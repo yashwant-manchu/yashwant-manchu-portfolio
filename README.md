@@ -1,36 +1,180 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yashwant Manchu - Portfolio Website
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion. Featuring advanced animations, glassmorphism effects, and a sophisticated dark/light mode system.
 
-First, run the development server:
+## 🚀 Features
+
+- **Modern Design**: Glassmorphism effects, gradient backgrounds, and smooth animations
+- **Responsive**: Mobile-first approach ensuring great UX across all devices
+- **Dark/Light Mode**: Advanced theme system with smooth transitions and persistence
+- **Interactive Elements**: Custom cursor, hover effects, and scroll-triggered animations
+- **Performance Optimized**: Fast loading times and SEO-friendly structure
+- **Accessibility**: WCAG compliant with proper contrast and semantic markup
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Fonts**: Inter & Space Grotesk (Google Fonts)
+
+## 📦 Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yashwantmanchu/portfolio.git
+   cd portfolio
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
+
+3. **Run the development server**
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
+
+4. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🏗️ Project Structure
+
+├── app/
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── layout/
+│   │   ├── Navigation.tsx
+│   │   └── Footer.tsx
+│   ├── providers/
+│   │   └── ThemeProvider.tsx
+│   ├── sections/
+│   │   ├── HeroSection.tsx
+│   │   ├── AboutSection.tsx
+│   │   ├── ExperienceSection.tsx
+│   │   ├── SkillsSection.tsx
+│   │   ├── ProjectsSection.tsx
+│   │   └── ContactSection.tsx
+│   └── ui/
+│       └── CustomCursor.tsx
+├── public/
+└── package.json
+
+## 🎨 Customization
+
+### Colors
+
+The project uses a sophisticated color system with CSS variables and Tailwind CSS. You can customize the colors in:
+
+- `tailwind.config.ts` - Theme colors
+- `globals.css` - CSS custom properties
+
+### Animations
+
+All animations are built with Framer Motion. You can customize:
+
+- Animation variants in individual components
+- Global animation settings in `globals.css`
+
+### Content
+
+Update your personal information in:
+
+- Individual section components in `components/sections/`
+- Metadata in `app/layout.tsx`
+
+## 🚀 Deployment
+
+### Deploy on Vercel
+
+1. **Push to GitHub**
+
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+
+2. **Deploy with Vercel**
+   - Connect your GitHub repository to Vercel
+   - Vercel will automatically detect it's a Next.js project
+   - Deploy with default settings
+
+3. **Environment Setup**
+   - No environment variables required for basic functionality
+   - Add any API keys or external service configurations as needed
+
+### Deploy on Other Platforms
+
+**Build for production:**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📱 Responsive Design
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The portfolio is built with a mobile-first approach and includes:
 
-## Learn More
+- Mobile navigation with hamburger menu
+- Responsive grid layouts
+- Touch-friendly interactive elements
+- Optimized images and performance
 
-To learn more about Next.js, take a look at the following resources:
+## ♿ Accessibility
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Semantic HTML structure
+- ARIA labels and roles where needed
+- Keyboard navigation support
+- High contrast ratios for readability
+- Screen reader compatible
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Performance Features
 
-## Deploy on Vercel
+- **Image Optimization**: Next.js automatic image optimization
+- **Code Splitting**: Automatic code splitting for faster loads
+- **SEO Optimization**: Meta tags, structured data, and semantic HTML
+- **Performance Monitoring**: Web Vitals tracking ready
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📞 Contact Information
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Email**: <yashwanthmanchu059@gmail.com>
+- **Phone**: +91 8367557617
+- **Location**: Nellore, A.P, India
+- **LinkedIn**: [linkedin.com/in/yashwantmanchu](https://linkedin.com/in/yashwantmanchu)
+- **GitHub**: [github.com/yashwantmanchu](https://github.com/yashwantmanchu)
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yashwantmanchu/portfolio/issues).
+
+## ⭐ Show Your Support
+
+Give a ⭐️ if you like this project!
+
+---
+
+### Made with ❤️ by Yashwant Manchu
