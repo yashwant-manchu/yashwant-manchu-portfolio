@@ -244,7 +244,7 @@ export const ProjectsSection = () => {
                 Explore my complete portfolio and open-source contributions
               </p>
               <motion.a
-                href="https://github.com/yashwantmanchu"
+                href="https://github.com/yashwant-manchu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-3 px-8 py-3 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full font-medium hover-lift cursor-hover"

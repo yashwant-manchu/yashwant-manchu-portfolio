@@ -160,8 +160,8 @@ The portfolio is built with a mobile-first approach and includes:
 - **Email**: <yashwanthmanchu059@gmail.com>
 - **Phone**: +91 8367557617
 - **Location**: Nellore, A.P, India
-- **LinkedIn**: [linkedin.com/in/yashwantmanchu](https://linkedin.com/in/yashwantmanchu)
-- **GitHub**: [github.com/yashwantmanchu](https://github.com/yashwantmanchu)
+- **LinkedIn**: [linkedin.com/in/yashwant-manchu](https://linkedin.com/in/yashwant-manchu)
+- **GitHub**: [github.com/yashwant-manchu](https://github.com/yashwant-manchu)
 
 ## 📄 License
 

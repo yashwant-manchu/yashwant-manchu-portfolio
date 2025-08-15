@@ -15,7 +15,7 @@ export const Footer = () => {
         },
         {
             name: 'LinkedIn',
-            href: 'https://linkedin.com/in/yashwantmanchu',
+            href: 'https://linkedin.com/in/yashwant-manchu',
             icon: Linkedin,
             color: 'hover:text-blue-600'
         },
