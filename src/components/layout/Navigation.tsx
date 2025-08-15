@@ -57,7 +57,7 @@ export const Navigation = () => {
             <motion.nav
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
                         ? "glass-card backdrop-blur-xl border-b border-white/10"
                         : "bg-transparent"
                     }`}
@@ -236,7 +236,7 @@ export const Navigation = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden"
+                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
                         onClick={() => setIsMobileMenuOpen(false)}
                     />
                 )}
