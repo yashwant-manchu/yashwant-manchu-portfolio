@@ -8,7 +8,6 @@ export const CustomCursor = () => {
     const [isHovering, setIsHovering] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
 
-    // Throttled mouse position update for better performance
     const updateMousePosition = useCallback((e: MouseEvent) => {
         setMousePosition({ x: e.clientX, y: e.clientY });
         if (!isVisible) setIsVisible(true);
@@ -18,11 +17,21 @@ export const CustomCursor = () => {
     const handleMouseLeave = useCallback(() => setIsHovering(false), []);
 
     useEffect(() => {
-        // Check if device supports hover (not touch devices)
         const supportsHover = window.matchMedia('(hover: hover)').matches;
         if (!supportsHover) return;
 
-        // Throttle mouse move events for performance
+        // Hide default cursor globally
+        document.body.style.cursor = 'none';
+        
+        // Apply cursor: none to all elements
+        const style = document.createElement('style');
+        style.innerHTML = `
+            *, *:before, *:after {
+                cursor: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+
         let ticking = false;
         const throttledMouseMove = (e: MouseEvent) => {
             if (!ticking) {
@@ -34,14 +43,10 @@ export const CustomCursor = () => {
             }
         };
 
-        // Add event listeners
         window.addEventListener("mousemove", throttledMouseMove, { passive: true });
-        
-        // Mouse leave/enter for visibility
         document.addEventListener("mouseleave", () => setIsVisible(false));
         document.addEventListener("mouseenter", () => setIsVisible(true));
 
-        // Add hover listeners to interactive elements
         const interactiveElements = document.querySelectorAll(
             "a, button, .cursor-hover, [role='button'], input, textarea, select"
         );
@@ -51,11 +56,10 @@ export const CustomCursor = () => {
             el.addEventListener("mouseleave", handleMouseLeave, { passive: true });
         });
 
-        // Observer for dynamically added elements
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 mutation.addedNodes.forEach((node) => {
-                    if (node.nodeType === 1) { // Element node
+                    if (node.nodeType === 1) {
                         const element = node as Element;
                         if (element.matches && element.matches("a, button, .cursor-hover, [role='button'], input, textarea, select")) {
                             element.addEventListener("mouseenter", handleMouseEnter, { passive: true });
@@ -69,6 +73,10 @@ export const CustomCursor = () => {
         observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
+            // Restore default cursor
+            document.body.style.cursor = 'auto';
+            document.head.removeChild(style);
+            
             window.removeEventListener("mousemove", throttledMouseMove);
             document.removeEventListener("mouseleave", () => setIsVisible(false));
             document.removeEventListener("mouseenter", () => setIsVisible(true));
@@ -82,21 +90,18 @@ export const CustomCursor = () => {
         };
     }, [updateMousePosition, handleMouseEnter, handleMouseLeave]);
 
-    // Don't render on touch devices or if not visible
-    const supportsHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
-    if (!supportsHover || !isVisible) return null;
+    if (!isVisible) return null;
 
     return (
         <>
-            {/* Main cursor dot */}
             <motion.div
-                className="fixed top-0 left-0 w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+                className="fixed top-0 left-0 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full pointer-events-none z-[9999] mix-blend-difference"
                 style={{
-                    translateX: mousePosition.x - 6,
-                    translateY: mousePosition.y - 6,
+                    translateX: mousePosition.x - 8,
+                    translateY: mousePosition.y - 8,
                 }}
                 animate={{
-                    scale: isHovering ? 1.5 : 1,
+                    scale: isHovering ? 2 : 1,
                     opacity: isVisible ? 1 : 0,
                 }}
                 transition={{
@@ -107,15 +112,14 @@ export const CustomCursor = () => {
                 }}
             />
             
-            {/* Outer ring */}
             <motion.div
-                className="fixed top-0 left-0 w-6 h-6 sm:w-8 sm:h-8 border-2 border-blue-400/30 rounded-full pointer-events-none z-[9998]"
+                className="fixed top-0 left-0 w-8 h-8 border-2 border-blue-400/30 rounded-full pointer-events-none z-[9998]"
                 style={{
-                    translateX: mousePosition.x - 12,
-                    translateY: mousePosition.y - 12,
+                    translateX: mousePosition.x - 16,
+                    translateY: mousePosition.y - 16,
                 }}
                 animate={{
-                    scale: isHovering ? 1.2 : 1,
+                    scale: isHovering ? 1.5 : 1,
                     opacity: isHovering ? 0.8 : 0.3,
                 }}
                 transition={{

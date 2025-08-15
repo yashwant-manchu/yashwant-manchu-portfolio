@@ -1,19 +1,20 @@
 'use client';
 
+
 import { motion, useInView, Variants } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 export const ContactSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true});
-  
+  const isInView = useInView(ref, { once: true });
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
-  
+
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const containerVariants: Variants = {
@@ -46,22 +47,33 @@ export const ContactSection = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus('loading');
-    
-    // Simulate form submission
-    setTimeout(() => {
-      if (formData.name && formData.email && formData.message) {
-        setFormStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setFormStatus('idle'), 3000);
-      } else {
-        setFormStatus('error');
-        setTimeout(() => setFormStatus('idle'), 3000);
-      }
-    }, 1000);
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setFormStatus('loading');
+        
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setFormStatus('success');
+                setFormData({ name: '', email: '', message: '' });
+                setTimeout(() => setFormStatus('idle'), 3000);
+            } else {
+                setFormStatus('error');
+                setTimeout(() => setFormStatus('idle'), 3000);
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setFormStatus('error');
+            setTimeout(() => setFormStatus('idle'), 3000);
+        }
+    };
 
   const contactInfo = [
     {
@@ -115,7 +127,7 @@ export const ContactSection = () => {
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center lg:text-left">
                 Contact Information
               </h3>
-              
+
               <div className="space-y-4 sm:space-y-6">
                 {contactInfo.map((info, index) => {
                   const IconComponent = info.icon;
@@ -154,7 +166,7 @@ export const ContactSection = () => {
                   Response Time
                 </h4>
                 <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">
-                  I typically respond to emails within 24 hours. For urgent matters, 
+                  I typically respond to emails within 24 hours. For urgent matters,
                   feel free to call or text me directly.
                 </p>
               </motion.div>
@@ -166,7 +178,7 @@ export const ContactSection = () => {
                 <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center lg:text-left">
                   Send a Message
                 </h3>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
                     <motion.div
@@ -187,7 +199,7 @@ export const ContactSection = () => {
                         placeholder="Your full name"
                       />
                     </motion.div>
-                    
+
                     <motion.div
                       className="space-y-2"
                       whileFocus={{ scale: 1.02 }}
@@ -207,7 +219,7 @@ export const ContactSection = () => {
                       />
                     </motion.div>
                   </div>
-                  
+
                   <motion.div
                     className="space-y-2"
                     whileFocus={{ scale: 1.02 }}
@@ -226,7 +238,7 @@ export const ContactSection = () => {
                       placeholder="Tell me about your project or just say hello..."
                     />
                   </motion.div>
-                  
+
                   <motion.button
                     type="submit"
                     disabled={formStatus === 'loading'}
@@ -270,7 +282,7 @@ export const ContactSection = () => {
                 Ready to Start Your Project?
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto text-sm sm:text-base px-2 sm:px-0">
-                Whether you need a new website, mobile app, or want to discuss a custom solution, 
+                Whether you need a new website, mobile app, or want to discuss a custom solution,
                 I&apos;m here to help bring your ideas to life.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

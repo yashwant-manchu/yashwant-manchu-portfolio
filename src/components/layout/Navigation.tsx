@@ -27,7 +27,7 @@ export const Navigation = () => {
             // Update active section based on scroll position with offset for mobile nav
             const sections = navItems.map((item) => item.href.substring(1));
             const navOffset = 80; // Account for fixed navigation height
-            
+
             const currentSection = sections.find((section) => {
                 const element = document.getElementById(section);
                 if (element) {
@@ -80,7 +80,7 @@ export const Navigation = () => {
             const navHeight = 80; // Fixed nav height
             const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
             const offsetPosition = elementPosition - navHeight;
-            
+
             window.scrollTo({
                 top: offsetPosition,
                 behavior: "smooth"
@@ -89,21 +89,28 @@ export const Navigation = () => {
         setIsMobileMenuOpen(false);
     };
 
+    const handleResumeDownload = () => {
+        const link = document.createElement('a');
+        link.href = '/Yashwant-Manchu-Resume.pdf';
+        link.download = 'Yashwant Manchu Resume.pdf';
+        link.click();
+    };
+
     return (
         <>
             <motion.nav
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                        ? "glass-card backdrop-blur-xl border-b border-white/10"
-                        : "bg-transparent"
+                    ? "glass-card backdrop-blur-xl border-b border-white/10"
+                    : "bg-transparent"
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-20"> {/* Increased height for better spacing */}
                         {/* Logo */}
-                        <motion.div 
-                            whileHover={{ scale: 1.05 }} 
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
                             className="cursor-pointer flex-shrink-0"
                         >
                             <h1 className="text-lg sm:text-xl font-display font-bold gradient-text-blue">
@@ -118,8 +125,8 @@ export const Navigation = () => {
                                     key={item.name}
                                     onClick={() => scrollToSection(item.href)}
                                     className={`relative px-3 py-2 text-sm font-medium transition-colors cursor-hover ${activeSection === item.href.substring(1)
-                                            ? "text-blue-500"
-                                            : "text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                                        ? "text-blue-500"
+                                        : "text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
                                         }`}
                                     whileHover={{ y: -1 }}
                                     whileTap={{ scale: 0.95 }}
@@ -176,9 +183,8 @@ export const Navigation = () => {
                             </motion.button>
 
                             {/* Resume Button - Responsive sizing */}
-                            <motion.a
-                                href="/resume.pdf"
-                                download
+                            <motion.button
+                                onClick={handleResumeDownload}
                                 className="hidden sm:flex items-center space-x-2 px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium cursor-hover text-sm"
                                 whileHover={{
                                     scale: 1.05,
@@ -189,7 +195,7 @@ export const Navigation = () => {
                                 <Download className="w-3 h-3 md:w-4 md:h-4" />
                                 <span className="hidden md:block">Resume</span>
                                 <span className="block md:hidden">CV</span>
-                            </motion.a>
+                            </motion.button>
 
                             {/* Mobile Menu Button */}
                             <motion.button
@@ -243,8 +249,8 @@ export const Navigation = () => {
                                         key={item.name}
                                         onClick={() => scrollToSection(item.href)}
                                         className={`block w-full text-left px-4 py-3 rounded-lg transition-colors cursor-hover ${activeSection === item.href.substring(1)
-                                                ? "text-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                                                : "text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800"
+                                            ? "text-blue-500 bg-blue-50 dark:bg-blue-900/20"
+                                            : "text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800"
                                             }`}
                                         initial={{ x: -50, opacity: 0 }}
                                         animate={{ x: 0, opacity: 1 }}
@@ -254,21 +260,15 @@ export const Navigation = () => {
                                         {item.name}
                                     </motion.button>
                                 ))}
-                                
+
                                 {/* Mobile Resume Button */}
-                                <motion.a
-                                    href="/resume.pdf"
-                                    download
+                                <motion.button
+                                    onClick={handleResumeDownload}
                                     className="flex items-center justify-center space-x-2 w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium cursor-hover mt-4"
-                                    initial={{ y: 20, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: navItems.length * 0.1 }}
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
                                 >
                                     <Download className="w-4 h-4" />
                                     <span>Download Resume</span>
-                                </motion.a>
+                                </motion.button>
                             </div>
                         </motion.div>
                     )}
