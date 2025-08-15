@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Ensure your build tool is configured to use Tailwind CSS as a PostCSS plugin */
 
 * {
   margin: 0;
@@ -12,6 +11,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for fixed navigation */
 }
 
 body {
@@ -20,6 +20,7 @@ body {
   color: var(--text-primary);
   transition: all 0.3s ease;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 :root {
@@ -148,14 +149,80 @@ body {
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Section padding */
+/* Section padding with responsive improvements */
 .section-padding {
   padding: 5rem 1rem;
+  min-height: auto;
+}
+
+/* Responsive section padding */
+@media (max-width: 1024px) {
+  .section-padding {
+    padding: 4rem 1rem;
+  }
 }
 
 @media (max-width: 768px) {
   .section-padding {
-    padding: 3rem 1rem;
+    padding: 3rem 1rem 3rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-padding {
+    padding: 2.5rem 0.75rem;
+  }
+}
+
+/* Section title spacing fix for mobile navigation */
+section {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 768px) {
+  section {
+    scroll-margin-top: 100px; /* Extra margin for mobile navigation */
+  }
+}
+
+/* Container improvements */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
   }
 }
 
@@ -210,4 +277,116 @@ body {
 @keyframes loading-dots2 {
   0% { transform: translate(0, 0); }
   100% { transform: translate(24px, 0); }
+}
+
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Responsive typography improvements */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+}
+
+/* Fix for horizontal scrolling issues */
+* {
+  max-width: 100%;
+}
+
+/* Improved mobile form styling */
+@media (max-width: 768px) {
+  input, textarea, button {
+    font-size: 16px; /* Prevents zoom on iOS */
+    line-height: 1.4;
+  }
+}
+
+/* Responsive grid improvements */
+.responsive-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .responsive-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* Card responsive improvements */
+.card-responsive {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .card-responsive {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-responsive {
+    padding: 2rem;
+  }
+}
+
+/* Text responsive improvements */
+.text-responsive-sm {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-sm {
+    font-size: 1rem;
+  }
+}
+
+.text-responsive-base {
+  font-size: 1rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-base {
+    font-size: 1.125rem;
+  }
+}
+
+.text-responsive-lg {
+  font-size: 1.125rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-lg {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .text-responsive-lg {
+    font-size: 1.5rem;
+  }
 }

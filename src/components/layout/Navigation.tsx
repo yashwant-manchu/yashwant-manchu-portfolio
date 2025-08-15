@@ -24,13 +24,15 @@ export const Navigation = () => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
 
-            // Update active section based on scroll position
+            // Update active section based on scroll position with offset for mobile nav
             const sections = navItems.map((item) => item.href.substring(1));
+            const navOffset = 80; // Account for fixed navigation height
+            
             const currentSection = sections.find((section) => {
                 const element = document.getElementById(section);
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    return rect.top <= 100 && rect.bottom >= 100;
+                    return rect.top <= navOffset + 20 && rect.bottom >= navOffset + 20;
                 }
                 return false;
             });
@@ -44,10 +46,45 @@ export const Navigation = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Close mobile menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (isMobileMenuOpen) {
+                const nav = document.querySelector('nav');
+                if (nav && !nav.contains(event.target as Node)) {
+                    setIsMobileMenuOpen(false);
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMobileMenuOpen]);
+
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
+
     const scrollToSection = (href: string) => {
         const element = document.querySelector(href);
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
+            const navHeight = 80; // Fixed nav height
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - navHeight;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
         setIsMobileMenuOpen(false);
     };
@@ -63,16 +100,19 @@ export const Navigation = () => {
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
+                    <div className="flex items-center justify-between h-20"> {/* Increased height for better spacing */}
                         {/* Logo */}
-                        <motion.div whileHover={{ scale: 1.05 }} className="cursor-pointer">
-                            <h1 className="text-xl font-display font-bold gradient-text-blue">
+                        <motion.div 
+                            whileHover={{ scale: 1.05 }} 
+                            className="cursor-pointer flex-shrink-0"
+                        >
+                            <h1 className="text-lg sm:text-xl font-display font-bold gradient-text-blue">
                                 Yashwant Manchu
                             </h1>
                         </motion.div>
 
-                        {/* Desktop Navigation */}
-                        <div className="hidden md:flex items-center space-x-8">
+                        {/* Desktop Navigation - Hidden on smaller screens */}
+                        <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
                             {navItems.map((item) => (
                                 <motion.button
                                     key={item.name}
@@ -101,13 +141,14 @@ export const Navigation = () => {
                         </div>
 
                         {/* Right side controls */}
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 sm:space-x-4">
                             {/* Theme Toggle */}
                             <motion.button
                                 onClick={toggleTheme}
                                 className="p-2 rounded-full glass-card cursor-hover"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
+                                aria-label="Toggle theme"
                             >
                                 <AnimatePresence mode="wait">
                                     {theme === "light" ? (
@@ -118,7 +159,7 @@ export const Navigation = () => {
                                             exit={{ rotate: 180, opacity: 0 }}
                                             transition={{ duration: 0.3 }}
                                         >
-                                            <Moon className="w-5 h-5" />
+                                            <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
                                         </motion.div>
                                     ) : (
                                         <motion.div
@@ -128,33 +169,35 @@ export const Navigation = () => {
                                             exit={{ rotate: 180, opacity: 0 }}
                                             transition={{ duration: 0.3 }}
                                         >
-                                            <Sun className="w-5 h-5" />
+                                            <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
                             </motion.button>
 
-                            {/* Resume Button */}
+                            {/* Resume Button - Responsive sizing */}
                             <motion.a
                                 href="/resume.pdf"
                                 download
-                                className="hidden sm:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium cursor-hover"
+                                className="hidden sm:flex items-center space-x-2 px-3 py-2 md:px-4 md:py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium cursor-hover text-sm"
                                 whileHover={{
                                     scale: 1.05,
                                     boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)",
                                 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <Download className="w-4 h-4" />
-                                <span>Resume</span>
+                                <Download className="w-3 h-3 md:w-4 md:h-4" />
+                                <span className="hidden md:block">Resume</span>
+                                <span className="block md:hidden">CV</span>
                             </motion.a>
 
                             {/* Mobile Menu Button */}
                             <motion.button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="md:hidden p-2 rounded-full glass-card cursor-hover"
+                                className="lg:hidden p-2 rounded-full glass-card cursor-hover"
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
+                                aria-label="Toggle mobile menu"
                             >
                                 <AnimatePresence mode="wait">
                                     {isMobileMenuOpen ? (
@@ -191,14 +234,15 @@ export const Navigation = () => {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="md:hidden glass-card border-t border-white/10"
+                            transition={{ duration: 0.3 }}
+                            className="lg:hidden glass-card border-t border-white/10 overflow-hidden"
                         >
-                            <div className="px-4 py-6 space-y-4">
+                            <div className="px-4 py-6 space-y-2 max-h-[calc(100vh-80px)] overflow-y-auto">
                                 {navItems.map((item, index) => (
                                     <motion.button
                                         key={item.name}
                                         onClick={() => scrollToSection(item.href)}
-                                        className={`block w-full text-left px-4 py-2 rounded-lg transition-colors cursor-hover ${activeSection === item.href.substring(1)
+                                        className={`block w-full text-left px-4 py-3 rounded-lg transition-colors cursor-hover ${activeSection === item.href.substring(1)
                                                 ? "text-blue-500 bg-blue-50 dark:bg-blue-900/20"
                                                 : "text-gray-600 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-50 dark:hover:bg-gray-800"
                                             }`}
@@ -210,10 +254,12 @@ export const Navigation = () => {
                                         {item.name}
                                     </motion.button>
                                 ))}
+                                
+                                {/* Mobile Resume Button */}
                                 <motion.a
                                     href="/resume.pdf"
                                     download
-                                    className="flex items-center justify-center space-x-2 w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium cursor-hover"
+                                    className="flex items-center justify-center space-x-2 w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium cursor-hover mt-4"
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: navItems.length * 0.1 }}
@@ -236,7 +282,7 @@ export const Navigation = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
                         onClick={() => setIsMobileMenuOpen(false)}
                     />
                 )}
