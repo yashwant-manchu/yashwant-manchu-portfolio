@@ -1,264 +1,268 @@
 'use client';
 
 import { motion, useInView, Variants } from 'framer-motion';
-import { useRef } from 'react';
-import { ExternalLink, Github, Smartphone, Globe, Car, Heart } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ExternalLink, Github, CreditCard, Users, BarChart3, Globe, Smartphone } from 'lucide-react';
 
 const projects = [
   {
     id: 1,
-    title: 'Parking Ticket App',
-    description: 'A comprehensive React Native mobile application for managing parking tickets with real-time updates, payment integration, and user-friendly interface.',
-    image: '/api/placeholder/400/250',
-    technologies: ['React Native', 'JavaScript', 'API Integration', 'Mobile UI'],
-    features: [
-      'Real-time parking availability',
-      'Digital ticket generation',
-      'Payment gateway integration',
-      'Location-based services'
+    title: 'iPaisa – Fintech Payment Platform',
+    category: 'Fintech',
+    description:
+        'Full-stack fintech web & mobile app supporting wallet payments, bill payments, recharges, and 5+ payment gateways (Razorpay, UPI, Net Banking). Mobile app live on Google Play Store.',
+    technologies: ['React.js', 'Expo', 'TypeScript', 'Redux Toolkit', 'Tailwind CSS', 'JWT', 'Swagger'],
+    highlights: [
+      '5+ payment gateway integrations including Razorpay & UPI',
+      'Granular RBAC with JWT-protected routes across all modules',
+      '30% reduction in unnecessary re-renders via memoized selectors',
+      'Dark/light mode & WCAG-accessible UI (Gluestack + NativeWind)',
+      'Live on Google Play Store',
     ],
-    icon: Car,
-    color: 'from-blue-500 to-cyan-500',
+    icon: CreditCard,
+    accent: '#10b981',
     github: '#',
-    demo: '#'
+    demo: '#',
+    badge: 'Live on Play Store',
   },
   {
     id: 2,
-    title: 'Donation App',
-    description: 'A compassionate React Native application connecting donors with causes, featuring secure payment processing and transparent donation tracking.',
-    image: '/api/placeholder/400/250',
-    technologies: ['React Native', 'Payment Gateway', 'Database', 'Authentication'],
-    features: [
-      'Secure donation processing',
-      'Cause discovery and filtering',
-      'Donation history tracking',
-      'Social sharing features'
+    title: 'FINAMSCCS / VLNIDHI – Corporate Banking',
+    category: 'Banking',
+    description:
+        'End-to-end corporate banking suite (web + mobile) covering KYC onboarding, investment plan management, and a 4-tier role hierarchy secured with JWT & RBAC.',
+    technologies: ['React.js', 'React Native CLI', 'Redux', 'React Native Paper', 'JWT'],
+    highlights: [
+      'End-to-end KYC onboarding workflows',
+      'Investment plan creation, subscription & maturity tracking',
+      '4-tier RBAC: Member → Collection Agent → Current → Admin',
+      'Zero unauthorized role access via JWT + navigation guards',
+      'Cross-platform iOS & Android',
     ],
-    icon: Heart,
-    color: 'from-pink-500 to-red-500',
+    icon: Users,
+    accent: '#f59e0b',
     github: '#',
-    demo: '#'
+    demo: '#',
+    badge: 'Web + Mobile',
   },
   {
     id: 3,
-    title: 'HyWay99',
-    description: 'A robust web platform built with PHP and MySQL, providing comprehensive highway information services with dynamic content management.',
-    image: '/api/placeholder/400/250',
-    technologies: ['PHP', 'MySQL', 'HTML5', 'CSS3', 'JavaScript'],
-    features: [
-      'Dynamic content management',
-      'Route planning system',
-      'Real-time traffic updates',
-      'User authentication'
+    title: 'HRMS – Enterprise HR Dashboard',
+    category: 'Enterprise',
+    description:
+        'Enterprise HR dashboard with employee lifecycle management, leave & attendance tracking, payroll processing, and multi-level approval workflows.',
+    technologies: ['React.js', 'Redux', 'Material-UI', 'REST APIs', 'Jest', 'RTL'],
+    highlights: [
+      'Employee lifecycle, payroll & multi-level approval flows',
+      '35% render speed improvement via useMemo & code splitting',
+      '28% reduction in initial JS bundle size',
+      'Role-specific views for HR Admin, Manager & Employee',
+      '85%+ test coverage with RTL',
     ],
-    icon: Globe,
-    color: 'from-green-500 to-emerald-500',
+    icon: BarChart3,
+    accent: '#06b6d4',
     github: '#',
-    demo: '#'
+    demo: '#',
+    badge: 'Enterprise',
   },
   {
     id: 4,
-    title: 'MTree Tech Solutions Website',
-    description: 'Modern, responsive corporate website built with HTML5, CSS3, JavaScript, and Bootstrap, showcasing company services and portfolio.',
-    image: '/api/placeholder/400/250',
-    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'Responsive Design'],
-    features: [
-      'Responsive design',
-      'Interactive animations',
-      'Contact form integration',
-      'Performance optimized'
+    title: 'MATCH – Merchant Compliance Tool',
+    category: 'Compliance',
+    description:
+        'Migrated legacy compliance app from deprecated DXP to Connect Toolkit, eliminating 40% technical debt. Handles 500+ daily merchant verifications with 85% test coverage.',
+    technologies: ['React.js', 'Redux Toolkit', 'Jest', 'RTL', 'Axios'],
+    highlights: [
+      'Legacy DXP → Connect Toolkit migration',
+      '150+ unit & integration tests (85% coverage)',
+      '500+ daily merchant verification requests handled',
+      '40% technical debt eliminated',
+      'Centralized async state with Redux Thunk',
+    ],
+    icon: Globe,
+    accent: '#a78bfa',
+    github: '#',
+    demo: '#',
+    badge: 'Compliance',
+  },
+  {
+    id: 5,
+    title: 'Smart Parking System',
+    category: 'Mobile',
+    description:
+        'Role-based parking management app with JWT auth, real-time vehicle tracking, Bluetooth thermal printer integration, and revenue analytics dashboard.',
+    technologies: ['React Native', 'Context API', 'Bluetooth API', 'JWT', 'i18n'],
+    highlights: [
+      'Bluetooth thermal printer — 70% faster ticket generation',
+      'Real-time vehicle tracking & space utilization analytics',
+      'Multilingual support (3 languages) & dynamic themes',
+      '35% user satisfaction improvement',
+      'JWT auth with role-based navigation',
     ],
     icon: Smartphone,
-    color: 'from-purple-500 to-indigo-500',
+    accent: '#f97316',
     github: '#',
-    demo: 'https://mtreetech.com'
-  }
+    demo: '#',
+    badge: 'Mobile App',
+  },
 ];
+
+const filters = ['All', 'Fintech', 'Banking', 'Enterprise', 'Compliance', 'Mobile'];
 
 export const ProjectsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const [filter, setFilter] = useState('All');
 
-  const containerVariants: Variants = {
+  const filtered = filter === 'All' ? projects : projects.filter((p) => p.category === filter);
+
+  const container: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
   };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+  const item: Variants = {
+    hidden: { opacity: 0, y: 26 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
   };
 
   return (
-    <section id="projects" className="section-padding">
-      <div className="container mx-auto px-4">
-        <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="max-w-7xl mx-auto"
-        >
-          {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display font-bold gradient-text-blue mb-4">
-              Featured Projects
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              A showcase of my work spanning mobile applications, web platforms, and innovative solutions
-            </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mt-6" />
-          </motion.div>
+      <section id="projects" className="section-padding" style={{ background: 'var(--bg-primary)' }}>
+        <div className="container mx-auto px-4">
+          <motion.div ref={ref} variants={container} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="max-w-6xl mx-auto">
 
-          {/* Projects Grid */}
-          <div className="grid lg:grid-cols-2 gap-8">
-            {projects.map((project) => {
-              const IconComponent = project.icon;
-              return (
-                <motion.div
-                  key={project.id}
-                  variants={itemVariants}
-                  className="group glass-card rounded-2xl overflow-hidden hover-lift cursor-hover"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Project Image */}
-                  <div className="relative h-64 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        className={`p-8 rounded-full bg-gradient-to-r ${project.color}`}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <IconComponent className="w-12 h-12 text-white" />
-                      </motion.div>
-                    </div>
-                    
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-
-                  {/* Project Content */}
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      <div className="flex space-x-2">
-                        <motion.a
-                          href={project.github}
-                          className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-hover"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <Github className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                        </motion.a>
-                        <motion.a
-                          href={project.demo}
-                          className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors cursor-hover"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
-                          <ExternalLink className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                        </motion.a>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Key Features */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
-                        Key Features:
-                      </h4>
-                      <ul className="space-y-1">
-                        {project.features.map((feature, i) => (
-                          <motion.li
-                            key={i}
-                            className="text-sm text-gray-600 dark:text-gray-400 flex items-center"
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={isInView ? { opacity: 1, x: 0 } : {}}
-                            transition={{ delay: 0.1 * i + 0.5 }}
-                          >
-                            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 flex-shrink-0" />
-                            {feature}
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Technologies */}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
-                        Technologies:
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, i) => (
-                          <motion.span
-                            key={i}
-                            className={`px-3 py-1 bg-gradient-to-r ${project.color} text-white rounded-full text-sm font-medium`}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                            transition={{ delay: 0.1 * i + 0.7 }}
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            {tech}
-                          </motion.span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* More Projects CTA */}
-          <motion.div
-            variants={itemVariants}
-            className="text-center mt-16"
-          >
-            <motion.div
-              className="glass-card p-8 rounded-2xl inline-block"
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3 className="text-2xl font-bold gradient-text-blue mb-4">
-                More Projects on GitHub
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Explore my complete portfolio and open-source contributions
+            {/* Header */}
+            <motion.div variants={item} className="text-center mb-10">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-widest"
+                  style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)' }}>
+              Portfolio
+            </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold gradient-text-blue mb-4">Featured Projects</h2>
+              <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
+                Production-grade apps spanning fintech, enterprise banking, compliance &amp; HR
               </p>
-              <motion.a
-                href="https://github.com/yashwant-manchu"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-3 px-8 py-3 bg-gradient-to-r from-gray-900 to-gray-700 text-white rounded-full font-medium hover-lift cursor-hover"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Github className="w-5 h-5" />
-                <span>View GitHub Profile</span>
-                <ExternalLink className="w-4 h-4" />
-              </motion.a>
+              <div className="w-16 h-1 rounded-full mx-auto mt-5" style={{ background: 'linear-gradient(90deg, var(--accent), var(--amber))' }} />
+            </motion.div>
+
+            {/* Filter tabs */}
+            <motion.div variants={item} className="flex flex-wrap justify-center gap-2 mb-10">
+              {filters.map((f) => (
+                  <motion.button
+                      key={f}
+                      onClick={() => setFilter(f)}
+                      className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all"
+                      style={{
+                        background: filter === f ? 'var(--accent)' : 'var(--bg-secondary)',
+                        color: filter === f ? '#fff' : 'var(--text-muted)',
+                        border: '1px solid',
+                        borderColor: filter === f ? 'var(--accent)' : 'var(--border-color)',
+                      }}
+                      whileHover={{ scale: 1.04 }}
+                      whileTap={{ scale: 0.96 }}
+                  >
+                    {f}
+                  </motion.button>
+              ))}
+            </motion.div>
+
+            {/* Grid */}
+            <motion.div layout className="grid lg:grid-cols-2 gap-7">
+              {filtered.map((project) => {
+                const Icon = project.icon;
+                return (
+                    <motion.div
+                        key={project.id}
+                        layout
+                        variants={item}
+                        className="glass-card rounded-2xl overflow-hidden hover-lift group"
+                        whileHover={{ scale: 1.015 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                      {/* Visual banner */}
+                      <div className="relative h-36 flex items-center justify-center overflow-hidden"
+                           style={{ background: `linear-gradient(135deg, ${project.accent}18, ${project.accent}08)` }}>
+                        <motion.div
+                            className="w-20 h-20 rounded-2xl flex items-center justify-center"
+                            style={{ background: `${project.accent}22`, border: `1px solid ${project.accent}40` }}
+                            whileHover={{ scale: 1.1, rotate: 4 }}
+                        >
+                          <Icon className="w-9 h-9" style={{ color: project.accent }} />
+                        </motion.div>
+                        <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-xs font-semibold"
+                              style={{ background: `${project.accent}22`, color: project.accent, border: `1px solid ${project.accent}40` }}>
+                      {project.badge}
+                    </span>
+                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+
+                      <div className="p-6">
+                        {/* Title row */}
+                        <div className="flex items-start justify-between mb-3 gap-3">
+                          <h3 className="font-bold text-base sm:text-lg leading-tight" style={{ color: 'var(--text-primary)' }}>
+                            {project.title}
+                          </h3>
+                          <div className="flex gap-2 flex-shrink-0">
+                            <motion.a href={project.github}
+                                      className="p-2 rounded-lg transition-colors"
+                                      style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
+                                      whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                              <Github className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                            </motion.a>
+                            <motion.a href={project.demo}
+                                      className="p-2 rounded-lg transition-colors"
+                                      style={{ background: `${project.accent}15`, border: `1px solid ${project.accent}30` }}
+                                      whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                              <ExternalLink className="w-4 h-4" style={{ color: project.accent }} />
+                            </motion.a>
+                          </div>
+                        </div>
+
+                        <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>{project.description}</p>
+
+                        {/* Highlights */}
+                        <ul className="space-y-1.5 mb-5">
+                          {project.highlights.slice(0, 3).map((h, i) => (
+                              <li key={i} className="flex items-start gap-2 text-xs" style={{ color: 'var(--text-secondary)' }}>
+                                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: project.accent }} />
+                                {h}
+                              </li>
+                          ))}
+                        </ul>
+
+                        {/* Tech chips */}
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.technologies.map((t) => (
+                              <span key={t} className="px-2 py-0.5 rounded-full text-xs font-medium"
+                                    style={{ background: 'var(--bg-tertiary)', color: 'var(--text-muted)', fontFamily: "'DM Mono', monospace" }}>
+                          {t}
+                        </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                );
+              })}
+            </motion.div>
+
+            {/* GitHub CTA */}
+            <motion.div variants={item} className="text-center mt-14">
+              <div className="glass-card rounded-2xl p-8 inline-block">
+                <h3 className="text-xl font-bold gradient-text-blue mb-2">See all projects on GitHub</h3>
+                <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>Open-source contributions and side projects</p>
+                <motion.a
+                    href="https://github.com/yashwant-manchu"
+                    target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 px-7 py-3 rounded-full text-sm font-semibold text-white"
+                    style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+                    whileHover={{ scale: 1.05, boxShadow: '0 0 24px rgba(16,185,129,0.3)' }}
+                    whileTap={{ scale: 0.97 }}>
+                  <Github className="w-4 h-4" />
+                  View GitHub Profile
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </motion.a>
+              </div>
             </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
   );
 };

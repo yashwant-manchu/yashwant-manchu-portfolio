@@ -1,177 +1,170 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowRight, Code, Briefcase } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Download, Layers } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const greetings = ['Hello', 'Namaste', 'Hi', 'Hey'];
+const roles = ['Frontend Engineer', 'React Native Developer', 'UI Engineer', 'TypeScript Developer'];
 
 export const HeroSection = () => {
-  const [currentGreeting, setCurrentGreeting] = useState(0);
+  const [roleIndex, setRoleIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentGreeting((prev) => (prev + 1) % greetings.length);
-    }, 2000);
-
-    return () => clearInterval(interval);
+    const id = setInterval(() => setRoleIndex((p) => (p + 1) % roles.length), 2800);
+    return () => clearInterval(id);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const navHeight = 80;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - navHeight;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+  const scroll = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
   };
 
+  const handleResume = () => {
+    const a = document.createElement('a');
+    a.href = '/Yashwant-Manchu-Resume.pdf';
+    a.download = 'Yashwant_Manchu_Resume.pdf';
+    a.click();
+  };
+
+  const techStack = ['React.js', 'React Native', 'TypeScript', 'Next.js', 'Redux Toolkit', 'Expo'];
+
   return (
-    <section 
-      id="home" 
-      className="relative overflow-hidden min-h-screen flex items-center justify-center pt-20 pb-10"
-    >
-      {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
-        
-        {/* Floating Elements - Responsive */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-64 sm:h-64 lg:w-72 lg:h-72 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        
-        <motion.div
-          className="absolute top-3/4 right-1/4 w-56 h-56 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-r from-purple-400/20 to-pink-600/20 rounded-full blur-3xl"
-          animate={{
-            x: [0, -75, 0],
-            y: [0, 50, 0],
-            scale: [1, 0.9, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
-          }}
-        />
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="space-y-6 sm:space-y-8"
-        >
-          {/* Greeting Animation */}
+      <section id="home" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-20 pb-16">
+        {/* Background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0" style={{ background: 'var(--bg-primary)' }} />
+          {/* Subtle grid */}
+          <div className="absolute inset-0 opacity-[0.035] dark:opacity-[0.055] grid-bg" />
+          {/* Emerald blob */}
           <motion.div
-            className="mb-4 sm:mb-6"
-            key={currentGreeting}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
+              className="absolute top-1/4 left-[15%] w-64 h-64 lg:w-[28rem] lg:h-[28rem] rounded-full blur-3xl"
+              style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)' }}
+              animate={{ x: [0, 35, 0], y: [0, -35, 0] }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          {/* Amber blob */}
+          <motion.div
+              className="absolute bottom-1/3 right-[10%] w-72 h-72 lg:w-[32rem] lg:h-[32rem] rounded-full blur-3xl"
+              style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%)' }}
+              animate={{ x: [0, -40, 0], y: [0, 28, 0] }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 max-w-4xl">
+          <motion.div
+              initial={{ opacity: 0, y: 36 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="space-y-7"
           >
-            <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-gray-600 dark:text-gray-300">
-              {greetings[currentGreeting]} 👋
+            {/* Open-to-work badge */}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.05 }} className="flex justify-center">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold"
+                  style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)', border: '1px solid rgba(16,185,129,0.3)' }}>
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
+              Open to new opportunities
             </span>
-          </motion.div>
+            </motion.div>
 
-          {/* Main Heading - Improved responsive typography */}
-          <motion.div
-            className="space-y-2 sm:space-y-4"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-tight">
-              I am{' '}
-              <span className="gradient-text-blue block sm:inline">
-                Yashwant Manchu
-              </span>
-            </h1>
-            <motion.h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-700 dark:text-gray-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+            {/* Name */}
+            <motion.h1
+                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight"
+                style={{ color: 'var(--text-primary)', lineHeight: '1.08' }}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
             >
-              a Frontend Developer
-            </motion.h2>
-          </motion.div>
+              Yashwant{' '}
+              <span className="gradient-text">Manchu</span>
+            </motion.h1>
 
-          {/* Caption */}
-          <motion.p
-            className="text-base sm:text-lg md:text-xl lg:text-xl text-gray-600 dark:text-gray-400 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-2 sm:px-0"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            I create clean, modern, and fully responsive websites that blend seamless design 
-            with functionality, bringing ideas to life through code.
-          </motion.p>
-
-          {/* Action Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4 sm:pt-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <motion.button
-              onClick={() => scrollToSection('experience')}
-              className="group flex items-center space-x-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold text-sm sm:text-base lg:text-lg cursor-hover hover-lift w-full sm:w-auto min-w-[200px] justify-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Briefcase className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>View Experience</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
-            </motion.button>
-
-            <motion.button
-              onClick={() => scrollToSection('projects')}
-              className="group flex items-center space-x-3 px-6 py-3 sm:px-8 sm:py-4 glass-card border border-gray-300 dark:border-gray-600 rounded-full font-semibold text-sm sm:text-base lg:text-lg cursor-hover hover-lift w-full sm:w-auto min-w-[200px] justify-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Code className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span>See Projects</span>
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
-            </motion.button>
-          </motion.div>
-
-          {/* Scroll Indicator - Hidden on small screens */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="w-6 h-10 border-2 border-gray-400 dark:border-gray-500 rounded-full flex justify-center">
-              <motion.div
-                className="w-1 h-3 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full mt-2"
-                animate={{ y: [0, 12, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+            {/* Animated role */}
+            <div className="h-9 sm:h-11 flex items-center justify-center overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.p
+                    key={roleIndex}
+                    className="text-lg sm:text-2xl font-semibold tracking-tight"
+                    style={{ color: 'var(--text-secondary)' }}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -14 }}
+                    transition={{ duration: 0.38 }}
+                >
+                  {roles[roleIndex]}
+                </motion.p>
+              </AnimatePresence>
             </div>
+
+            {/* Tagline */}
+            <motion.p
+                className="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
+                style={{ color: 'var(--text-muted)' }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.38 }}
+            >
+              3+ years building production-grade fintech platforms, mobile apps &amp; enterprise dashboards
+              with React.js, React Native, TypeScript &amp; Next.js — shipped to web and both app stores.
+            </motion.p>
+
+            {/* Tech pills */}
+            <motion.div className="flex flex-wrap justify-center gap-2"
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+              {techStack.map((t) => (
+                  <span key={t} className="px-3 py-1 text-xs font-medium rounded-full"
+                        style={{
+                          background: 'var(--bg-secondary)',
+                          border: '1px solid var(--border-color)',
+                          color: 'var(--text-muted)',
+                          fontFamily: "'DM Mono', monospace",
+                        }}>
+                {t}
+              </span>
+              ))}
+            </motion.div>
+
+            {/* CTAs */}
+            <motion.div
+                className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.62 }}
+            >
+              <motion.button
+                  onClick={() => scroll('projects')}
+                  className="group flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm sm:text-base text-white w-full sm:w-auto justify-center"
+                  style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+                  whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(16,185,129,0.38)' }}
+                  whileTap={{ scale: 0.97 }}
+              >
+                <Layers className="w-4 h-4" />
+                View My Work
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </motion.button>
+
+              <motion.button
+                  onClick={handleResume}
+                  className="group flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm sm:text-base w-full sm:w-auto justify-center glass-card"
+                  style={{ color: 'var(--text-primary)' }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+              >
+                <Download className="w-4 h-4" />
+                Download Resume
+              </motion.button>
+            </motion.div>
+
+            {/* Scroll hint */}
+            <motion.div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1.5"
+                animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}
+            >
+              <span className="text-[11px] tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>scroll</span>
+              <div className="w-5 h-8 rounded-full border-2 flex justify-center pt-1.5" style={{ borderColor: 'var(--border-color)' }}>
+                <motion.div
+                    className="w-1 h-2 rounded-full"
+                    style={{ background: 'var(--accent)' }}
+                    animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
+                />
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
   );
 };

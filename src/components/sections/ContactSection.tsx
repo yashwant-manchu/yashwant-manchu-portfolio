@@ -1,314 +1,188 @@
 'use client';
 
-
 import { motion, useInView, Variants } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Linkedin, Github } from 'lucide-react';
 
 export const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-
-  const containerVariants: Variants = {
+  const container: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
+    visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
+  };
+  const item: Variants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 3500);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 3500);
       }
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3500);
     }
   };
 
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setFormStatus('loading');
-        
-        try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                setFormStatus('success');
-                setFormData({ name: '', email: '', message: '' });
-                setTimeout(() => setFormStatus('idle'), 3000);
-            } else {
-                setFormStatus('error');
-                setTimeout(() => setFormStatus('idle'), 3000);
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setFormStatus('error');
-            setTimeout(() => setFormStatus('idle'), 3000);
-        }
-    };
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'yashwanthmanchu059@gmail.com',
-      href: 'mailto:yashwanthmanchu059@gmail.com',
-      color: 'from-blue-500 to-cyan-500'
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '+91 8367557617',
-      href: 'tel:+918367557617',
-      color: 'from-green-500 to-emerald-500'
-    },
-    {
-      icon: MapPin,
-      label: 'Location',
-      value: 'Nellore, A.P, India',
-      href: 'https://maps.google.com/?q=Nellore,Andhra Pradesh,India',
-      color: 'from-purple-500 to-pink-500'
-    }
+  const contactCards = [
+    { icon: Mail, label: 'Email', value: 'yashwanthmanchu059@gmail.com', href: 'mailto:yashwanthmanchu059@gmail.com', color: '#10b981' },
+    { icon: Phone, label: 'Phone', value: '+91 8367557617', href: 'tel:+918367557617', color: '#f59e0b' },
+    { icon: MapPin, label: 'Location', value: 'Pune, Maharashtra, India', href: 'https://maps.google.com/?q=Pune,Maharashtra,India', color: '#06b6d4' },
+    { icon: Linkedin, label: 'LinkedIn', value: 'yashwant-manchu', href: 'https://linkedin.com/in/yashwant-manchu', color: '#a78bfa' },
+    { icon: Github, label: 'GitHub', value: 'yashwant-manchu', href: 'https://github.com/yashwant-manchu', color: '#fb7185' },
   ];
 
   return (
-    <section id="contact" className="section-padding bg-gray-50 dark:bg-slate-800/50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          ref={ref}
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="max-w-7xl mx-auto"
-        >
-          {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold gradient-text-blue mb-4">
+      <section id="contact" className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div ref={ref} variants={container} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="max-w-6xl mx-auto">
+
+            {/* Header */}
+            <motion.div variants={item} className="text-center mb-14">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-widest"
+                  style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)' }}>
               Get In Touch
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4 sm:px-0">
-              Let&apos;s discuss your next project or just say hello. I&apos;m always open to new opportunities and interesting conversations.
-            </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mt-6" />
-          </motion.div>
+            </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold gradient-text-blue mb-4">Let&apos;s Work Together</h2>
+              <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
+                Whether you have a project in mind, an opportunity to share, or just want to say hello — my inbox is always open.
+              </p>
+              <div className="w-16 h-1 rounded-full mx-auto mt-5" style={{ background: 'linear-gradient(90deg, var(--accent), var(--amber))' }} />
+            </motion.div>
 
-          {/* Mobile-First Layout */}
-          <div className="space-y-8 lg:space-y-0 lg:grid lg:grid-cols-5 lg:gap-12">
-            {/* Contact Information */}
-            <motion.div variants={itemVariants} className="lg:col-span-2 order-2 lg:order-1">
-              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center lg:text-left">
-                Contact Information
-              </h3>
-
-              <div className="space-y-4 sm:space-y-6">
-                {contactInfo.map((info, index) => {
-                  const IconComponent = info.icon;
+            <div className="grid lg:grid-cols-5 gap-10">
+              {/* Contact info */}
+              <motion.div variants={item} className="lg:col-span-2 space-y-4">
+                <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Contact Details</h3>
+                {contactCards.map((c) => {
+                  const Icon = c.icon;
                   return (
-                    <motion.a
-                      key={index}
-                      href={info.href}
-                      target={info.label === 'Location' ? '_blank' : undefined}
-                      rel={info.label === 'Location' ? 'noopener noreferrer' : undefined}
-                      className="flex items-center space-x-4 p-4 sm:p-5 glass-card rounded-xl hover-lift cursor-hover group w-full"
-                      whileHover={{ scale: 1.02, x: info.label === 'Location' ? 0 : 10 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className={`p-3 bg-gradient-to-r ${info.color} rounded-lg flex-shrink-0`}>
-                        <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">
-                          {info.label}
-                        </p>
-                        <p className="text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors text-sm sm:text-base break-all sm:break-normal">
-                          {info.value}
-                        </p>
-                      </div>
-                    </motion.a>
+                      <motion.a
+                          key={c.label}
+                          href={c.href}
+                          target={['Location', 'LinkedIn', 'GitHub'].includes(c.label) ? '_blank' : undefined}
+                          rel={['Location', 'LinkedIn', 'GitHub'].includes(c.label) ? 'noopener noreferrer' : undefined}
+                          className="flex items-center gap-4 p-4 glass-card rounded-xl hover-lift group"
+                          whileHover={{ scale: 1.02, x: 4 }}
+                          transition={{ duration: 0.25 }}
+                      >
+                        <div className="p-2.5 rounded-xl flex-shrink-0"
+                             style={{ background: `${c.color}18`, border: `1px solid ${c.color}30` }}>
+                          <Icon className="w-5 h-5" style={{ color: c.color }} />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{c.label}</p>
+                          <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>{c.value}</p>
+                        </div>
+                      </motion.a>
                   );
                 })}
-              </div>
 
-              {/* Additional Info */}
-              <motion.div
-                className="mt-6 sm:mt-8 p-4 sm:p-6 glass-card rounded-xl"
-                whileHover={{ scale: 1.02 }}
-              >
-                <h4 className="font-bold text-gray-900 dark:text-white mb-3 text-sm sm:text-base">
-                  Response Time
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm leading-relaxed">
-                  I typically respond to emails within 24 hours. For urgent matters,
-                  feel free to call or text me directly.
-                </p>
+                <div className="glass-card rounded-xl p-5 mt-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--text-muted)' }}>Response Time</p>
+                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    I typically reply within 24 hours. For urgent matters, call or text directly.
+                  </p>
+                </div>
               </motion.div>
-            </motion.div>
 
-            {/* Contact Form */}
-            <motion.div variants={itemVariants} className="lg:col-span-3 order-1 lg:order-2">
-              <div className="glass-card p-6 sm:p-8 rounded-2xl">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6 sm:mb-8 text-center lg:text-left">
-                  Send a Message
-                </h3>
+              {/* Form */}
+              <motion.div variants={item} className="lg:col-span-3">
+                <div className="glass-card rounded-2xl p-7">
+                  <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--text-primary)' }}>Send a Message</h3>
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      {(['name', 'email'] as const).map((field) => (
+                          <div key={field} className="space-y-1.5">
+                            <label htmlFor={field} className="block text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                              {field === 'name' ? 'Full Name' : 'Email Address'}
+                            </label>
+                            <input
+                                type={field === 'email' ? 'email' : 'text'}
+                                id={field} name={field}
+                                value={formData[field]}
+                                onChange={handleChange}
+                                required
+                                placeholder={field === 'name' ? 'Yashwant Manchu' : 'you@example.com'}
+                                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                                style={{
+                                  background: 'var(--bg-secondary)',
+                                  border: '1px solid var(--border-color)',
+                                  color: 'var(--text-primary)',
+                                }}
+                                onFocus={(e) => { e.target.style.borderColor = 'var(--accent)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)'; }}
+                                onBlur={(e) => { e.target.style.borderColor = 'var(--border-color)'; e.target.style.boxShadow = 'none'; }}
+                            />
+                          </div>
+                      ))}
+                    </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                  <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
-                    <motion.div
-                      className="space-y-2"
-                      whileFocus={{ scale: 1.02 }}
-                    >
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Full Name
+                    <div className="space-y-1.5">
+                      <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                        Message
                       </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-3 py-3 sm:px-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 cursor-hover text-sm sm:text-base"
-                        placeholder="Your full name"
+                      <textarea
+                          id="message" name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          required rows={5}
+                          placeholder="Tell me about your project or opportunity..."
+                          className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
+                          style={{
+                            background: 'var(--bg-secondary)',
+                            border: '1px solid var(--border-color)',
+                            color: 'var(--text-primary)',
+                          }}
+                          onFocus={(e) => { e.target.style.borderColor = 'var(--accent)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)'; }}
+                          onBlur={(e) => { e.target.style.borderColor = 'var(--border-color)'; e.target.style.boxShadow = 'none'; }}
                       />
-                    </motion.div>
+                    </div>
 
-                    <motion.div
-                      className="space-y-2"
-                      whileFocus={{ scale: 1.02 }}
+                    <motion.button
+                        type="submit"
+                        disabled={status === 'loading'}
+                        className="w-full flex items-center justify-center gap-3 py-3.5 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-60"
+                        style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+                        whileHover={{ scale: status === 'loading' ? 1 : 1.02, boxShadow: '0 0 24px rgba(16,185,129,0.3)' }}
+                        whileTap={{ scale: 0.98 }}
                     >
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        Email Address
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-3 py-3 sm:px-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 cursor-hover text-sm sm:text-base"
-                        placeholder="your.email@example.com"
-                      />
-                    </motion.div>
-                  </div>
-
-                  <motion.div
-                    className="space-y-2"
-                    whileFocus={{ scale: 1.02 }}
-                  >
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                      rows={5}
-                      className="w-full px-3 py-3 sm:px-4 bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none cursor-hover text-sm sm:text-base"
-                      placeholder="Tell me about your project or just say hello..."
-                    />
-                  </motion.div>
-
-                  <motion.button
-                    type="submit"
-                    disabled={formStatus === 'loading'}
-                    className="w-full flex items-center justify-center space-x-3 px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold cursor-hover hover-lift disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
-                    whileHover={{ scale: formStatus === 'loading' ? 1 : 1.02 }}
-                    whileTap={{ scale: formStatus === 'loading' ? 1 : 0.98 }}
-                  >
-                    {formStatus === 'loading' ? (
-                      <div className="loading-dots scale-75">
-                        <div></div><div></div><div></div><div></div>
-                      </div>
-                    ) : formStatus === 'success' ? (
-                      <>
-                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <span>Message Sent!</span>
-                      </>
-                    ) : formStatus === 'error' ? (
-                      <>
-                        <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <span>Please try again</span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <span>Send Message</span>
-                      </>
-                    )}
-                  </motion.button>
-                </form>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Call to Action */}
-          <motion.div
-            variants={itemVariants}
-            className="text-center mt-12 sm:mt-16"
-          >
-            <div className="glass-card p-6 sm:p-8 rounded-2xl">
-              <h3 className="text-xl sm:text-2xl font-bold gradient-text-blue mb-4">
-                Ready to Start Your Project?
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto text-sm sm:text-base px-2 sm:px-0">
-                Whether you need a new website, mobile app, or want to discuss a custom solution,
-                I&apos;m here to help bring your ideas to life.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <motion.a
-                  href="mailto:yashwanthmanchu059@gmail.com"
-                  className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-medium cursor-hover w-full sm:w-auto justify-center text-sm sm:text-base"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>Email Me</span>
-                </motion.a>
-                <motion.a
-                  href="tel:+918367557617"
-                  className="flex items-center space-x-2 px-6 py-3 glass-card border border-gray-300 dark:border-gray-600 rounded-full font-medium cursor-hover w-full sm:w-auto justify-center text-sm sm:text-base"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Phone className="w-4 h-4" />
-                  <span>Call Me</span>
-                </motion.a>
-              </div>
+                      {status === 'loading' ? (
+                          <div className="loading-dots scale-[0.6]"><div /><div /><div /><div /></div>
+                      ) : status === 'success' ? (
+                          <><CheckCircle className="w-5 h-5" /> Message Sent!</>
+                      ) : status === 'error' ? (
+                          <><AlertCircle className="w-5 h-5" /> Something went wrong</>
+                      ) : (
+                          <><Send className="w-4 h-4" /> Send Message</>
+                      )}
+                    </motion.button>
+                  </form>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
-        </motion.div>
-      </div>
-    </section>
+        </div>
+      </section>
   );
 };
