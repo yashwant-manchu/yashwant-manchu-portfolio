@@ -16,9 +16,9 @@ const navItems = [
 
 export const Navigation = () => {
     const { theme, toggleTheme } = useTheme();
-    const [scrolled, setScrolled] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [active, setActive] = useState("home");
+    const [scrolled, setScrolled]   = useState(false);
+    const [menuOpen, setMenuOpen]   = useState(false);
+    const [active,   setActive]     = useState("home");
 
     useEffect(() => {
         const onScroll = () => {
@@ -82,12 +82,19 @@ export const Navigation = () => {
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-[70px]">
+
                         {/* Logo */}
-                        <motion.div whileHover={{ scale: 1.04 }} className="cursor-pointer flex-shrink-0">
-              <span className="text-lg font-extrabold gradient-text" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                        <motion.div whileHover={{ scale: 1.04 }} className="cursor-hover flex-shrink-0 flex items-center gap-2">
+              <span
+                  className="text-xl font-extrabold gradient-text"
+                  style={{ fontFamily: "'Syne', sans-serif" }}
+              >
                 YM
               </span>
-                            <span className="ml-2 text-sm font-semibold hidden sm:inline" style={{ color: "var(--text-secondary)" }}>
+                            <span
+                                className="text-sm font-semibold hidden sm:inline"
+                                style={{ color: "var(--text-secondary)" }}
+                            >
                 Yashwant Manchu
               </span>
                         </motion.div>
@@ -100,7 +107,7 @@ export const Navigation = () => {
                                     <motion.button
                                         key={item.name}
                                         onClick={() => scrollTo(item.href)}
-                                        className="relative px-3 py-2 text-sm font-medium rounded-lg transition-colors"
+                                        className="relative px-3 py-2 text-sm font-medium rounded-lg transition-colors cursor-hover"
                                         style={{ color: isActive ? "var(--accent)" : "var(--text-muted)" }}
                                         whileHover={{ y: -1 }}
                                         whileTap={{ scale: 0.95 }}
@@ -123,9 +130,10 @@ export const Navigation = () => {
                         <div className="flex items-center gap-2">
                             <motion.button
                                 onClick={toggleTheme}
-                                className="p-2 rounded-full glass-card"
+                                className="p-2 rounded-full glass-card cursor-hover"
                                 style={{ color: "var(--text-secondary)" }}
-                                whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
                                 aria-label="Toggle theme"
                             >
                                 <AnimatePresence mode="wait">
@@ -143,9 +151,9 @@ export const Navigation = () => {
 
                             <motion.button
                                 onClick={downloadResume}
-                                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white"
-                                style={{ background: "linear-gradient(135deg, #10b981, #059669)" }}
-                                whileHover={{ scale: 1.06, boxShadow: "0 0 22px rgba(16,185,129,0.35)" }}
+                                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-white cursor-hover"
+                                style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dark))" }}
+                                whileHover={{ scale: 1.06, boxShadow: "0 0 22px var(--accent-glow)" }}
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <Download className="w-3.5 h-3.5" />
@@ -155,9 +163,10 @@ export const Navigation = () => {
 
                             <motion.button
                                 onClick={() => setMenuOpen(!menuOpen)}
-                                className="lg:hidden p-2 rounded-full glass-card"
+                                className="lg:hidden p-2 rounded-full glass-card cursor-hover"
                                 style={{ color: "var(--text-secondary)" }}
-                                whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
                                 aria-label="Toggle menu"
                             >
                                 <AnimatePresence mode="wait">
@@ -192,7 +201,7 @@ export const Navigation = () => {
                                     <motion.button
                                         key={item.name}
                                         onClick={() => scrollTo(item.href)}
-                                        className="block w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors"
+                                        className="block w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-colors cursor-hover"
                                         style={{
                                             color: active === item.href.substring(1) ? "var(--accent)" : "var(--text-secondary)",
                                             background: active === item.href.substring(1) ? "var(--accent-light)" : "transparent",
@@ -207,8 +216,8 @@ export const Navigation = () => {
                                 ))}
                                 <motion.button
                                     onClick={downloadResume}
-                                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white mt-3"
-                                    style={{ background: "linear-gradient(135deg, #10b981, #059669)" }}
+                                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold text-white mt-3 cursor-hover"
+                                    style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-dark))" }}
                                 >
                                     <Download className="w-4 h-4" />
                                     Download Resume

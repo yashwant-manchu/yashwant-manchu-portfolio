@@ -33,19 +33,17 @@ export const HeroSection = () => {
         {/* Background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0" style={{ background: 'var(--bg-primary)' }} />
-          {/* Subtle grid */}
           <div className="absolute inset-0 opacity-[0.035] dark:opacity-[0.055] grid-bg" />
-          {/* Emerald blob */}
+          {/* Green glow blobs */}
           <motion.div
               className="absolute top-1/4 left-[15%] w-64 h-64 lg:w-[28rem] lg:h-[28rem] rounded-full blur-3xl"
-              style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)' }}
+              style={{ background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)' }}
               animate={{ x: [0, 35, 0], y: [0, -35, 0] }}
               transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
           />
-          {/* Amber blob */}
           <motion.div
               className="absolute bottom-1/3 right-[10%] w-72 h-72 lg:w-[32rem] lg:h-[32rem] rounded-full blur-3xl"
-              style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.12) 0%, transparent 70%)' }}
+              style={{ background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)' }}
               animate={{ x: [0, -40, 0], y: [0, 28, 0] }}
               transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
           />
@@ -60,8 +58,14 @@ export const HeroSection = () => {
           >
             {/* Open-to-work badge */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.05 }} className="flex justify-center">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold"
-                  style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)', border: '1px solid rgba(16,185,129,0.3)' }}>
+            <span
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold"
+                style={{
+                  background: 'var(--accent-light)',
+                  color: 'var(--accent-dark)',
+                  border: '1px solid var(--accent-glow)',
+                }}
+            >
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
               Open to new opportunities
             </span>
@@ -70,8 +74,10 @@ export const HeroSection = () => {
             {/* Name */}
             <motion.h1
                 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight"
-                style={{ color: 'var(--text-primary)', lineHeight: '1.08' }}
-                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
+                style={{ color: 'var(--text-primary)', lineHeight: '1.08', fontFamily: "'Syne', sans-serif" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.12 }}
             >
               Yashwant{' '}
               <span className="gradient-text">Manchu</span>
@@ -98,23 +104,31 @@ export const HeroSection = () => {
             <motion.p
                 className="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.38 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.38 }}
             >
-              3+ years building production-grade fintech platforms, mobile apps &amp; enterprise dashboards
-              with React.js, React Native, TypeScript &amp; Next.js — shipped to web and both app stores.
+              3+ years building production-grade fintech platforms, mobile apps &amp; enterprise
+              dashboards with React.js, React Native, TypeScript &amp; Next.js — shipped to web and both app stores.
             </motion.p>
 
             {/* Tech pills */}
-            <motion.div className="flex flex-wrap justify-center gap-2"
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+            <motion.div
+                className="flex flex-wrap justify-center gap-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+            >
               {techStack.map((t) => (
-                  <span key={t} className="px-3 py-1 text-xs font-medium rounded-full"
-                        style={{
-                          background: 'var(--bg-secondary)',
-                          border: '1px solid var(--border-color)',
-                          color: 'var(--text-muted)',
-                          fontFamily: "'DM Mono', monospace",
-                        }}>
+                  <span
+                      key={t}
+                      className="px-3 py-1 text-xs font-medium rounded-full mono"
+                      style={{
+                        background: 'var(--bg-secondary)',
+                        border: '1px solid var(--border-color)',
+                        color: 'var(--text-muted)',
+                      }}
+                  >
                 {t}
               </span>
               ))}
@@ -123,13 +137,15 @@ export const HeroSection = () => {
             {/* CTAs */}
             <motion.div
                 className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
-                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.62 }}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.62 }}
             >
               <motion.button
                   onClick={() => scroll('projects')}
                   className="group flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm sm:text-base text-white w-full sm:w-auto justify-center"
-                  style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
-                  whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(16,185,129,0.38)' }}
+                  style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))' }}
+                  whileHover={{ scale: 1.05, boxShadow: '0 0 30px var(--accent-glow)' }}
                   whileTap={{ scale: 0.97 }}
               >
                 <Layers className="w-4 h-4" />
@@ -152,14 +168,16 @@ export const HeroSection = () => {
             {/* Scroll hint */}
             <motion.div
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1.5"
-                animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
             >
               <span className="text-[11px] tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>scroll</span>
               <div className="w-5 h-8 rounded-full border-2 flex justify-center pt-1.5" style={{ borderColor: 'var(--border-color)' }}>
                 <motion.div
                     className="w-1 h-2 rounded-full"
                     style={{ background: 'var(--accent)' }}
-                    animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
                 />
               </div>
             </motion.div>

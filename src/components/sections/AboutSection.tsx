@@ -2,196 +2,262 @@
 
 import { motion, useInView, Variants } from 'framer-motion';
 import { useRef } from 'react';
-import { Award, BookOpen, MapPin, Zap } from 'lucide-react';
+import { BookOpen, MapPin, Zap, Code2 } from 'lucide-react';
+
+const stats = [
+  { value: '3+',   label: 'Years Experience' },
+  { value: '10+',  label: 'Apps Shipped' },
+  { value: '85%+', label: 'Test Coverage' },
+  { value: '2',    label: 'App Stores' },
+];
+
+const expertise = [
+  'React.js & React Native (CLI + Expo)',
+  'TypeScript & Next.js',
+  'Redux Toolkit & Context API',
+  'JWT Authentication & RBAC',
+  'REST APIs & Swagger / Axios',
+  'Jest & React Testing Library',
+];
+
+const impacts = [
+  '35% render speed improvement via memoization & code-splitting',
+  '47% reduction in page load times through lazy loading',
+  '85%+ test coverage with Jest & React Testing Library',
+  'Apps deployed live on Google Play Store & Apple App Store',
+  '35% cut in redundant API calls via Redux state normalization',
+];
 
 export const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
-    },
+  const container: Variants = {
+    hidden:  { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
   };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
+  const item: Variants = {
+    hidden:  { opacity: 0, y: 28 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   return (
-      <section id="about" className="section-padding bg-gray-50 dark:bg-slate-800/50">
+      <section id="about" className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container mx-auto px-4">
           <motion.div
               ref={ref}
-              variants={containerVariants}
+              variants={container}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
-              className="max-w-7xl mx-auto"
+              className="max-w-6xl mx-auto"
           >
-            {/* Section Header */}
-            <motion.div variants={itemVariants} className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-display font-bold gradient-text-blue mb-4">
-                About Me
+            {/* ── Section header ── */}
+            <motion.div variants={item} className="text-center mb-14">
+            <span
+                className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-widest"
+                style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)' }}
+            >
+              About Me
+            </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold gradient-text-blue mb-4">
+                Who I Am
               </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full" />
+              <div
+                  className="w-16 h-1 rounded-full mx-auto"
+                  style={{ background: 'var(--accent)' }}
+              />
             </motion.div>
 
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Avatar / Image placeholder */}
-              <motion.div variants={itemVariants} className="relative">
-                <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000" />
-                  <div className="relative">
-                    <div className="w-full max-w-md mx-auto aspect-square bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-2xl flex items-center justify-center overflow-hidden glass-card">
-                      <div className="w-48 h-48 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                        <span className="text-4xl font-bold text-white">YM</span>
-                      </div>
+            <div className="grid lg:grid-cols-2 gap-14 items-start">
+
+              {/* ── Left: avatar + stats + location ── */}
+              <motion.div variants={item} className="space-y-6">
+
+                {/* Avatar card */}
+                <div className="relative">
+                  <div
+                      className="absolute -inset-3 rounded-3xl blur-xl opacity-15"
+                      style={{ background: 'var(--accent)' }}
+                  />
+                  <div className="relative glass-card rounded-3xl p-8 flex items-center justify-center min-h-[240px]">
+                    <div
+                        className="w-32 h-32 rounded-full flex items-center justify-center text-3xl font-extrabold text-white"
+                        style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))' }}
+                    >
+                      YM
                     </div>
                   </div>
                 </div>
 
-                {/* Quick stats below avatar */}
-                <motion.div
-                    variants={itemVariants}
-                    className="mt-6 grid grid-cols-3 gap-4 text-center"
-                >
-                  {[
-                    { value: '3+', label: 'Years Exp.' },
-                    { value: '10+', label: 'Projects' },
-                    { value: '2', label: 'Companies' },
-                  ].map((stat) => (
-                      <div key={stat.label} className="glass-card p-4 rounded-xl">
-                        <div className="text-2xl font-bold gradient-text-blue">{stat.value}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">{stat.label}</div>
-                      </div>
+                {/* Stats grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  {stats.map((s) => (
+                      <motion.div
+                          key={s.label}
+                          className="glass-card rounded-2xl p-5 text-center hover-lift"
+                          whileHover={{ scale: 1.03 }}
+                      >
+                        <div
+                            className="text-3xl font-extrabold mb-1"
+                            style={{ color: 'var(--accent)' }}
+                        >
+                          {s.value}
+                        </div>
+                        <div className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
+                          {s.label}
+                        </div>
+                      </motion.div>
                   ))}
-                </motion.div>
+                </div>
+
+                {/* Location */}
+                <div className="glass-card rounded-2xl p-5 flex items-center gap-4">
+                  <div
+                      className="p-3 rounded-xl flex-shrink-0"
+                      style={{ background: 'var(--accent-light)' }}
+                  >
+                    <MapPin className="w-5 h-5" style={{ color: 'var(--accent-dark)' }} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
+                      Currently based in
+                    </p>
+                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                      Pune, Maharashtra, India
+                    </p>
+                  </div>
+                </div>
               </motion.div>
 
-              {/* Content */}
-              <motion.div variants={itemVariants} className="space-y-6">
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-white mb-6">
-                  Frontend Software Engineer
-                </h3>
+              {/* ── Right: bio + cards ── */}
+              <motion.div variants={item} className="space-y-7">
 
-                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                  I&apos;m a Frontend Software Engineer with 3+ years of experience delivering scalable
-                  web and cross-platform mobile applications. My journey started in Electrical &amp;
-                  Electronics Engineering, where a passion for software took over — and I&apos;ve never
-                  looked back.
-                </p>
-
-                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Currently at <span className="font-semibold text-blue-600 dark:text-blue-400">EDSOM FINTECH PVT. LTD.</span> in Pune,
-                  I build production fintech platforms — from multi-gateway payment flows and real-time
-                  WebRTC chat to enterprise RBAC systems. Previously at MTREE TECH SOLUTIONS, I led
-                  React Native mobile app development and modernised legacy codebases for multiple clients.
-                </p>
-
-                {/* Core Competencies */}
-                <div className="grid md:grid-cols-2 gap-6 mt-8">
-                  <motion.div
-                      className="p-6 glass-card rounded-xl hover-lift cursor-hover"
-                      whileHover={{ scale: 1.02 }}
+                <div>
+                  <h3
+                      className="text-2xl sm:text-3xl font-bold mb-4"
+                      style={{ color: 'var(--text-primary)' }}
                   >
-                    <div className="flex items-center space-x-3 mb-4">
-                      <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                        <Award className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                        Core Expertise
-                      </h4>
-                    </div>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                      <li>• React.js &amp; React Native</li>
-                      <li>• TypeScript &amp; Next.js</li>
-                      <li>• Real-Time (Socket.io / WebRTC)</li>
-                      <li>• State Management (Redux Toolkit)</li>
-                      <li>• Fintech &amp; RBAC Systems</li>
-                    </ul>
-                  </motion.div>
-
-                  <motion.div
-                      className="p-6 glass-card rounded-xl hover-lift cursor-hover"
-                      whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="flex items-center space-x-3 mb-4">
-                      <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                        <MapPin className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                      </div>
-                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                        Location &amp; Goals
-                      </h4>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 mb-2">
-                      Based in Pune, Maharashtra, India
-                    </p>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      Open to impactful product roles in fintech, SaaS, or consumer tech
-                    </p>
-                  </motion.div>
+                    Frontend Software Engineer
+                  </h3>
+                  <p className="text-base leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
+                    I&apos;m a Frontend Software Engineer with 3+ years of hands-on experience building
+                    scalable web and cross-platform mobile applications. My passion for technology started
+                    during my Electrical Engineering studies — and quickly evolved into a full-time career
+                    crafting high-performance digital products.
+                  </p>
+                  <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    Currently at{' '}
+                    <span className="font-semibold" style={{ color: 'var(--accent)' }}>
+                    EDSOM FINTECH PVT. LTD.
+                  </span>{' '}
+                    in Pune, I architect and ship production fintech platforms — multi-gateway payment
+                    flows, enterprise banking suites, HRMS dashboards, and KYC workflows — that serve
+                    real users across both web and mobile.
+                  </p>
                 </div>
 
-                {/* What I bring */}
-                <motion.div
-                    className="mt-6 p-6 glass-card rounded-xl"
-                    variants={itemVariants}
-                >
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
-                      <Zap className="w-6 h-6 text-orange-500 dark:text-orange-400" />
+                {/* Core Technical Expertise */}
+                <div className="glass-card rounded-2xl p-6">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                        className="p-2.5 rounded-xl flex-shrink-0"
+                        style={{ background: 'var(--accent-light)' }}
+                    >
+                      <Code2 className="w-5 h-5" style={{ color: 'var(--accent-dark)' }} />
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      What I Bring
+                    <h4 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                      Core Technical Expertise
                     </h4>
                   </div>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-300 text-sm">
-                    <li>✦ 85%+ test coverage with Jest &amp; React Testing Library</li>
-                    <li>✦ Google Play Store &amp; Apple App Store deployments</li>
-                    <li>✦ 35–47% performance improvements through code-splitting &amp; lazy loading</li>
-                    <li>✦ Sub-100ms real-time messaging via Socket.io &amp; SockJS</li>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {expertise.map((e) => (
+                        <div
+                            key={e}
+                            className="flex items-center gap-2 text-sm"
+                            style={{ color: 'var(--text-secondary)' }}
+                        >
+                      <span
+                          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                          style={{ background: 'var(--accent)' }}
+                      />
+                          {e}
+                        </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Impact I Deliver */}
+                <div className="glass-card rounded-2xl p-6">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                        className="p-2.5 rounded-xl flex-shrink-0"
+                        style={{ background: 'var(--accent-light)' }}
+                    >
+                      <Zap className="w-5 h-5" style={{ color: 'var(--accent-dark)' }} />
+                    </div>
+                    <h4 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                      Impact I Deliver
+                    </h4>
+                  </div>
+                  <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                    {impacts.map((pt) => (
+                        <li key={pt} className="flex items-start gap-2">
+                      <span
+                          className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
+                          style={{ background: 'var(--accent)' }}
+                      />
+                          {pt}
+                        </li>
+                    ))}
                   </ul>
-                </motion.div>
+                </div>
 
                 {/* Education */}
-                <motion.div
-                    className="mt-6 p-6 glass-card rounded-xl"
-                    variants={itemVariants}
-                >
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                      <BookOpen className="w-6 h-6 text-green-600 dark:text-green-400" />
+                <div className="glass-card rounded-2xl p-6">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div
+                        className="p-2.5 rounded-xl flex-shrink-0"
+                        style={{ background: 'var(--accent-light)' }}
+                    >
+                      <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-dark)' }} />
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      Educational Background
+                    <h4 className="font-bold" style={{ color: 'var(--text-primary)' }}>
+                      Education
                     </h4>
                   </div>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        B.Tech — Electrical &amp; Electronics Engineering
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Sree Venkateswara College of Engineering · 2020–2023 · GPA: 7.6
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        Diploma — Electrical &amp; Electronics Engineering
-                      </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Government Polytechnic Nellore · 2017–2020 · GPA: 8.8
-                      </p>
-                    </div>
+                  <div className="space-y-4">
+                    {[
+                      {
+                        degree: 'B.Tech — Electrical & Electronics Engineering',
+                        school: 'Sree Venkateswara College of Engineering',
+                        period: '2020–2023',
+                        gpa:    'GPA 7.6',
+                      },
+                      {
+                        degree: 'Diploma — Electrical & Electronics Engineering',
+                        school: 'Government Polytechnic Nellore',
+                        period: '2017–2020',
+                        gpa:    'GPA 8.8',
+                      },
+                    ].map((edu) => (
+                        <div
+                            key={edu.degree}
+                            className="border-l-2 pl-4"
+                            style={{ borderColor: 'var(--accent)' }}
+                        >
+                          <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
+                            {edu.degree}
+                          </p>
+                          <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                            {edu.school}
+                          </p>
+                          <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                            {edu.period} · {edu.gpa}
+                          </p>
+                        </div>
+                    ))}
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
             </div>
           </motion.div>

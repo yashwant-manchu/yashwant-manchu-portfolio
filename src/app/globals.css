@@ -1,14 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Mono:wght@400;500&display=swap');
+/* ── FONTS: Syne (headings) + Outfit (body) + JetBrains Mono (code) ── */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ── CURSOR: hide native cursor globally BEFORE React hydrates ── */
+html, body, * { cursor: none !important; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Outfit', sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: background 0.3s ease, color 0.3s ease;
@@ -34,9 +38,6 @@ body {
   --accent-dark:   #059669;
   --accent-light:  #d1fae5;
   --accent-glow:   rgba(16,185,129,0.22);
-
-  --amber:         #f59e0b;
-  --amber-light:   #fef3c7;
 
   --glass-bg:      rgba(255,255,255,0.65);
   --glass-border:  rgba(226,232,240,0.85);
@@ -65,9 +66,6 @@ body {
   --accent-light:  rgba(52,211,153,0.12);
   --accent-glow:   rgba(52,211,153,0.18);
 
-  --amber:         #fbbf24;
-  --amber-light:   rgba(251,191,36,0.12);
-
   --glass-bg:      rgba(13,22,38,0.7);
   --glass-border:  rgba(52,211,153,0.1);
 
@@ -80,8 +78,19 @@ body {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent), var(--amber));
+  background: var(--accent);
   border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Syne', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+code, pre, .mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* ── GLASS ── */
@@ -100,14 +109,16 @@ body {
 }
 
 /* ── GRADIENT TEXT ── */
+/* Single green — light to slightly darker green */
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--amber) 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* Used for section headings — green to teal-green */
 .gradient-text-blue {
-  background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #0d9488 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -137,7 +148,11 @@ section { scroll-margin-top: 80px; }
 
 /* ── LOADING DOTS ── */
 .loading-dots { display:inline-block; position:relative; width:80px; height:80px; }
-.loading-dots div { position:absolute; top:33px; width:13px; height:13px; border-radius:50%; background:var(--accent); animation-timing-function:cubic-bezier(0,1,1,0); }
+.loading-dots div {
+  position:absolute; top:33px; width:13px; height:13px;
+  border-radius:50%; background:var(--accent);
+  animation-timing-function:cubic-bezier(0,1,1,0);
+}
 .loading-dots div:nth-child(1) { left:8px;  animation:ld1 0.6s infinite; }
 .loading-dots div:nth-child(2) { left:8px;  animation:ld2 0.6s infinite; }
 .loading-dots div:nth-child(3) { left:32px; animation:ld2 0.6s infinite; }
@@ -149,7 +164,7 @@ section { scroll-margin-top: 80px; }
 /* ── MOBILE FORM FIX ── */
 @media (max-width:768px) { input,textarea,button { font-size:16px; line-height:1.4; } }
 
-/* ── GRID LINES BG ── */
+/* ── SUBTLE GRID BG ── */
 .grid-bg {
   background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
   linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
