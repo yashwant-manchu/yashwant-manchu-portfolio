@@ -1,101 +1,41 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowUp, Github, Linkedin, Mail, Phone, Heart } from 'lucide-react';
+import { ArrowUp, Github, Linkedin, Mail } from 'lucide-react';
 
 export const Footer = () => {
     const year = new Date().getFullYear();
-
-    const social = [
-        { icon: Github,   href: 'https://github.com/yashwant-manchu',              label: 'GitHub' },
-        { icon: Linkedin, href: 'https://linkedin.com/in/yashwant-manchu',          label: 'LinkedIn' },
-        { icon: Mail,     href: 'mailto:yashwanthmanchu059@gmail.com',              label: 'Email' },
-        { icon: Phone,    href: 'tel:+918367557617',                                label: 'Phone' },
-    ];
-
     const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    const social = [
+        { icon: Github,   href: 'https://github.com/yashwant-manchu',         label: 'GitHub' },
+        { icon: Linkedin, href: 'https://linkedin.com/in/yashwant-manchu',     label: 'LinkedIn' },
+        { icon: Mail,     href: 'mailto:yashwanthmanchu059@gmail.com',         label: 'Email' },
+    ];
+
     return (
-        <footer style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}>
-            <div className="container mx-auto px-4 py-12">
-                <div className="max-w-5xl mx-auto">
+        <footer
+            className="py-8 px-6"
+            style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}
+        >
+            <div className="max-w-3xl mx-auto">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
-                    {/* Top row */}
-                    <div className="grid sm:grid-cols-3 gap-8 mb-10">
-                        {/* Brand */}
-                        <div className="sm:col-span-1">
-                            <p
-                                className="text-2xl font-extrabold gradient-text mb-3"
-                                style={{ fontFamily: "'Syne', sans-serif" }}
-                            >
-                                Yashwant Manchu
-                            </p>
-                            <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
-                                Frontend Software Engineer — React.js, React Native, TypeScript &amp; Next.js.
-                            </p>
-                            <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--text-muted)' }}>
-                                <span>Built with</span>
-                                <Heart className="w-3.5 h-3.5 text-rose-400 animate-pulse" />
-                                <span>Next.js &amp; Tailwind CSS</span>
-                            </div>
-                        </div>
-
-                        {/* Quick links */}
-                        <div>
-                            <p
-                                className="text-xs font-bold mb-4 uppercase tracking-widest"
-                                style={{ color: 'var(--text-primary)' }}
-                            >
-                                Navigation
-                            </p>
-                            <ul className="space-y-2">
-                                {['Home', 'About', 'Experience', 'Skills', 'Projects', 'Contact'].map((link) => (
-                                    <li key={link}>
-                                        <motion.button
-                                            onClick={() => {
-                                                const el = document.getElementById(link.toLowerCase());
-                                                el?.scrollIntoView({ behavior: 'smooth' });
-                                            }}
-                                            className="text-sm transition-colors cursor-hover hover:underline"
-                                            style={{ color: 'var(--text-muted)' }}
-                                            whileHover={{ x: 4 }}
-                                        >
-                                            {link}
-                                        </motion.button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        {/* Contact */}
-                        <div>
-                            <p
-                                className="text-xs font-bold mb-4 uppercase tracking-widest"
-                                style={{ color: 'var(--text-primary)' }}
-                            >
-                                Contact
-                            </p>
-                            <div className="space-y-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-                                <p>Pune, Maharashtra, India</p>
-                                <a
-                                    href="mailto:yashwanthmanchu059@gmail.com"
-                                    className="block hover:underline"
-                                    style={{ color: 'var(--accent)' }}
-                                >
-                                    yashwanthmanchu059@gmail.com
-                                </a>
-                                <a
-                                    href="tel:+918367557617"
-                                    className="block hover:underline"
-                                >
-                                    +91 8367557617
-                                </a>
-                            </div>
-                        </div>
+                    {/* Left: credit */}
+                    <div className="text-center sm:text-left space-y-1">
+                        <p
+                            className="text-sm font-bold gradient-text"
+                            style={{ fontFamily: "'Syne',sans-serif" }}
+                        >
+                            Yashwant Manchu
+                        </p>
+                        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                            © {year} · Built with Next.js &amp; Tailwind CSS
+                        </p>
                     </div>
 
-                    {/* Social icons — all themed green on hover */}
-                    <div className="flex justify-center gap-4 mb-10">
+                    {/* Center: social icons */}
+                    <div className="flex items-center gap-4">
                         {social.map((s) => {
                             const Icon = s.icon;
                             return (
@@ -104,11 +44,11 @@ export const Footer = () => {
                                     href={s.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 rounded-xl glass-card transition-all cursor-hover"
-                                    style={{ color: 'var(--text-muted)' }}
-                                    whileHover={{ scale: 1.12, y: -3 }}
-                                    whileTap={{ scale: 0.92 }}
                                     aria-label={s.label}
+                                    className="cursor-hover transition-colors"
+                                    style={{ color: 'var(--text-muted)' }}
+                                    whileHover={{ scale: 1.15, y: -2 }}
+                                    whileTap={{ scale: 0.92 }}
                                     onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
                                     onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
                                 >
@@ -118,24 +58,16 @@ export const Footer = () => {
                         })}
                     </div>
 
-                    {/* Bottom bar */}
-                    <div
-                        className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-7"
-                        style={{ borderTop: '1px solid var(--border-color)' }}
+                    {/* Right: back to top */}
+                    <motion.button
+                        onClick={scrollTop}
+                        className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold glass-card cursor-hover"
+                        style={{ color: 'var(--text-secondary)' }}
+                        whileHover={{ scale: 1.06, y: -2 }}
+                        whileTap={{ scale: 0.94 }}
                     >
-                        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                            © {year} Yashwant Manchu · All rights reserved
-                        </p>
-                        <motion.button
-                            onClick={scrollTop}
-                            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold glass-card cursor-hover"
-                            style={{ color: 'var(--text-secondary)' }}
-                            whileHover={{ scale: 1.06, y: -2 }}
-                            whileTap={{ scale: 0.94 }}
-                        >
-                            Back to top <ArrowUp className="w-3.5 h-3.5" />
-                        </motion.button>
-                    </div>
+                        Back to top <ArrowUp className="w-3.5 h-3.5" />
+                    </motion.button>
                 </div>
             </div>
         </footer>

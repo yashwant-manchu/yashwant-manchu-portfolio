@@ -1,15 +1,18 @@
-/* ── FONTS: Syne (headings) + Outfit (body) + JetBrains Mono (code) ── */
+/* ── FONTS ── */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── CURSOR: hide native cursor globally BEFORE React hydrates ── */
+/* ── CURSOR: hide native cursor before React hydrates ── */
 html, body, * { cursor: none !important; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+html {
+  scroll-behavior: smooth;
+  /* scroll-margin-top on sections handles nav offset — no scroll-padding needed */
+}
 
 body {
   font-family: 'Outfit', sans-serif;
@@ -32,7 +35,6 @@ body {
   --text-muted:    #64748b;
 
   --border-color:  #e2e8f0;
-  --border-subtle: rgba(226,232,240,0.6);
 
   --accent:        #10b981;
   --accent-dark:   #059669;
@@ -59,7 +61,6 @@ body {
   --text-muted:    #7a96b8;
 
   --border-color:  #1e2d45;
-  --border-subtle: rgba(30,45,69,0.7);
 
   --accent:        #34d399;
   --accent-dark:   #10b981;
@@ -77,10 +78,7 @@ body {
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 10px;
-}
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
 
 /* ── TYPOGRAPHY ── */
@@ -88,7 +86,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Syne', sans-serif;
   letter-spacing: -0.02em;
 }
-
 code, pre, .mono {
   font-family: 'JetBrains Mono', monospace;
 }
@@ -109,14 +106,12 @@ code, pre, .mono {
 }
 
 /* ── GRADIENT TEXT ── */
-/* Single green — light to slightly darker green */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-/* Used for section headings — green to teal-green */
 .gradient-text-blue {
   background: linear-gradient(135deg, var(--accent) 0%, #0d9488 100%);
   -webkit-background-clip: text;
@@ -127,16 +122,24 @@ code, pre, .mono {
 /* ── HOVER ── */
 .hover-lift { transition: all 0.3s ease; }
 .hover-lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.hover-glow:hover { box-shadow: 0 0 22px var(--accent-glow); }
 
-/* ── SECTION PADDING ── */
-.section-padding { padding: 5rem 1rem; }
-@media (max-width:1024px) { .section-padding { padding: 4rem 1rem; } }
-@media (max-width:768px)  { .section-padding { padding: 3rem 1rem; } }
-@media (max-width:640px)  { .section-padding { padding: 2.5rem 0.75rem; } }
+/* ── SECTION LAYOUT ── */
+/* Fixed nav is 70px tall. Each section gets exactly 70px top margin
+   so section title is right below the nav with normal spacing.      */
+section {
+  scroll-margin-top: 70px;
+}
 
-section { scroll-margin-top: 80px; }
-@media (max-width:768px) { section { scroll-margin-top: 100px; } }
+/* Section content padding — comfortable but not excessive */
+.section-padding {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (max-width: 1024px) { .section-padding { padding-top: 4rem; padding-bottom: 4rem; } }
+@media (max-width: 768px)  { .section-padding { padding-top: 3rem; padding-bottom: 3rem; } }
+@media (max-width: 640px)  { .section-padding { padding-top: 2.5rem; padding-bottom: 2.5rem; padding-left: 0.75rem; padding-right: 0.75rem; } }
 
 /* ── CONTAINER ── */
 .container { width: 100%; margin: 0 auto; padding: 0 1rem; }
@@ -148,27 +151,44 @@ section { scroll-margin-top: 80px; }
 
 /* ── LOADING DOTS ── */
 .loading-dots { display:inline-block; position:relative; width:80px; height:80px; }
-.loading-dots div {
-  position:absolute; top:33px; width:13px; height:13px;
-  border-radius:50%; background:var(--accent);
-  animation-timing-function:cubic-bezier(0,1,1,0);
-}
+.loading-dots div { position:absolute; top:33px; width:13px; height:13px; border-radius:50%; background:var(--accent); animation-timing-function:cubic-bezier(0,1,1,0); }
 .loading-dots div:nth-child(1) { left:8px;  animation:ld1 0.6s infinite; }
 .loading-dots div:nth-child(2) { left:8px;  animation:ld2 0.6s infinite; }
 .loading-dots div:nth-child(3) { left:32px; animation:ld2 0.6s infinite; }
 .loading-dots div:nth-child(4) { left:56px; animation:ld3 0.6s infinite; }
-@keyframes ld1 { 0%{transform:scale(0)}   100%{transform:scale(1)} }
-@keyframes ld3 { 0%{transform:scale(1)}   100%{transform:scale(0)} }
+@keyframes ld1 { 0%{transform:scale(0)} 100%{transform:scale(1)} }
+@keyframes ld3 { 0%{transform:scale(1)} 100%{transform:scale(0)} }
 @keyframes ld2 { 0%{transform:translate(0,0)} 100%{transform:translate(24px,0)} }
 
 /* ── MOBILE FORM FIX ── */
 @media (max-width:768px) { input,textarea,button { font-size:16px; line-height:1.4; } }
 
-/* ── SUBTLE GRID BG ── */
+/* ── GRID BG ── */
 .grid-bg {
   background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
   linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
   background-size: 44px 44px;
+}
+
+/* Skill tag hover */
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+.skill-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
 }
 
 * { max-width: 100%; }

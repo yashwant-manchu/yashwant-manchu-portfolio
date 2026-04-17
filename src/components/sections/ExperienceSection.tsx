@@ -2,227 +2,162 @@
 
 import { motion, useInView, Variants } from 'framer-motion';
 import { useRef } from 'react';
-import { Calendar, MapPin, Award, CheckCircle, ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 const experiences = [
   {
-    position: 'Software Development Engineer',
+    period: 'May 2025 — Present',
+    role: 'Software Development Engineer',
     company: 'EDSOM FINTECH PVT. LTD.',
-    url: '#', type: 'Full-time', duration: 'May 2025 – Present',
-    location: 'Pune, Maharashtra', current: true,
-    achievements: [
-      'Engineered iPaisa web & mobile payment platform (Expo, TypeScript, Tailwind CSS) with 5+ payment gateways; app live on Google Play Store',
-      'Built FINAMSCCS & VLNIDHI corporate banking suite — end-to-end KYC onboarding, investment plan management, 4-tier RBAC hierarchy secured with JWT',
-      'Delivered full-featured HRMS dashboard; improved render speed 35% via React memoization, lazy loading & code splitting',
-      'Built Smart Parking system with Bluetooth thermal printer integration, cutting ticket generation time by 70%',
+    companyUrl: 'https://edsomfintech.com',
+    location: 'Pune, Maharashtra',
+    summary: `Building production fintech platforms at scale. I architected and shipped iPaisa — a multi-gateway 
+    payment app (Razorpay, UPI, Net Banking) with wallet flows, real-time status updates, and downloadable 
+    transaction reports — deployed live on the Google Play Store.`,
+    highlights: [
+      'Built FINAMSCCS & VLNIDHI corporate banking suite with end-to-end KYC onboarding, investment tracking, and a 4-tier role hierarchy (Member → Admin) secured with JWT & RBAC',
+      'Delivered a full-featured HRMS with payroll, leave tracking, and multi-level approvals; cut render time 35% via memoization and code-splitting',
+      'Developed Smart Parking system with Bluetooth thermal printer integration, reducing ticket generation time by 70%',
     ],
-    techStack: ['React.js', 'React Native', 'TypeScript', 'Expo', 'Redux Toolkit', 'JWT/RBAC', 'Tailwind CSS'],
+    tech: ['React.js', 'React Native', 'TypeScript', 'Expo', 'Redux Toolkit', 'JWT/RBAC', 'Tailwind CSS'],
   },
   {
-    position: 'Software Development Engineer I',
+    period: 'Jun 2023 — Mar 2025',
+    role: 'Software Development Engineer I',
     company: 'MTREE TECH SOLUTIONS',
-    url: 'https://mtreetech.com', type: 'Full-time', duration: 'Jun 2023 – Mar 2025',
-    location: 'Nellore, Andhra Pradesh', current: false,
-    achievements: [
-      'Led migration of 20+ class components to functional components with React Hooks, reducing technical debt by 40%',
-      'Architected Redux Toolkit & Context API state management across 3 production projects, cutting redundant API calls by 35%',
-      'Maintained 85%+ test coverage with Jest & RTL; integrated 8+ REST APIs via Axios at 99.2% production success rate',
-      'Engineered JWT-secured RBAC systems across 3 apps supporting 5 distinct user roles with protected route navigation',
+    companyUrl: 'https://mtreetech.com',
+    location: 'Nellore, Andhra Pradesh',
+    summary: `Modernised a legacy React codebase and led feature development across multiple client products. 
+    Focused on improving maintainability, performance, and test coverage while shipping new features on tight timelines.`,
+    highlights: [
+      'Migrated 20+ class components to functional components with Hooks, cutting technical debt by 40%',
+      'Architected Redux Toolkit state management across 3 production apps, reducing redundant API calls by 35%',
+      'Maintained 85%+ test coverage with Jest & RTL across all core features; integrated 8+ REST APIs at 99.2% uptime',
     ],
-    techStack: ['React.js', 'React Native', 'TypeScript', 'Redux Toolkit', 'Jest', 'RTL', 'Axios', 'JWT'],
+    tech: ['React.js', 'React Native', 'Redux Toolkit', 'TypeScript', 'Jest', 'RTL', 'Axios'],
   },
   {
-    position: 'Software Development Intern',
+    period: 'Dec 2022 — May 2023',
+    role: 'Software Development Intern',
     company: 'MTREE TECH SOLUTIONS',
-    url: 'https://mtreetech.com', type: 'Internship', duration: 'Dec 2022 – May 2023',
-    location: 'Nellore, Andhra Pradesh', current: false,
-    achievements: [
-      'Developed the company marketing website using HTML5, CSS3 & JavaScript, deployed via GitHub Pages',
-      'Built a medical appointment portal achieving 95% cross-browser compatibility with Bootstrap 5',
-      'Modernised legacy PHP 8 codebase resolving 15+ security vulnerabilities, reducing page load times by 47%',
+    companyUrl: 'https://mtreetech.com',
+    location: 'Nellore, Andhra Pradesh',
+    summary: `Joined as an intern and shipped the company's public marketing site from scratch. 
+    Also built a medical appointment portal and helped resolve long-standing performance issues in a legacy PHP codebase.`,
+    highlights: [
+      'Built and deployed the company marketing website using HTML5, CSS3 & JavaScript via GitHub Pages',
+      'Achieved 95% cross-browser compatibility on a Bootstrap 5 medical portal',
+      'Resolved 15+ security vulnerabilities in PHP 8 codebase; reduced page load times by 47%',
     ],
-    techStack: ['React Native', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap', 'PHP'],
+    tech: ['React Native', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap', 'PHP'],
   },
-];
-
-const certifications = [
-  { title: 'Git Training Certification', org: 'Simplilearn' },
-  { title: 'Postman API Fundamentals', org: 'Postman' },
-  { title: 'Standout Performer of the Year 2023', org: 'MTREE TECH SOLUTIONS' },
 ];
 
 export const ExperienceSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   const container: Variants = {
     hidden:  { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.25, delayChildren: 0.1 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.1 } },
   };
   const item: Variants = {
-    hidden:  { opacity: 0, y: 24 },
+    hidden:  { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
   };
 
   return (
       <section id="experience" className="section-padding" style={{ background: 'var(--bg-primary)' }}>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6 lg:px-8">
           <motion.div
               ref={ref}
               variants={container}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
-              className="max-w-5xl mx-auto"
+              className="max-w-3xl mx-auto"
           >
-            {/* Header */}
-            <motion.div variants={item} className="text-center mb-14">
-            <span
-                className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-widest"
-                style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)' }}
-            >
-              Career
+            {/* Section label */}
+            <motion.div variants={item} className="flex items-center gap-3 mb-8">
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+              02. Experience
             </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold gradient-text-blue mb-4">
-                Work Experience
-              </h2>
-              <div className="w-16 h-1 rounded-full mx-auto" style={{ background: 'var(--accent)' }} />
+              <div className="flex-1 h-px" style={{ background: 'var(--border-color)' }} />
             </motion.div>
 
-            {/* Timeline */}
-            <div className="relative space-y-8">
-              <div
-                  className="absolute left-6 top-3 bottom-3 w-px hidden md:block"
-                  style={{ background: 'linear-gradient(180deg, var(--accent), var(--accent-light), transparent)' }}
-              />
-
+            {/* Entries */}
+            <div className="space-y-12">
               {experiences.map((exp, i) => (
-                  <motion.div key={i} variants={item} className="relative pl-0 md:pl-16">
-                    {/* Dot */}
-                    <div
-                        className="absolute left-4 top-6 hidden md:flex items-center justify-center w-5 h-5 rounded-full border-2"
-                        style={{
-                          background: exp.current ? 'var(--accent)' : 'var(--bg-card)',
-                          borderColor: 'var(--accent)',
-                        }}
-                    >
-                      {exp.current && (
-                          <motion.div
-                              className="w-2 h-2 rounded-full"
-                              style={{ background: 'var(--bg-primary)' }}
-                              animate={{ scale: [1, 1.4, 1] }}
-                              transition={{ duration: 2, repeat: Infinity }}
-                          />
-                      )}
+                  <motion.div
+                      key={i}
+                      variants={item}
+                      className="group grid sm:grid-cols-[140px_1fr] gap-4 sm:gap-8"
+                  >
+                    {/* Period */}
+                    <div className="flex-shrink-0 pt-1">
+                      <p className="text-xs font-mono leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                        {exp.period}
+                      </p>
                     </div>
 
-                    <motion.div className="glass-card rounded-2xl p-6 hover-lift" whileHover={{ scale: 1.01 }}>
-                      {/* Card header */}
-                      <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center flex-wrap gap-2 mb-1">
-                        <span
-                            className="px-2.5 py-0.5 rounded-full text-xs font-semibold"
-                            style={{
-                              background: exp.current
-                                  ? 'var(--accent-light)'
-                                  : 'var(--bg-tertiary)',
-                              color: exp.current ? 'var(--accent-dark)' : 'var(--text-muted)',
-                            }}
-                        >
-                          {exp.current ? '● Current' : exp.type}
-                        </span>
-                          </div>
-                          <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
-                            {exp.position}
-                          </h3>
+                    {/* Content */}
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="text-base font-bold leading-snug" style={{ color: 'var(--text-primary)' }}>
+                          {exp.role}{' '}
                           <a
-                              href={exp.url}
+                              href={exp.companyUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 font-semibold text-sm hover:underline"
+                              className="inline-flex items-center gap-0.5 hover:underline cursor-hover"
                               style={{ color: 'var(--accent)' }}
                           >
-                            {exp.company} <ExternalLink className="w-3 h-3" />
+                            · {exp.company}
+                            <ExternalLink className="w-3 h-3" />
                           </a>
-                        </div>
-                        <div
-                            className="text-right text-xs space-y-1 flex-shrink-0"
-                            style={{ color: 'var(--text-muted)' }}
-                        >
-                          <div className="flex items-center gap-1 justify-end">
-                            <Calendar className="w-3.5 h-3.5" /> {exp.duration}
-                          </div>
-                          <div className="flex items-center gap-1 justify-end">
-                            <MapPin className="w-3.5 h-3.5" /> {exp.location}
-                          </div>
-                        </div>
+                        </h3>
+                        <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{exp.location}</p>
                       </div>
 
-                      {/* Achievements */}
-                      <ul className="space-y-2 mb-5">
-                        {exp.achievements.map((a, j) => (
-                            <motion.li
-                                key={j}
-                                className="flex items-start gap-2 text-sm"
-                                style={{ color: 'var(--text-secondary)' }}
-                                initial={{ opacity: 0, x: -8 }}
-                                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ delay: j * 0.08 + 0.4 }}
-                            >
-                              <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: 'var(--accent)' }} />
-                              {a}
-                            </motion.li>
+                      <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        {exp.summary}
+                      </p>
+
+                      <ul className="space-y-1.5">
+                        {exp.highlights.map((h, j) => (
+                            <li key={j} className="flex items-start gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                              <span className="mt-2 w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--accent)' }} />
+                              {h}
+                            </li>
                         ))}
                       </ul>
 
-                      {/* Tech stack */}
-                      <div className="flex flex-wrap gap-2">
-                        {exp.techStack.map((t) => (
-                            <span
-                                key={t}
-                                className="px-2.5 py-0.5 rounded-full text-xs font-medium mono"
-                                style={{
-                                  background: 'var(--bg-tertiary)',
-                                  color: 'var(--text-muted)',
-                                  border: '1px solid var(--border-color)',
-                                }}
-                            >
-                        {t}
-                      </span>
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {exp.tech.map((t) => (
+                            <span key={t} className="skill-tag">{t}</span>
                         ))}
                       </div>
-                    </motion.div>
+                    </div>
                   </motion.div>
               ))}
             </div>
 
-            {/* Certifications */}
-            <motion.div variants={item} className="mt-14 glass-card rounded-2xl p-8">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold gradient-text-blue">Certifications &amp; Awards</h3>
-              </div>
-              <div className="grid sm:grid-cols-3 gap-5">
-                {certifications.map((c, i) => (
-                    <motion.div
-                        key={i}
-                        className="rounded-xl p-5 text-center hover-lift"
-                        style={{
-                          background: 'var(--bg-secondary)',
-                          border: '1px solid var(--border-color)',
-                        }}
-                        whileHover={{ scale: 1.04 }}
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : {}}
-                        transition={{ delay: i * 0.15 + 0.6 }}
-                    >
-                      <Award className="w-7 h-7 mx-auto mb-3" style={{ color: 'var(--accent)' }} />
-                      <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
-                        {c.title}
-                      </p>
-                      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{c.org}</p>
-                    </motion.div>
-                ))}
-              </div>
+            {/* Full résumé link */}
+            <motion.div variants={item} className="mt-12">
+              <a
+                  href="https://yashwant-manchu-portfolio.vercel.app/Yashwant-Manchu-Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 group cursor-hover"
+                  style={{ color: 'var(--text-primary)' }}
+              >
+              <span className="text-sm font-semibold group-hover:underline" style={{ color: 'var(--accent)' }}>
+                View Full Résumé
+              </span>
+                <ArrowUpRight
+                    className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    style={{ color: 'var(--accent)' }}
+                />
+              </a>
             </motion.div>
           </motion.div>
         </div>

@@ -6,16 +6,16 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Linkedin, Github }
 
 export const ContactSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const container: Variants = {
     hidden:  { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.2 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
   };
   const item: Variants = {
-    hidden:  { opacity: 0, y: 24 },
+    hidden:  { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
   };
 
@@ -45,189 +45,149 @@ export const ContactSection = () => {
     }
   };
 
-  const contactCards = [
-    { icon: Mail,     label: 'Email',    value: 'yashwanthmanchu059@gmail.com', href: 'mailto:yashwanthmanchu059@gmail.com' },
-    { icon: Phone,    label: 'Phone',    value: '+91 8367557617',               href: 'tel:+918367557617' },
-    { icon: MapPin,   label: 'Location', value: 'Pune, Maharashtra, India',     href: 'https://maps.google.com/?q=Pune,Maharashtra,India' },
-    { icon: Linkedin, label: 'LinkedIn', value: 'yashwant-manchu',              href: 'https://linkedin.com/in/yashwant-manchu' },
-    { icon: Github,   label: 'GitHub',   value: 'yashwant-manchu',              href: 'https://github.com/yashwant-manchu' },
+  const links = [
+    { icon: Mail,     label: 'yashwanthmanchu059@gmail.com', href: 'mailto:yashwanthmanchu059@gmail.com' },
+    { icon: Phone,    label: '+91 8367557617',               href: 'tel:+918367557617' },
+    { icon: MapPin,   label: 'Pune, Maharashtra, India',     href: '#' },
+    { icon: Linkedin, label: 'linkedin.com/in/yashwant-manchu', href: 'https://linkedin.com/in/yashwant-manchu' },
+    { icon: Github,   label: 'github.com/yashwant-manchu',  href: 'https://github.com/yashwant-manchu' },
   ];
 
-  const externalLabels = ['Location', 'LinkedIn', 'GitHub'];
-
   return (
-      <section id="contact" className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="section-padding" style={{ background: 'var(--bg-primary)' }}>
+        <div className="container mx-auto px-6 lg:px-8">
           <motion.div
               ref={ref}
               variants={container}
               initial="hidden"
               animate={isInView ? 'visible' : 'hidden'}
-              className="max-w-6xl mx-auto"
+              className="max-w-3xl mx-auto"
           >
-            {/* Header */}
-            <motion.div variants={item} className="text-center mb-14">
-            <span
-                className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4 uppercase tracking-widest"
-                style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)' }}
-            >
-              Get In Touch
+            {/* Section label */}
+            <motion.div variants={item} className="flex items-center gap-3 mb-8">
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+              04. Contact
             </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold gradient-text-blue mb-4">
-                Let&apos;s Work Together
-              </h2>
-              <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--text-muted)' }}>
-                Whether you have a project, an opportunity, or just want to say hello — my inbox is always open.
-              </p>
-              <div className="w-16 h-1 rounded-full mx-auto mt-5" style={{ background: 'var(--accent)' }} />
+              <div className="flex-1 h-px" style={{ background: 'var(--border-color)' }} />
             </motion.div>
 
-            <div className="grid lg:grid-cols-5 gap-10">
-              {/* Contact cards */}
-              <motion.div variants={item} className="lg:col-span-2 space-y-3">
-                <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                  Contact Details
-                </h3>
-                {contactCards.map((c) => {
-                  const Icon = c.icon;
+            <motion.p variants={item} className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: 'var(--text-primary)', fontFamily: "'Syne',sans-serif" }}>
+              Get In Touch
+            </motion.p>
+            <motion.p variants={item} className="text-base leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
+              Whether you have an opportunity, a project idea, or just want to say hi — I&apos;ll do my best
+              to get back to you. My inbox is always open.
+            </motion.p>
+
+            {/* Two-col: contact links + form */}
+            <div className="grid md:grid-cols-5 gap-10">
+
+              {/* Contact links — no heading */}
+              <motion.div variants={item} className="md:col-span-2 space-y-3 md:pt-1">
+                {links.map((l) => {
+                  const Icon = l.icon;
                   return (
                       <motion.a
-                          key={c.label}
-                          href={c.href}
-                          target={externalLabels.includes(c.label) ? '_blank' : undefined}
-                          rel={externalLabels.includes(c.label) ? 'noopener noreferrer' : undefined}
-                          className="flex items-center gap-4 p-4 glass-card rounded-xl hover-lift group"
-                          whileHover={{ scale: 1.02, x: 4 }}
-                          transition={{ duration: 0.25 }}
+                          key={l.label}
+                          href={l.href}
+                          target={l.href.startsWith('http') ? '_blank' : undefined}
+                          rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          className="flex items-center gap-3 group cursor-hover"
+                          whileHover={{ x: 4 }}
+                          transition={{ duration: 0.2 }}
                       >
                         <div
-                            className="p-2.5 rounded-xl flex-shrink-0"
-                            style={{
-                              background: 'var(--accent-light)',
-                              border: '1px solid var(--accent-glow)',
-                            }}
+                            className="p-2 rounded-lg flex-shrink-0 transition-colors"
+                            style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}
                         >
-                          <Icon className="w-5 h-5" style={{ color: 'var(--accent-dark)' }} />
+                          <Icon className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                         </div>
-                        <div className="min-w-0">
-                          <p className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                            {c.label}
-                          </p>
-                          <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
-                            {c.value}
-                          </p>
-                        </div>
+                        <span
+                            className="text-sm truncate group-hover:underline"
+                            style={{ color: 'var(--text-secondary)' }}
+                        >
+                      {l.label}
+                    </span>
                       </motion.a>
                   );
                 })}
-
-                <div className="glass-card rounded-xl p-5 mt-2">
-                  <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--text-muted)' }}>
-                    Response Time
-                  </p>
-                  <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                    I typically reply within 24 hours. For urgent matters, call or text directly.
-                  </p>
-                </div>
               </motion.div>
 
               {/* Form */}
-              <motion.div variants={item} className="lg:col-span-3">
-                <div className="glass-card rounded-2xl p-7">
-                  <h3 className="text-lg font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
-                    Send a Message
-                  </h3>
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid sm:grid-cols-2 gap-5">
-                      {(['name', 'email'] as const).map((field) => (
-                          <div key={field} className="space-y-1.5">
-                            <label
-                                htmlFor={field}
-                                className="block text-xs font-semibold uppercase tracking-wide"
-                                style={{ color: 'var(--text-muted)' }}
-                            >
-                              {field === 'name' ? 'Full Name' : 'Email Address'}
-                            </label>
-                            <input
-                                type={field === 'email' ? 'email' : 'text'}
-                                id={field}
-                                name={field}
-                                value={formData[field]}
-                                onChange={handleChange}
-                                required
-                                placeholder={field === 'name' ? 'Your full name' : 'you@example.com'}
-                                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                                style={{
-                                  background: 'var(--bg-secondary)',
-                                  border: '1px solid var(--border-color)',
-                                  color: 'var(--text-primary)',
-                                }}
-                                onFocus={(e) => {
-                                  e.target.style.borderColor = 'var(--accent)';
-                                  e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)';
-                                }}
-                                onBlur={(e) => {
-                                  e.target.style.borderColor = 'var(--border-color)';
-                                  e.target.style.boxShadow = 'none';
-                                }}
-                            />
-                          </div>
-                      ))}
-                    </div>
+              <motion.div variants={item} className="md:col-span-3">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {(['name', 'email'] as const).map((field) => (
+                        <div key={field} className="space-y-1.5">
+                          <label
+                              htmlFor={field}
+                              className="block text-xs font-semibold uppercase tracking-wide"
+                              style={{ color: 'var(--text-muted)' }}
+                          >
+                            {field === 'name' ? 'Name' : 'Email'}
+                          </label>
+                          <input
+                              type={field === 'email' ? 'email' : 'text'}
+                              id={field} name={field}
+                              value={formData[field]}
+                              onChange={handleChange}
+                              required
+                              placeholder={field === 'name' ? 'Your name' : 'you@example.com'}
+                              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                              style={{
+                                background: 'var(--bg-secondary)',
+                                border: '1px solid var(--border-color)',
+                                color: 'var(--text-primary)',
+                                fontFamily: "'Outfit', sans-serif",
+                              }}
+                              onFocus={(e) => { e.target.style.borderColor = 'var(--accent)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)'; }}
+                              onBlur={(e)  => { e.target.style.borderColor = 'var(--border-color)'; e.target.style.boxShadow = 'none'; }}
+                          />
+                        </div>
+                    ))}
+                  </div>
 
-                    <div className="space-y-1.5">
-                      <label
-                          htmlFor="message"
-                          className="block text-xs font-semibold uppercase tracking-wide"
-                          style={{ color: 'var(--text-muted)' }}
-                      >
-                        Message
-                      </label>
-                      <textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          required
-                          rows={5}
-                          placeholder="Tell me about your project or opportunity..."
-                          className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
-                          style={{
-                            background: 'var(--bg-secondary)',
-                            border: '1px solid var(--border-color)',
-                            color: 'var(--text-primary)',
-                          }}
-                          onFocus={(e) => {
-                            e.target.style.borderColor = 'var(--accent)';
-                            e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)';
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = 'var(--border-color)';
-                            e.target.style.boxShadow = 'none';
-                          }}
-                      />
-                    </div>
+                  <div className="space-y-1.5">
+                    <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                      Message
+                    </label>
+                    <textarea
+                        id="message" name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required rows={5}
+                        placeholder="What's on your mind?"
+                        className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
+                        style={{
+                          background: 'var(--bg-secondary)',
+                          border: '1px solid var(--border-color)',
+                          color: 'var(--text-primary)',
+                          fontFamily: "'Outfit', sans-serif",
+                        }}
+                        onFocus={(e) => { e.target.style.borderColor = 'var(--accent)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)'; }}
+                        onBlur={(e)  => { e.target.style.borderColor = 'var(--border-color)'; e.target.style.boxShadow = 'none'; }}
+                    />
+                  </div>
 
-                    <motion.button
-                        type="submit"
-                        disabled={status === 'loading'}
-                        className="w-full flex items-center justify-center gap-3 py-3.5 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-60"
-                        style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))' }}
-                        whileHover={{ scale: status === 'loading' ? 1 : 1.02, boxShadow: '0 0 24px var(--accent-glow)' }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                      {status === 'loading' ? (
-                          <div className="loading-dots scale-[0.6]"><div /><div /><div /><div /></div>
-                      ) : status === 'success' ? (
-                          <><CheckCircle className="w-5 h-5" /> Message Sent!</>
-                      ) : status === 'error' ? (
-                          <><AlertCircle className="w-5 h-5" /> Something went wrong</>
-                      ) : (
-                          <><Send className="w-4 h-4" /> Send Message</>
-                      )}
-                    </motion.button>
-                  </form>
-                </div>
+                  <motion.button
+                      type="submit"
+                      disabled={status === 'loading'}
+                      className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-60 cursor-hover"
+                      style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))' }}
+                      whileHover={{ scale: status === 'loading' ? 1 : 1.03, boxShadow: '0 0 20px var(--accent-glow)' }}
+                      whileTap={{ scale: 0.97 }}
+                  >
+                    {status === 'loading' ? (
+                        <div className="loading-dots scale-[0.55]"><div /><div /><div /><div /></div>
+                    ) : status === 'success' ? (
+                        <><CheckCircle className="w-4 h-4" /> Sent!</>
+                    ) : status === 'error' ? (
+                        <><AlertCircle className="w-4 h-4" /> Try again</>
+                    ) : (
+                        <><Send className="w-4 h-4" /> Send Message</>
+                    )}
+                  </motion.button>
+                </form>
               </motion.div>
             </div>
           </motion.div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Download, Layers } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const roles = ['Frontend Engineer', 'React Native Developer', 'UI Engineer', 'TypeScript Developer'];
@@ -16,25 +16,22 @@ export const HeroSection = () => {
 
   const scroll = (id: string) => {
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
-  };
-
-  const handleResume = () => {
-    const a = document.createElement('a');
-    a.href = '/Yashwant-Manchu-Resume.pdf';
-    a.download = 'Yashwant_Manchu_Resume.pdf';
-    a.click();
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 70, behavior: 'smooth' });
   };
 
   const techStack = ['React.js', 'React Native', 'TypeScript', 'Next.js', 'Redux Toolkit', 'Expo'];
 
   return (
-      <section id="home" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-20 pb-16">
+      <section
+          id="home"
+          className="relative overflow-hidden min-h-screen flex items-center justify-center"
+          /* Hero doesn't need the nav offset since it's full-screen */
+          style={{ scrollMarginTop: 0 }}
+      >
         {/* Background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0" style={{ background: 'var(--bg-primary)' }} />
           <div className="absolute inset-0 opacity-[0.035] dark:opacity-[0.055] grid-bg" />
-          {/* Green glow blobs */}
           <motion.div
               className="absolute top-1/4 left-[15%] w-64 h-64 lg:w-[28rem] lg:h-[28rem] rounded-full blur-3xl"
               style={{ background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)' }}
@@ -49,22 +46,18 @@ export const HeroSection = () => {
           />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 max-w-4xl">
+        <div className="container mx-auto px-6 lg:px-8 text-center z-10 max-w-4xl">
           <motion.div
               initial={{ opacity: 0, y: 36 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="space-y-7"
+              className="space-y-6"
           >
-            {/* Open-to-work badge */}
+            {/* Status */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.05 }} className="flex justify-center">
             <span
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold"
-                style={{
-                  background: 'var(--accent-light)',
-                  color: 'var(--accent-dark)',
-                  border: '1px solid var(--accent-glow)',
-                }}
+                style={{ background: 'var(--accent-light)', color: 'var(--accent-dark)', border: '1px solid var(--accent-glow)' }}
             >
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--accent)' }} />
               Open to new opportunities
@@ -75,12 +68,9 @@ export const HeroSection = () => {
             <motion.h1
                 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight"
                 style={{ color: 'var(--text-primary)', lineHeight: '1.08', fontFamily: "'Syne', sans-serif" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12 }}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}
             >
-              Yashwant{' '}
-              <span className="gradient-text">Manchu</span>
+              Yashwant <span className="gradient-text">Manchu</span>
             </motion.h1>
 
             {/* Animated role */}
@@ -88,11 +78,9 @@ export const HeroSection = () => {
               <AnimatePresence mode="wait">
                 <motion.p
                     key={roleIndex}
-                    className="text-lg sm:text-2xl font-semibold tracking-tight"
+                    className="text-lg sm:text-2xl font-semibold"
                     style={{ color: 'var(--text-secondary)' }}
-                    initial={{ opacity: 0, y: 14 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -14 }}
+                    initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.38 }}
                 >
                   {roles[roleIndex]}
@@ -104,80 +92,47 @@ export const HeroSection = () => {
             <motion.p
                 className="text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.38 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.38 }}
             >
-              3+ years building production-grade fintech platforms, mobile apps &amp; enterprise
-              dashboards with React.js, React Native, TypeScript &amp; Next.js — shipped to web and both app stores.
+              I build scalable, accessible interfaces for the web and mobile — fintech platforms,
+              enterprise dashboards, and cross-platform apps, shipped to production across both app stores.
             </motion.p>
 
             {/* Tech pills */}
-            <motion.div
-                className="flex flex-wrap justify-center gap-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-            >
+            <motion.div className="flex flex-wrap justify-center gap-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
               {techStack.map((t) => (
-                  <span
-                      key={t}
-                      className="px-3 py-1 text-xs font-medium rounded-full mono"
-                      style={{
-                        background: 'var(--bg-secondary)',
-                        border: '1px solid var(--border-color)',
-                        color: 'var(--text-muted)',
-                      }}
-                  >
-                {t}
-              </span>
+                  <span key={t} className="skill-tag">{t}</span>
               ))}
             </motion.div>
 
-            {/* CTAs */}
+            {/* Single CTA */}
             <motion.div
-                className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.62 }}
+                className="flex justify-center pt-2"
+                initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.62 }}
             >
               <motion.button
-                  onClick={() => scroll('projects')}
-                  className="group flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm sm:text-base text-white w-full sm:w-auto justify-center"
+                  onClick={() => scroll('about')}
+                  className="group flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm sm:text-base text-white cursor-hover"
                   style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-dark))' }}
                   whileHover={{ scale: 1.05, boxShadow: '0 0 30px var(--accent-glow)' }}
                   whileTap={{ scale: 0.97 }}
               >
-                <Layers className="w-4 h-4" />
-                View My Work
+                Learn more about me
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </motion.button>
-
-              <motion.button
-                  onClick={handleResume}
-                  className="group flex items-center gap-3 px-7 py-3.5 rounded-full font-semibold text-sm sm:text-base w-full sm:w-auto justify-center glass-card"
-                  style={{ color: 'var(--text-primary)' }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-              >
-                <Download className="w-4 h-4" />
-                Download Resume
               </motion.button>
             </motion.div>
 
             {/* Scroll hint */}
             <motion.div
                 className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-1.5"
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}
             >
               <span className="text-[11px] tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>scroll</span>
               <div className="w-5 h-8 rounded-full border-2 flex justify-center pt-1.5" style={{ borderColor: 'var(--border-color)' }}>
                 <motion.div
                     className="w-1 h-2 rounded-full"
                     style={{ background: 'var(--accent)' }}
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
                 />
               </div>
             </motion.div>
