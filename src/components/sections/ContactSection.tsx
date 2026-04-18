@@ -6,17 +6,17 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Linkedin, Github }
 
 export const ContactSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const container: Variants = {
     hidden:  { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
   };
   const item: Variants = {
-    hidden:  { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } },
+    hidden:  { opacity: 0, y: 18 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -50,8 +50,24 @@ export const ContactSection = () => {
     { icon: Phone,    label: '+91 8367557617',               href: 'tel:+918367557617' },
     { icon: MapPin,   label: 'Pune, Maharashtra, India',     href: '#' },
     { icon: Linkedin, label: 'linkedin.com/in/yashwant-manchu', href: 'https://linkedin.com/in/yashwant-manchu' },
-    { icon: Github,   label: 'github.com/yashwant-manchu',  href: 'https://github.com/yashwant-manchu' },
+    { icon: Github,   label: 'github.com/yashwant-manchu',   href: 'https://github.com/yashwant-manchu' },
   ];
+
+  const inputStyle = {
+    background: 'var(--bg-secondary)',
+    border: '1px solid var(--border-color)',
+    color: 'var(--text-primary)',
+    fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+  };
+
+  const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.target.style.borderColor = 'var(--accent)';
+    e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)';
+  };
+  const blurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.target.style.borderColor = 'var(--border-color)';
+    e.target.style.boxShadow = 'none';
+  };
 
   return (
       <section id="contact" className="section-padding" style={{ background: 'var(--bg-primary)' }}>
@@ -64,26 +80,33 @@ export const ContactSection = () => {
               className="max-w-3xl mx-auto"
           >
             {/* Section label */}
-            <motion.div variants={item} className="flex items-center gap-3 mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+            <motion.div variants={item} className="flex items-center gap-3 mb-10">
+            <span
+                className="text-xs font-bold uppercase tracking-widest"
+                style={{ color: 'var(--accent)', fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
+            >
               04. Contact
             </span>
               <div className="flex-1 h-px" style={{ background: 'var(--border-color)' }} />
             </motion.div>
 
-            <motion.p variants={item} className="text-2xl sm:text-3xl font-bold mb-3" style={{ color: 'var(--text-primary)', fontFamily: "'Syne',sans-serif" }}>
+            <motion.h2
+                variants={item}
+                className="text-2xl sm:text-3xl font-bold mb-3"
+                style={{ color: 'var(--text-primary)', fontFamily: "var(--font-syne), 'Syne', sans-serif" }}
+            >
               Get In Touch
-            </motion.p>
+            </motion.h2>
             <motion.p variants={item} className="text-base leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
-              Whether you have an opportunity, a project idea, or just want to say hi — I&apos;ll do my best
-              to get back to you. My inbox is always open.
+              I&apos;m currently open to new opportunities. Whether you have a project, a role, or just
+              want to say hi — I&apos;ll do my best to get back to you.
             </motion.p>
 
-            {/* Two-col: contact links + form */}
+            {/* Two-col layout — links + form aligned at top */}
             <div className="grid md:grid-cols-5 gap-10">
 
-              {/* Contact links — no heading */}
-              <motion.div variants={item} className="md:col-span-2 space-y-3 md:pt-1">
+              {/* Left: contact links (no heading) */}
+              <motion.div variants={item} className="md:col-span-2 space-y-3">
                 {links.map((l) => {
                   const Icon = l.icon;
                   return (
@@ -113,7 +136,7 @@ export const ContactSection = () => {
                 })}
               </motion.div>
 
-              {/* Form */}
+              {/* Right: form */}
               <motion.div variants={item} className="md:col-span-3">
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -134,14 +157,9 @@ export const ContactSection = () => {
                               required
                               placeholder={field === 'name' ? 'Your name' : 'you@example.com'}
                               className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                              style={{
-                                background: 'var(--bg-secondary)',
-                                border: '1px solid var(--border-color)',
-                                color: 'var(--text-primary)',
-                                fontFamily: "'Outfit', sans-serif",
-                              }}
-                              onFocus={(e) => { e.target.style.borderColor = 'var(--accent)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)'; }}
-                              onBlur={(e)  => { e.target.style.borderColor = 'var(--border-color)'; e.target.style.boxShadow = 'none'; }}
+                              style={inputStyle}
+                              onFocus={focusStyle}
+                              onBlur={blurStyle}
                           />
                         </div>
                     ))}
@@ -158,14 +176,9 @@ export const ContactSection = () => {
                         required rows={5}
                         placeholder="What's on your mind?"
                         className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
-                        style={{
-                          background: 'var(--bg-secondary)',
-                          border: '1px solid var(--border-color)',
-                          color: 'var(--text-primary)',
-                          fontFamily: "'Outfit', sans-serif",
-                        }}
-                        onFocus={(e) => { e.target.style.borderColor = 'var(--accent)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-glow)'; }}
-                        onBlur={(e)  => { e.target.style.borderColor = 'var(--border-color)'; e.target.style.boxShadow = 'none'; }}
+                        style={inputStyle}
+                        onFocus={focusStyle}
+                        onBlur={blurStyle}
                     />
                   </div>
 

@@ -1,96 +1,117 @@
-/* ── FONTS ── */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+/**
+ * Fonts are loaded via next/font/google in layout.tsx and exposed as:
+ *   --font-syne       → headings
+ *   --font-outfit     → body
+ *   --font-mono       → code / pills
+ *
+ * NO @import here — Next.js handles font delivery automatically.
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── CURSOR: hide native cursor before React hydrates ── */
+/* ── Hide native cursor everywhere before React hydrates ── */
 html, body, * { cursor: none !important; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-  /* scroll-margin-top on sections handles nav offset — no scroll-padding needed */
-}
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit), 'Outfit', system-ui, sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: background 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── LIGHT MODE ── */
+/* ─── LIGHT MODE ─────────────────────────────────────── */
 :root {
   --bg-primary:    #f8fafc;
   --bg-secondary:  #f1f5f9;
   --bg-tertiary:   #e2e8f0;
-  --bg-card:       rgba(255,255,255,0.85);
 
   --text-primary:  #0f172a;
   --text-secondary:#334155;
   --text-muted:    #64748b;
 
-  --border-color:  #e2e8f0;
+  --border-color:  #cbd5e1;      /* slightly darker so skill pills are visible */
+  --border-subtle: #e2e8f0;
 
   --accent:        #10b981;
   --accent-dark:   #059669;
   --accent-light:  #d1fae5;
   --accent-glow:   rgba(16,185,129,0.22);
 
+  /* Skill tag colours — light mode */
+  --pill-bg:       #e2e8f0;      /* slate-200: clearly distinct from f8fafc bg */
+  --pill-border:   #94a3b8;      /* slate-400 */
+  --pill-text:     #334155;      /* slate-700 */
+  --pill-bg-hover: #d1fae5;
+  --pill-border-hover: #10b981;
+  --pill-text-hover:   #065f46;
+
   --glass-bg:      rgba(255,255,255,0.65);
   --glass-border:  rgba(226,232,240,0.85);
 
-  --shadow-sm:  0 1px 3px  rgba(15,23,42,0.08);
-  --shadow-md:  0 4px 16px rgba(15,23,42,0.10);
-  --shadow-lg:  0 8px 32px rgba(15,23,42,0.13);
+  --shadow-sm: 0 1px 3px  rgba(15,23,42,0.08);
+  --shadow-md: 0 4px 16px rgba(15,23,42,0.10);
+  --shadow-lg: 0 8px 32px rgba(15,23,42,0.13);
 }
 
-/* ── DARK MODE ── */
+/* ─── DARK MODE ──────────────────────────────────────── */
 .dark {
-  --bg-primary:    #060d16;
-  --bg-secondary:  #0d1626;
-  --bg-tertiary:   #162035;
-  --bg-card:       rgba(13,22,38,0.85);
+  --bg-primary:    #0a1020;
+  --bg-secondary:  #0f1a30;
+  --bg-tertiary:   #1a2640;
 
-  --text-primary:  #f0f6ff;
-  --text-secondary:#b8cce4;
-  --text-muted:    #7a96b8;
+  --text-primary:  #e8f0fe;
+  --text-secondary:#9ab0cc;
+  --text-muted:    #5a7a9a;
 
-  --border-color:  #1e2d45;
+  --border-color:  #1e3050;
+  --border-subtle: #162540;
 
   --accent:        #34d399;
   --accent-dark:   #10b981;
-  --accent-light:  rgba(52,211,153,0.12);
+  --accent-light:  rgba(52,211,153,0.14);
   --accent-glow:   rgba(52,211,153,0.18);
 
-  --glass-bg:      rgba(13,22,38,0.7);
-  --glass-border:  rgba(52,211,153,0.1);
+  /* Skill tag colours — dark mode */
+  --pill-bg:       rgba(52,211,153,0.08);
+  --pill-border:   rgba(52,211,153,0.3);
+  --pill-text:     #34d399;
+  --pill-bg-hover: rgba(52,211,153,0.18);
+  --pill-border-hover: #34d399;
+  --pill-text-hover:   #6ee7b7;
 
-  --shadow-sm:  0 1px 3px  rgba(0,0,0,0.35);
-  --shadow-md:  0 4px 16px rgba(0,0,0,0.45);
-  --shadow-lg:  0 8px 32px rgba(0,0,0,0.55);
+  --glass-bg:      rgba(10,16,32,0.75);
+  --glass-border:  rgba(52,211,153,0.12);
+
+  --shadow-sm: 0 1px 3px  rgba(0,0,0,0.35);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.45);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.55);
 }
 
-/* ── SCROLLBAR ── */
+/* ─── SCROLLBAR ─────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-dark); }
 
-/* ── TYPOGRAPHY ── */
+/* ─── TYPOGRAPHY ─────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Syne', sans-serif;
+  font-family: var(--font-syne), 'Syne', sans-serif;
   letter-spacing: -0.02em;
 }
 code, pre, .mono {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
 }
 
-/* ── GLASS ── */
+/* ─── GLASS ──────────────────────────────────────────── */
 .glass {
   background: var(--glass-bg);
   backdrop-filter: blur(14px);
@@ -105,7 +126,7 @@ code, pre, .mono {
   box-shadow: var(--shadow-md);
 }
 
-/* ── GRADIENT TEXT ── */
+/* ─── GRADIENT TEXT ──────────────────────────────────── */
 .gradient-text {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   -webkit-background-clip: text;
@@ -119,37 +140,33 @@ code, pre, .mono {
   -webkit-text-fill-color: transparent;
 }
 
-/* ── HOVER ── */
+/* ─── HOVER ──────────────────────────────────────────── */
 .hover-lift { transition: all 0.3s ease; }
 .hover-lift:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-/* ── SECTION LAYOUT ── */
-/* Fixed nav is 70px tall. Each section gets exactly 70px top margin
-   so section title is right below the nav with normal spacing.      */
+/* ─── SECTION ────────────────────────────────────────── */
 section {
-  scroll-margin-top: 70px;
+  scroll-margin-top: 70px;   /* matches nav height */
 }
-
-/* Section content padding — comfortable but not excessive */
 .section-padding {
   padding-top: 5rem;
   padding-bottom: 5rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }
-@media (max-width: 1024px) { .section-padding { padding-top: 4rem; padding-bottom: 4rem; } }
-@media (max-width: 768px)  { .section-padding { padding-top: 3rem; padding-bottom: 3rem; } }
-@media (max-width: 640px)  { .section-padding { padding-top: 2.5rem; padding-bottom: 2.5rem; padding-left: 0.75rem; padding-right: 0.75rem; } }
+@media (max-width:1024px) { .section-padding { padding-top:4rem; padding-bottom:4rem; } }
+@media (max-width:768px)  { .section-padding { padding-top:3rem; padding-bottom:3rem; } }
+@media (max-width:640px)  { .section-padding { padding-top:2.5rem; padding-bottom:2.5rem; padding-left:0.75rem; padding-right:0.75rem; } }
 
-/* ── CONTAINER ── */
-.container { width: 100%; margin: 0 auto; padding: 0 1rem; }
-@media (min-width:640px)  { .container { max-width:640px;  padding: 0 1.5rem; } }
+/* ─── CONTAINER ──────────────────────────────────────── */
+.container { width:100%; margin:0 auto; padding:0 1rem; }
+@media (min-width:640px)  { .container { max-width:640px;  padding:0 1.5rem; } }
 @media (min-width:768px)  { .container { max-width:768px; } }
 @media (min-width:1024px) { .container { max-width:1024px; } }
 @media (min-width:1280px) { .container { max-width:1280px; } }
 @media (min-width:1536px) { .container { max-width:1536px; } }
 
-/* ── LOADING DOTS ── */
+/* ─── LOADING DOTS ───────────────────────────────────── */
 .loading-dots { display:inline-block; position:relative; width:80px; height:80px; }
 .loading-dots div { position:absolute; top:33px; width:13px; height:13px; border-radius:50%; background:var(--accent); animation-timing-function:cubic-bezier(0,1,1,0); }
 .loading-dots div:nth-child(1) { left:8px;  animation:ld1 0.6s infinite; }
@@ -160,35 +177,41 @@ section {
 @keyframes ld3 { 0%{transform:scale(1)} 100%{transform:scale(0)} }
 @keyframes ld2 { 0%{transform:translate(0,0)} 100%{transform:translate(24px,0)} }
 
-/* ── MOBILE FORM FIX ── */
+/* ─── MOBILE FORM FIX ────────────────────────────────── */
 @media (max-width:768px) { input,textarea,button { font-size:16px; line-height:1.4; } }
 
-/* ── GRID BG ── */
+/* ─── GRID BG ────────────────────────────────────────── */
 .grid-bg {
-  background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
-  linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-image:
+          linear-gradient(var(--border-subtle) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
-/* Skill tag hover */
+/* ─── SKILL TAG ──────────────────────────────────────── */
+/*
+ * Uses dedicated CSS vars so both light and dark have clear contrast.
+ * Light:  slate-200 bg / slate-400 border / slate-700 text
+ * Dark:   tinted green bg / green border / green text
+ */
 .skill-tag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   padding: 4px 12px;
   border-radius: 9999px;
-  font-size: 0.78rem;
-  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-weight: 500;
-  border: 1px solid var(--border-color);
-  background: var(--bg-secondary);
-  color: var(--text-muted);
-  transition: all 0.2s ease;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
 }
 .skill-tag:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-light);
+  background:    var(--pill-bg-hover);
+  border-color:  var(--pill-border-hover);
+  color:         var(--pill-text-hover);
 }
 
 * { max-width: 100%; }

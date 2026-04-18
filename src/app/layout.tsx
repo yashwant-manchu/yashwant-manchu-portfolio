@@ -1,55 +1,65 @@
 import type { Metadata } from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import { Syne, Outfit, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../components/providers/ThemeProvider';
 
-const inter = Inter({ 
+/**
+ * Next.js font optimisation — fonts are downloaded at build time,
+ * self-hosted, and exposed as CSS custom properties.
+ * This is the correct approach in Next.js 13+ (App Router).
+ * Do NOT also import them via @import url() in globals.css.
+ */
+const syne = Syne({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-syne',
+  display: 'swap',
 });
 
-const spaceGrotesk = Space_Grotesk({ 
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Yashwant Manchu - Frontend Developer',
-  description: 'Frontend Developer specializing in React.js, React Native, and modern web technologies. Creating clean, modern, and fully responsive websites.',
-  keywords: 'Frontend Developer, React.js, React Native, JavaScript, Web Development, Mobile Development, Yashwant Manchu',
+  title: 'Yashwant Manchu — Frontend Engineer',
+  description:
+      'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js. Building scalable web and mobile apps.',
+  keywords:
+      'Frontend Engineer, React.js, React Native, TypeScript, Next.js, Web Development, Mobile Development, Yashwant Manchu',
   authors: [{ name: 'Yashwant Manchu' }],
   creator: 'Yashwant Manchu',
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://yashwantmanchu.vercel.app',
-    siteName: 'Yashwant Manchu Portfolio',
-    title: 'Yashwant Manchu - Frontend Developer',
-    description: 'Frontend Developer specializing in React.js, React Native, and modern web technologies.',
+    url: 'https://yashwant-manchu-portfolio.vercel.app',
+    siteName: 'Yashwant Manchu',
+    title: 'Yashwant Manchu — Frontend Engineer',
+    description: 'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Yashwant Manchu - Frontend Developer',
-    description: 'Frontend Developer specializing in React.js, React Native, and modern web technologies.',
+    title: 'Yashwant Manchu — Frontend Engineer',
+    description: 'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js.',
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <html lang="en" suppressHydrationWarning>
+      <body className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} antialiased`}>
+      <ThemeProvider>{children}</ThemeProvider>
       </body>
-    </html>
+      </html>
   );
 }

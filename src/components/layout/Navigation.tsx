@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { useTheme } from "../providers/ThemeProvider";
@@ -18,46 +18,81 @@ export const Navigation = () => {
     const [scrolled,  setScrolled]  = useState(false);
     const [menuOpen,  setMenuOpen]  = useState(false);
     const [active,    setActive]    = useState("home");
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
+    /* ── Active section via IntersectionObserver ─────────────────────
+       Uses a rootMargin that fires when a section crosses the 70px
+       nav boundary.  The last section (contact) gets special treatment
+       via a "bottom of page" fallback so it always highlights.         */
     useEffect(() => {
+        const NAV_H = 70;
+
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                /* Find the entry that is currently most "in view" */
+                const visible = entries
+                    .filter((e) => e.isIntersecting)
+                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+                if (visible.length > 0) {
+                    setActive(visible[0].target.id);
+                }
+            },
+            {
+                /* Top edge = nav bottom; bottom edge = 40% from top
+                   This means a section is "active" as soon as it's visible
+                   right beneath the nav bar.                                */
+                rootMargin: `-${NAV_H}px 0px -40% 0px`,
+                threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+            }
+        );
+
+        const ids = navItems.map((i) => i.href.substring(1));
+        ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observerRef.current!.observe(el);
+        });
+
+        /* Fallback: when near bottom of page, activate contact */
         const onScroll = () => {
             setScrolled(window.scrollY > 50);
-            const NAV_H = 70;
-            const found = navItems
-                .map((i) => i.href.substring(1))
-                .find((id) => {
-                    const el = document.getElementById(id);
-                    if (!el) return false;
-                    const { top, bottom } = el.getBoundingClientRect();
-                    return top <= NAV_H + 20 && bottom >= NAV_H + 20;
-                });
-            if (found) setActive(found);
+            const nearBottom =
+                window.innerHeight + window.scrollY >= document.body.scrollHeight - 100;
+            if (nearBottom) setActive("contact");
         };
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
+        window.addEventListener("scroll", onScroll, { passive: true });
+
+        return () => {
+            observerRef.current?.disconnect();
+            window.removeEventListener("scroll", onScroll);
+        };
     }, []);
 
-    useEffect(() => {
-        const h = (e: MouseEvent) => {
-            if (menuOpen) {
-                const nav = document.querySelector("nav");
-                if (nav && !nav.contains(e.target as Node)) setMenuOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", h);
-        return () => document.removeEventListener("mousedown", h);
-    }, [menuOpen]);
-
+    /* ── Body scroll lock when menu open ── */
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "unset";
         return () => { document.body.style.overflow = "unset"; };
     }, [menuOpen]);
 
+    /* ── Click outside mobile menu ── */
+    useEffect(() => {
+        const h = (e: MouseEvent) => {
+            if (!menuOpen) return;
+            const nav = document.querySelector("nav");
+            if (nav && !nav.contains(e.target as Node)) setMenuOpen(false);
+        };
+        document.addEventListener("mousedown", h);
+        return () => document.removeEventListener("mousedown", h);
+    }, [menuOpen]);
+
     const scrollTo = (href: string) => {
-        const el = document.querySelector(href);
+        const id = href.substring(1);
+        const el = document.getElementById(id);
         if (el) {
             const top = el.getBoundingClientRect().top + window.pageYOffset - 70;
             window.scrollTo({ top, behavior: "smooth" });
+            /* Immediately set active so there's no lag */
+            setActive(id);
         }
         setMenuOpen(false);
     };
@@ -81,7 +116,12 @@ export const Navigation = () => {
                             whileHover={{ scale: 1.04 }}
                             className="cursor-hover flex-shrink-0 flex items-center gap-2"
                         >
-                            <span className="text-xl font-extrabold gradient-text" style={{ fontFamily: "'Syne',sans-serif" }}>YM</span>
+              <span
+                  className="text-xl font-extrabold gradient-text"
+                  style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif" }}
+              >
+                YM
+              </span>
                             <span className="text-sm font-semibold hidden sm:inline" style={{ color: "var(--text-secondary)" }}>
                 Yashwant Manchu
               </span>
@@ -114,7 +154,7 @@ export const Navigation = () => {
                             })}
                         </div>
 
-                        {/* Controls */}
+                        {/* Theme + hamburger */}
                         <div className="flex items-center gap-2">
                             <motion.button
                                 onClick={toggleTheme}
@@ -136,7 +176,6 @@ export const Navigation = () => {
                                 </AnimatePresence>
                             </motion.button>
 
-                            {/* Mobile menu button */}
                             <motion.button
                                 onClick={() => setMenuOpen(!menuOpen)}
                                 className="lg:hidden p-2 rounded-full glass-card cursor-hover"
@@ -195,7 +234,7 @@ export const Navigation = () => {
                 </AnimatePresence>
             </motion.nav>
 
-            {/* Backdrop */}
+            {/* Mobile backdrop */}
             <AnimatePresence>
                 {menuOpen && (
                     <motion.div

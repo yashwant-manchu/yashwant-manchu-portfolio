@@ -5,42 +5,46 @@ import { useRef } from 'react';
 
 const skillGroups = [
   {
-    category: 'Frontend',
-    skills: ['React.js', 'React Native', 'TypeScript', 'Next.js', 'JavaScript (ES6+)', 'HTML5', 'CSS3', 'Tailwind CSS'],
+    category: 'Languages & Frameworks',
+    skills: ['JavaScript (ES6+)', 'TypeScript', 'React.js', 'React Native', 'Next.js', 'HTML5', 'CSS3'],
   },
   {
     category: 'State & Data',
-    skills: ['Redux Toolkit', 'Redux-Thunk', 'Context API', 'REST APIs', 'Axios', 'Swagger'],
-  },
-  {
-    category: 'Auth & Security',
-    skills: ['JWT Authentication', 'RBAC Systems', 'Protected Routes', 'Session Management'],
+    skills: ['Redux Toolkit', 'Context API', 'Axios', 'REST APIs', 'Swagger'],
   },
   {
     category: 'Mobile',
-    skills: ['React Native CLI', 'Expo (Managed & Bare)', 'NativeWind', 'Gluestack UI', 'TamagUI', 'Google Play Store', 'App Store'],
+    skills: ['Expo (Managed & Bare)', 'React Native CLI', 'NativeWind', 'Gluestack UI', 'Google Play', 'App Store'],
+  },
+  {
+    category: 'Auth & Security',
+    skills: ['JWT', 'RBAC', 'Protected Routes'],
+  },
+  {
+    category: 'Styling',
+    skills: ['Tailwind CSS', 'Material-UI', 'Styled Components'],
   },
   {
     category: 'Testing',
     skills: ['Jest', 'React Testing Library', 'Unit Testing', 'Integration Testing'],
   },
   {
-    category: 'Tooling',
-    skills: ['Git', 'GitHub', 'GitLab', 'Bitbucket', 'VS Code', 'WebStorm', 'Vite', 'Webpack', 'Jira', 'Postman', 'Vercel'],
+    category: 'Tools',
+    skills: ['Git', 'GitHub', 'GitLab', 'VS Code', 'Postman', 'Jira', 'Vite', 'Vercel'],
   },
 ];
 
 export const SkillsSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
 
   const container: Variants = {
     hidden:  { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
   };
   const item: Variants = {
     hidden:  { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.48, ease: 'easeOut' } },
   };
 
   return (
@@ -54,55 +58,60 @@ export const SkillsSection = () => {
               className="max-w-3xl mx-auto"
           >
             {/* Section label */}
-            <motion.div variants={item} className="flex items-center gap-3 mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
+            <motion.div variants={item} className="flex items-center gap-3 mb-10">
+            <span
+                className="text-xs font-bold uppercase tracking-widest"
+                style={{ color: 'var(--accent)', fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
+            >
               03. Skills
             </span>
               <div className="flex-1 h-px" style={{ background: 'var(--border-color)' }} />
             </motion.div>
 
             <motion.p variants={item} className="text-base leading-relaxed mb-10" style={{ color: 'var(--text-secondary)' }}>
-              Here&apos;s a snapshot of the tools and technologies I reach for most. I pick up new ones quickly
-              when a project calls for it.
+              Technologies and tools I reach for day-to-day. I pick up new ones quickly when a project calls for it.
             </motion.p>
 
             {/* Skill groups */}
-            <div className="space-y-8">
-              {skillGroups.map((group, i) => (
-                  <motion.div key={group.category} variants={item}>
-                    <div className="grid sm:grid-cols-[120px_1fr] gap-3 sm:gap-6 items-start">
-                      {/* Category label */}
-                      <p className="text-xs font-semibold uppercase tracking-widest pt-1 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
-                        {group.category}
-                      </p>
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2">
-                        {group.skills.map((skill, j) => (
-                            <motion.span
-                                key={skill}
-                                className="skill-tag"
-                                initial={{ opacity: 0, scale: 0.92 }}
-                                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                                transition={{ delay: i * 0.06 + j * 0.03 + 0.2 }}
-                                whileHover={{ scale: 1.05 }}
-                            >
-                              {skill}
-                            </motion.span>
-                        ))}
-                      </div>
+            <div className="space-y-7">
+              {skillGroups.map((group, gi) => (
+                  <motion.div
+                      key={group.category}
+                      variants={item}
+                      className="grid sm:grid-cols-[170px_1fr] gap-3 sm:gap-6 items-start"
+                  >
+                    <p
+                        className="text-xs font-semibold uppercase tracking-widest pt-1 flex-shrink-0"
+                        style={{
+                          color: 'var(--text-muted)',
+                          fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
+                        }}
+                    >
+                      {group.category}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {group.skills.map((skill, si) => (
+                          <motion.span
+                              key={skill}
+                              className="skill-tag"
+                              initial={{ opacity: 0, scale: 0.9 }}
+                              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                              transition={{ delay: gi * 0.05 + si * 0.025 + 0.15 }}
+                              whileHover={{ scale: 1.06 }}
+                          >
+                            {skill}
+                          </motion.span>
+                      ))}
                     </div>
-                    {i < skillGroups.length - 1 && (
-                        <div className="mt-8 h-px" style={{ background: 'var(--border-color)' }} />
-                    )}
                   </motion.div>
               ))}
             </div>
 
-            {/* Stats strip */}
-            <motion.div
-                variants={item}
-                className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-4"
-            >
+            {/* Divider */}
+            <div className="my-10 h-px" style={{ background: 'var(--border-color)' }} />
+
+            {/* Stats */}
+            <motion.div variants={item} className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
                 { v: '3+',   l: 'Years' },
                 { v: '20+',  l: 'Technologies' },
@@ -113,7 +122,12 @@ export const SkillsSection = () => {
                       key={s.l}
                       className="glass-card rounded-xl p-4 text-center"
                   >
-                    <p className="text-2xl font-extrabold" style={{ color: 'var(--accent)' }}>{s.v}</p>
+                    <p
+                        className="text-2xl font-extrabold"
+                        style={{ color: 'var(--accent)', fontFamily: "var(--font-syne), 'Syne', sans-serif" }}
+                    >
+                      {s.v}
+                    </p>
                     <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{s.l}</p>
                   </div>
               ))}
