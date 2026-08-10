@@ -4,7 +4,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 const eslintConfig = [
   {
-    ignores: ['.next/**', 'node_modules/**', 'out/**', 'build/**'],
+    ignores: ['.next/**', 'node_modules/**', 'out/**', 'build/**', 'coverage/**'],
   },
   ...nextCoreWebVitals,
   ...nextTypescript,
