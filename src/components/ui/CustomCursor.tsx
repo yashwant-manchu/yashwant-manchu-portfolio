@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const CustomCursor = () => {
     const dotRef   = useRef<HTMLDivElement>(null);
@@ -11,19 +11,19 @@ export const CustomCursor = () => {
     const [isHovering, setIsHovering] = useState(false);
     const [isVisible,  setIsVisible]  = useState(false);
 
-    /* ── move both cursors via RAF — no React state, zero re-renders ── */
-    const moveCursors = useCallback(() => {
-        const { x, y } = posRef.current;
-        if (dotRef.current) {
-            dotRef.current.style.transform = `translate(${x - 6}px, ${y - 6}px)`;
-        }
-        if (ringRef.current) {
-            ringRef.current.style.transform = `translate(${x - 18}px, ${y - 18}px)`;
-        }
-        rafRef.current = requestAnimationFrame(moveCursors);
-    }, []);
-
     useEffect(() => {
+        /* ── move both cursors via RAF — no React state, zero re-renders ── */
+        function moveCursors() {
+            const { x, y } = posRef.current;
+            if (dotRef.current) {
+                dotRef.current.style.transform = `translate(${x - 6}px, ${y - 6}px)`;
+            }
+            if (ringRef.current) {
+                ringRef.current.style.transform = `translate(${x - 18}px, ${y - 18}px)`;
+            }
+            rafRef.current = requestAnimationFrame(moveCursors);
+        }
+
         /* Only activate on pointer devices */
         if (!window.matchMedia("(hover: hover)").matches) return;
 
@@ -99,7 +99,7 @@ export const CustomCursor = () => {
             observer.disconnect();
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
         };
-    }, [moveCursors, isVisible]);
+    }, [isVisible]);
 
     /* Keep dot/ring CSS classes in sync with hover state */
     useEffect(() => {
