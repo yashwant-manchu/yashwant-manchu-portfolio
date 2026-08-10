@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/yashwant-manchu/yashwant-manchu-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/yashwant-manchu/yashwant-manchu-portfolio/actions/workflows/ci.yml)
 
-A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion. Featuring advanced animations, glassmorphism effects, and a sophisticated dark/light mode system.
+A modern, responsive portfolio website built with Next.js 16, TypeScript, Tailwind CSS, and Framer Motion. Featuring advanced animations, glassmorphism effects, and a sophisticated dark/light mode system.
 
 ## 🚀 Features
 
@@ -15,20 +15,22 @@ A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwi
 
 ## 🛠️ Tech Stack
 
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
 - **Icons**: Lucide React
-- **Fonts**: Inter & Space Grotesk (Google Fonts)
+- **Fonts**: Syne, Outfit & JetBrains Mono (Google Fonts)
+- **Testing**: Jest & React Testing Library
+- **CI**: GitHub Actions (lint, format check, tests, build on every push)
 
 ## 📦 Installation
 
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yashwantmanchu/portfolio.git
-   cd portfolio
+   git clone https://github.com/yashwant-manchu/yashwant-manchu-portfolio.git
+   cd yashwant-manchu-portfolio
    ```
 
 2. **Install dependencies**
@@ -54,29 +56,46 @@ A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwi
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## 🧪 Available Scripts
+
+| Command                 | Description                                |
+| ----------------------- | ------------------------------------------ |
+| `npm run dev`           | Start the development server               |
+| `npm run build`         | Build for production                       |
+| `npm run start`         | Serve the production build                 |
+| `npm run lint`          | Run ESLint                                 |
+| `npm run format`        | Format the codebase with Prettier          |
+| `npm run format:check`  | Check formatting without writing changes   |
+| `npm test`              | Run the Jest + React Testing Library suite |
+| `npm run test:coverage` | Run tests with a coverage report           |
+
 ## 🏗️ Project Structure
 
+```
+src/
 ├── app/
-│ ├── globals.css
-│ ├── layout.tsx
-│ └── page.tsx
-├── components/
-│ ├── layout/
-│ │ ├── Navigation.tsx
-│ │ └── Footer.tsx
-│ ├── providers/
-│ │ └── ThemeProvider.tsx
-│ ├── sections/
-│ │ ├── HeroSection.tsx
-│ │ ├── AboutSection.tsx
-│ │ ├── ExperienceSection.tsx
-│ │ ├── SkillsSection.tsx
-│ │ ├── ProjectsSection.tsx
-│ │ └── ContactSection.tsx
-│ └── ui/
-│ └── CustomCursor.tsx
-├── public/
-└── package.json
+│   ├── api/contact/route.ts
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+└── components/
+    ├── layout/
+    │   ├── Navigation.tsx
+    │   └── Footer.tsx
+    ├── providers/
+    │   └── ThemeProvider.tsx
+    ├── sections/
+    │   ├── HeroSection.tsx
+    │   ├── AboutSection.tsx
+    │   ├── ExperienceSection.tsx
+    │   ├── SkillsSection.tsx
+    │   ├── ProjectsSection.tsx
+    │   └── ContactSection.tsx
+    └── ui/
+        └── CustomCursor.tsx
+public/
+└── Yashwant-Manchu-Resume.pdf
+```
 
 ## 🎨 Customization
 
@@ -98,19 +117,21 @@ All animations are built with Framer Motion. You can customize:
 
 Update your personal information in:
 
-- Individual section components in `components/sections/`
-- Metadata in `app/layout.tsx`
+- Individual section components in `src/components/sections/`
+- Metadata in `src/app/layout.tsx`
 
 ## 🚀 Deployment
 
-### Deploy on Vercel
+This repo is connected to Vercel via GitHub — every push to `master` triggers both the CI workflow above and a Vercel build/deploy. The live site is at [yashwant-manchu-portfolio.vercel.app](https://yashwant-manchu-portfolio.vercel.app).
+
+To deploy your own fork:
 
 1. **Push to GitHub**
 
    ```bash
    git add .
    git commit -m "Initial commit"
-   git push origin main
+   git push origin master
    ```
 
 2. **Deploy with Vercel**
@@ -119,8 +140,8 @@ Update your personal information in:
    - Deploy with default settings
 
 3. **Environment Setup**
-   - No environment variables required for basic functionality
-   - Add any API keys or external service configurations as needed
+   - The site itself needs no environment variables to build and run
+   - The contact form needs `EMAIL_USER` and `EMAIL_PASS` (a Gmail address + [app password](https://myaccount.google.com/apppasswords)) set in Vercel's project settings, or it'll return a 500
 
 ### Deploy on Other Platforms
 
@@ -161,7 +182,7 @@ The portfolio is built with a mobile-first approach and includes:
 
 - **Email**: <yashwanthmanchu059@gmail.com>
 - **Phone**: +91 8367557617
-- **Location**: Nellore, A.P, India
+- **Location**: Pune, Maharashtra, India
 - **LinkedIn**: [linkedin.com/in/yashwant-manchu](https://linkedin.com/in/yashwant-manchu)
 - **GitHub**: [github.com/yashwant-manchu](https://github.com/yashwant-manchu)
 
@@ -171,7 +192,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yashwantmanchu/portfolio/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/yashwant-manchu/yashwant-manchu-portfolio/issues).
 
 ## ⭐ Show Your Support
 
