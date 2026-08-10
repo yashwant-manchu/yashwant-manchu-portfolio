@@ -1,5 +1,7 @@
 # Yashwant Manchu - Portfolio Website
 
+[![CI](https://github.com/yashwant-manchu/yashwant-manchu-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/yashwant-manchu/yashwant-manchu-portfolio/actions/workflows/ci.yml)
+
 A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion. Featuring advanced animations, glassmorphism effects, and a sophisticated dark/light mode system.
 
 ## 🚀 Features
