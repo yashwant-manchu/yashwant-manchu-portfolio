@@ -33,9 +33,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Yashwant Manchu — Frontend Engineer',
   description:
-      'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js. Building scalable web and mobile apps.',
+    'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js. Building scalable web and mobile apps.',
   keywords:
-      'Frontend Engineer, React.js, React Native, TypeScript, Next.js, Web Development, Mobile Development, Yashwant Manchu',
+    'Frontend Engineer, React.js, React Native, TypeScript, Next.js, Web Development, Mobile Development, Yashwant Manchu',
   authors: [{ name: 'Yashwant Manchu' }],
   creator: 'Yashwant Manchu',
   openGraph: {
@@ -44,22 +44,24 @@ export const metadata: Metadata = {
     url: 'https://yashwant-manchu-portfolio.vercel.app',
     siteName: 'Yashwant Manchu',
     title: 'Yashwant Manchu — Frontend Engineer',
-    description: 'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js.',
+    description:
+      'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Yashwant Manchu — Frontend Engineer',
-    description: 'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js.',
+    description:
+      'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js.',
   },
   robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-      <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} antialiased`}>
-      <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
-      </html>
+    </html>
   );
 }

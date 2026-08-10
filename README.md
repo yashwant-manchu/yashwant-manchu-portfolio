@@ -55,24 +55,24 @@ A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwi
 ## 🏗️ Project Structure
 
 ├── app/
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
+│ ├── globals.css
+│ ├── layout.tsx
+│ └── page.tsx
 ├── components/
-│   ├── layout/
-│   │   ├── Navigation.tsx
-│   │   └── Footer.tsx
-│   ├── providers/
-│   │   └── ThemeProvider.tsx
-│   ├── sections/
-│   │   ├── HeroSection.tsx
-│   │   ├── AboutSection.tsx
-│   │   ├── ExperienceSection.tsx
-│   │   ├── SkillsSection.tsx
-│   │   ├── ProjectsSection.tsx
-│   │   └── ContactSection.tsx
-│   └── ui/
-│       └── CustomCursor.tsx
+│ ├── layout/
+│ │ ├── Navigation.tsx
+│ │ └── Footer.tsx
+│ ├── providers/
+│ │ └── ThemeProvider.tsx
+│ ├── sections/
+│ │ ├── HeroSection.tsx
+│ │ ├── AboutSection.tsx
+│ │ ├── ExperienceSection.tsx
+│ │ ├── SkillsSection.tsx
+│ │ ├── ProjectsSection.tsx
+│ │ └── ContactSection.tsx
+│ └── ui/
+│ └── CustomCursor.tsx
 ├── public/
 └── package.json
 

@@ -1,12 +1,14 @@
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
-import nextTypescript from "eslint-config-next/typescript";
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextTypescript from 'eslint-config-next/typescript';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 const eslintConfig = [
   {
-    ignores: [".next/**", "node_modules/**", "out/**", "build/**"],
+    ignores: ['.next/**', 'node_modules/**', 'out/**', 'build/**'],
   },
   ...nextCoreWebVitals,
   ...nextTypescript,
+  eslintConfigPrettier,
 ];
 
 export default eslintConfig;

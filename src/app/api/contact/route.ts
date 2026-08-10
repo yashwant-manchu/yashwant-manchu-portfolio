@@ -2,56 +2,47 @@ import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
-    try {
-        const { name, email, message } = await request.json();
+  try {
+    const { name, email, message } = await request.json();
 
-        // Validation
-        if (!name || !email || !message) {
-            return NextResponse.json(
-                { error: 'All fields are required' },
-                { status: 400 }
-            );
-        }
+    // Validation
+    if (!name || !email || !message) {
+      return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
+    }
 
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return NextResponse.json(
-                { error: 'Invalid email format' },
-                { status: 400 }
-            );
-        }
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
+    }
 
-        // Check environment variables
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-            console.error('Missing email environment variables');
-            return NextResponse.json(
-                { error: 'Server configuration error' },
-                { status: 500 }
-            );
-        }
+    // Check environment variables
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Missing email environment variables');
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+    }
 
-        console.log('🚀 Attempting to send email...'); // For debugging
+    console.log('🚀 Attempting to send email...'); // For debugging
 
-        // Create transporter
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
+    // Create transporter
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-        // Verify transporter
-        await transporter.verify();
-        console.log('✅ Email transporter verified'); // For debugging
+    // Verify transporter
+    await transporter.verify();
+    console.log('✅ Email transporter verified'); // For debugging
 
-        // Email content
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: 'yashwanthmanchu059@gmail.com',
-            subject: `🌟 Portfolio Contact: ${name}`,
-            html: `
+    // Email content
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'yashwanthmanchu059@gmail.com',
+      subject: `🌟 Portfolio Contact: ${name}`,
+      html: `
                 <!DOCTYPE html>
                 <html>
                 <head>
@@ -78,13 +69,13 @@ export async function POST(request: NextRequest) {
                     <div style="margin-top: 30px; text-align: center; padding: 20px; background: #f1f5f9; border-radius: 10px;">
                         <p style="margin: 0; color: #64748b; font-size: 14px;">
                             📅 Sent on ${new Date().toLocaleDateString('en-IN', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                timeZone: 'Asia/Kolkata'
+                              weekday: 'long',
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              timeZone: 'Asia/Kolkata',
                             })} IST
                         </p>
                         <p style="margin: 10px 0 0 0; color: #64748b; font-size: 12px;">
@@ -100,36 +91,32 @@ export async function POST(request: NextRequest) {
                 </body>
                 </html>
             `,
-        };
+    };
 
-        // Send email
-        const info = await transporter.sendMail(mailOptions);
-        console.log('✅ Email sent successfully:', info.messageId); // For debugging
+    // Send email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('✅ Email sent successfully:', info.messageId); // For debugging
 
+    return NextResponse.json(
+      {
+        message: 'Email sent successfully',
+        messageId: info.messageId,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error('❌ Error sending email:', error);
+
+    // Return different error messages based on error type
+    if (error instanceof Error) {
+      if (error.message.includes('Invalid login')) {
         return NextResponse.json(
-            { 
-                message: 'Email sent successfully',
-                messageId: info.messageId 
-            },
-            { status: 200 }
+          { error: 'Email authentication failed. Please check credentials.' },
+          { status: 500 },
         );
-
-    } catch (error) {
-        console.error('❌ Error sending email:', error);
-        
-        // Return different error messages based on error type
-        if (error instanceof Error) {
-            if (error.message.includes('Invalid login')) {
-                return NextResponse.json(
-                    { error: 'Email authentication failed. Please check credentials.' },
-                    { status: 500 }
-                );
-            }
-        }
-        
-        return NextResponse.json(
-            { error: 'Failed to send email. Please try again.' },
-            { status: 500 }
-        );
+      }
     }
+
+    return NextResponse.json({ error: 'Failed to send email. Please try again.' }, { status: 500 });
+  }
 }

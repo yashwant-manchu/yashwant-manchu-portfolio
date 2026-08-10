@@ -10,19 +10,19 @@ import { ContactSection } from '@/components/sections/ContactSection';
 import { Footer } from '@/components/layout/Footer';
 
 export default function Home() {
-    return (
-        <>
-            <CustomCursor />
-            <Navigation />
-            <main>
-                <HeroSection />
-                <AboutSection />
-                <ExperienceSection />
-                <SkillsSection />
-                {/* ProjectsSection hidden per request */}
-                <ContactSection />
-            </main>
-            <Footer />
-        </>
-    );
+  return (
+    <>
+      <CustomCursor />
+      <Navigation />
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <SkillsSection />
+        {/* ProjectsSection hidden per request */}
+        <ContactSection />
+      </main>
+      <Footer />
+    </>
+  );
 }
