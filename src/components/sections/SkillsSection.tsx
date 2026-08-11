@@ -106,7 +106,6 @@ const skillGroups = [
 export const SkillsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
-  const totalSkills = skillGroups.reduce((n, g) => n + g.skills.length, 0);
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -141,36 +140,10 @@ export const SkillsSection = () => {
             <div className="bg-divider h-px flex-1" />
           </motion.div>
 
-          <motion.p variants={item} className="text-secondary mb-8 text-base leading-relaxed">
+          <motion.p variants={item} className="text-secondary mb-10 text-base leading-relaxed">
             Technologies and tools I reach for day-to-day. I pick up new ones quickly when a project
             calls for it.
           </motion.p>
-
-          {/* Activity snapshot */}
-          <motion.div variants={item} className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {[
-              { v: `${totalSkills}+`, l: 'Skills' },
-              { v: `${skillGroups.length}`, l: 'Categories' },
-              { v: '3+', l: 'Years Experience' },
-              { v: '85%+', l: 'Test Coverage' },
-            ].map((s) => (
-              <div key={s.l} className="glass-card rounded-xl p-4 text-center">
-                <p
-                  className="text-2xl font-extrabold"
-                  style={{
-                    color: 'var(--accent)',
-                    fontFamily: "var(--font-syne), 'Syne', sans-serif",
-                  }}
-                >
-                  {s.v}
-                </p>
-                <p className="text-muted mt-1 text-xs">{s.l}</p>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Divider */}
-          <div className="bg-divider mb-10 h-px" />
 
           {/* Skill groups */}
           <div className="space-y-7">
