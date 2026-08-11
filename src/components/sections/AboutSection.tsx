@@ -3,21 +3,6 @@
 import { motion, useInView, Variants } from 'framer-motion';
 import { useRef } from 'react';
 
-const skills = [
-  'React.js',
-  'React Native',
-  'TypeScript',
-  'Next.js',
-  'Redux Toolkit',
-  'Context API',
-  'Expo',
-  'Tailwind CSS',
-  'Jest & RTL',
-  'REST APIs',
-  'JWT / RBAC',
-  'Material-UI',
-];
-
 export const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
@@ -111,9 +96,8 @@ export const AboutSection = () => {
               </div>
             </motion.div>
 
-            {/* Avatar + skills */}
-            <motion.div variants={item} className="space-y-6 md:col-span-2">
-              {/* Avatar */}
+            {/* Avatar */}
+            <motion.div variants={item} className="md:col-span-2">
               <div className="relative mx-auto max-w-[180px] md:mx-0">
                 <div className="bg-accent absolute -inset-2 rounded-2xl opacity-20 blur-xl" />
                 <div
@@ -123,23 +107,6 @@ export const AboutSection = () => {
                   }}
                 >
                   YM
-                </div>
-              </div>
-
-              {/* Skills */}
-              <div>
-                <p
-                  className="text-muted mb-3 text-xs font-semibold uppercase tracking-widest"
-                  style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
-                >
-                  Tech I work with
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {skills.map((s) => (
-                    <motion.span key={s} className="skill-tag" whileHover={{ scale: 1.06 }}>
-                      {s}
-                    </motion.span>
-                  ))}
                 </div>
               </div>
             </motion.div>

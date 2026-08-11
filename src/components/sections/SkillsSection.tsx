@@ -2,10 +2,22 @@
 
 import { motion, useInView, Variants } from 'framer-motion';
 import { useRef } from 'react';
+import {
+  Code2,
+  Database,
+  Smartphone,
+  ShieldCheck,
+  Palette,
+  FlaskConical,
+  Wrench,
+  Radio,
+  BarChart3,
+} from 'lucide-react';
 
 const skillGroups = [
   {
     category: 'Languages & Frameworks',
+    icon: Code2,
     skills: [
       'JavaScript (ES6+)',
       'TypeScript',
@@ -18,40 +30,83 @@ const skillGroups = [
   },
   {
     category: 'State & Data',
-    skills: ['Redux Toolkit', 'Context API', 'Axios', 'REST APIs', 'Swagger'],
+    icon: Database,
+    skills: [
+      'Redux Toolkit',
+      'RTK Query',
+      'Redux-Thunk Middleware',
+      'Reselect',
+      'Context API',
+      'Axios',
+      'REST APIs',
+      'Swagger',
+    ],
   },
   {
     category: 'Mobile',
+    icon: Smartphone,
     skills: [
       'Expo (Managed & Bare)',
       'React Native CLI',
       'NativeWind',
       'Gluestack UI',
+      'TamagUI',
+      'React Native Paper',
       'Google Play',
       'App Store',
     ],
   },
   {
+    category: 'Real-Time & Communication',
+    icon: Radio,
+    skills: ['Socket.io', 'SockJS', 'WebRTC', 'WebSockets'],
+  },
+  {
+    category: 'Data Viz & Forms',
+    icon: BarChart3,
+    skills: ['Chart.js', 'D3.js', 'React Hook Form'],
+  },
+  {
     category: 'Auth & Security',
+    icon: ShieldCheck,
     skills: ['JWT', 'RBAC', 'Protected Routes'],
   },
   {
     category: 'Styling',
-    skills: ['Tailwind CSS', 'Material-UI', 'Styled Components'],
+    icon: Palette,
+    skills: ['Tailwind CSS', 'Material-UI', 'Styled Components', 'WCAG Accessibility'],
   },
   {
     category: 'Testing',
+    icon: FlaskConical,
     skills: ['Jest', 'React Testing Library', 'Unit Testing', 'Integration Testing'],
   },
   {
     category: 'Tools',
-    skills: ['Git', 'GitHub', 'GitLab', 'VS Code', 'Postman', 'Jira', 'Vite', 'Vercel'],
+    icon: Wrench,
+    skills: [
+      'Git',
+      'GitHub',
+      'GitLab',
+      'Bitbucket',
+      'VS Code',
+      'Postman',
+      'Jira',
+      'Confluence',
+      'Vite',
+      'Webpack',
+      'ESLint',
+      'Prettier',
+      'Vercel',
+      'GitHub Pages',
+    ],
   },
 ];
 
 export const SkillsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const totalSkills = skillGroups.reduce((n, g) => n + g.skills.length, 0);
 
   const container: Variants = {
     hidden: { opacity: 0 },
@@ -86,52 +141,17 @@ export const SkillsSection = () => {
             <div className="bg-divider h-px flex-1" />
           </motion.div>
 
-          <motion.p variants={item} className="text-secondary mb-10 text-base leading-relaxed">
+          <motion.p variants={item} className="text-secondary mb-8 text-base leading-relaxed">
             Technologies and tools I reach for day-to-day. I pick up new ones quickly when a project
             calls for it.
           </motion.p>
 
-          {/* Skill groups */}
-          <div className="space-y-7">
-            {skillGroups.map((group, gi) => (
-              <motion.div
-                key={group.category}
-                variants={item}
-                className="grid items-start gap-3 sm:grid-cols-[170px_1fr] sm:gap-6"
-              >
-                <p
-                  className="text-muted flex-shrink-0 pt-1 text-xs font-semibold uppercase tracking-widest"
-                  style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
-                >
-                  {group.category}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {group.skills.map((skill, si) => (
-                    <motion.span
-                      key={skill}
-                      className="skill-tag"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: gi * 0.05 + si * 0.025 + 0.15 }}
-                      whileHover={{ scale: 1.06 }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Divider */}
-          <div className="bg-divider my-10 h-px" />
-
-          {/* Stats */}
-          <motion.div variants={item} className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          {/* Activity snapshot */}
+          <motion.div variants={item} className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {[
-              { v: '3+', l: 'Years' },
-              { v: '20+', l: 'Technologies' },
-              { v: '10+', l: 'Projects' },
+              { v: `${totalSkills}+`, l: 'Skills' },
+              { v: `${skillGroups.length}`, l: 'Categories' },
+              { v: '3+', l: 'Years Experience' },
               { v: '85%+', l: 'Test Coverage' },
             ].map((s) => (
               <div key={s.l} className="glass-card rounded-xl p-4 text-center">
@@ -148,6 +168,45 @@ export const SkillsSection = () => {
               </div>
             ))}
           </motion.div>
+
+          {/* Divider */}
+          <div className="bg-divider mb-10 h-px" />
+
+          {/* Skill groups */}
+          <div className="space-y-7">
+            {skillGroups.map((group, gi) => {
+              const Icon = group.icon;
+              return (
+                <motion.div
+                  key={group.category}
+                  variants={item}
+                  className="grid items-start gap-3 sm:grid-cols-[170px_1fr] sm:gap-6"
+                >
+                  <p
+                    className="text-muted flex flex-shrink-0 items-center gap-1.5 pt-1 text-xs font-semibold uppercase tracking-widest"
+                    style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
+                  >
+                    <Icon className="text-accent h-3.5 w-3.5" />
+                    {group.category}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map((skill, si) => (
+                      <motion.span
+                        key={skill}
+                        className="skill-tag"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ delay: gi * 0.05 + si * 0.025 + 0.15 }}
+                        whileHover={{ scale: 1.06 }}
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
       </div>
     </section>
