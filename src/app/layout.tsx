@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Syne, Outfit, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '../components/providers/ThemeProvider';
+import { SITE_URL } from '@/lib/constants';
 
 /**
  * Next.js font optimisation — fonts are downloaded at build time,
@@ -31,6 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Yashwant Manchu — Frontend Engineer',
   description:
     'Frontend Software Engineer specialising in React.js, React Native, TypeScript, and Next.js. Building scalable web and mobile apps.',
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://yashwant-manchu-portfolio.vercel.app',
+    url: SITE_URL,
     siteName: 'Yashwant Manchu',
     title: 'Yashwant Manchu — Frontend Engineer',
     description:
