@@ -36,7 +36,7 @@ export const HeroSection = () => {
     >
       {/* Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0" style={{ background: 'var(--bg-primary)' }} />
+        <div className="bg-primary absolute inset-0" />
         <div className="grid-bg absolute inset-0 opacity-[0.03]" />
         <motion.div
           className="absolute left-1/4 top-1/4 h-72 w-72 rounded-full blur-3xl lg:h-[30rem] lg:w-[30rem]"
@@ -61,9 +61,8 @@ export const HeroSection = () => {
         >
           {/* Name */}
           <motion.h1
-            className="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
+            className="text-primary text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl"
             style={{
-              color: 'var(--text-primary)',
               lineHeight: 1.08,
               fontFamily: "var(--font-syne), 'Syne', sans-serif",
             }}
@@ -79,8 +78,7 @@ export const HeroSection = () => {
             <AnimatePresence mode="wait">
               <motion.p
                 key={roleIndex}
-                className="text-lg font-semibold sm:text-xl"
-                style={{ color: 'var(--text-secondary)' }}
+                className="text-secondary text-lg font-semibold sm:text-xl"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
@@ -93,11 +91,8 @@ export const HeroSection = () => {
 
           {/* One-liner tagline */}
           <motion.p
-            className="mx-auto max-w-xl text-base leading-relaxed sm:text-lg"
-            style={{
-              color: 'var(--text-muted)',
-              fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
-            }}
+            className="text-muted mx-auto max-w-xl text-base leading-relaxed sm:text-lg"
+            style={{ fontFamily: "var(--font-outfit), 'Outfit', sans-serif" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -132,19 +127,10 @@ export const HeroSection = () => {
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <span
-          className="text-[10px] uppercase tracking-widest"
-          style={{ color: 'var(--text-muted)' }}
-        >
-          scroll
-        </span>
-        <div
-          className="flex h-8 w-5 justify-center rounded-full border-2 pt-1.5"
-          style={{ borderColor: 'var(--border-color)' }}
-        >
+        <span className="text-muted text-[10px] uppercase tracking-widest">scroll</span>
+        <div className="border-divider flex h-8 w-5 justify-center rounded-full border-2 pt-1.5">
           <motion.div
-            className="h-2 w-1 rounded-full"
-            style={{ background: 'var(--accent)' }}
+            className="bg-accent h-2 w-1 rounded-full"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           />

@@ -325,6 +325,39 @@ section {
   background-size: 44px 44px;
 }
 
+/* ─── SEMANTIC COLOR UTILITIES ───────────────────────────
+ * Thin single-property wrappers around the CSS custom properties
+ * above, so sections don't each repeat their own
+ * `style={{ color: 'var(--text-muted)' }}` objects.
+ */
+.text-primary {
+  color: var(--text-primary);
+}
+.text-secondary {
+  color: var(--text-secondary);
+}
+.text-muted {
+  color: var(--text-muted);
+}
+.text-accent {
+  color: var(--accent);
+}
+.bg-primary {
+  background: var(--bg-primary);
+}
+.bg-secondary {
+  background: var(--bg-secondary);
+}
+.bg-accent {
+  background: var(--accent);
+}
+.bg-divider {
+  background: var(--border-color);
+}
+.border-divider {
+  border-color: var(--border-color);
+}
+
 /* ─── SKILL TAG ──────────────────────────────────────── */
 /*
  * Uses dedicated CSS vars so both light and dark have clear contrast.

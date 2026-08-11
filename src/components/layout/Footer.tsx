@@ -14,10 +14,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer
-      className="px-6 py-8"
-      style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}
-    >
+    <footer className="border-divider bg-primary border-t px-6 py-8">
       <div className="mx-auto max-w-3xl">
         <div className="flex flex-col items-center justify-between gap-5 sm:flex-row">
           {/* Credit */}
@@ -28,7 +25,7 @@ export const Footer = () => {
             >
               Yashwant Manchu
             </p>
-            <p className="mt-0.5 text-xs" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-muted mt-0.5 text-xs">
               © {year} · Built with Next.js &amp; Tailwind CSS
             </p>
           </div>
@@ -44,8 +41,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="cursor-hover transition-colors"
-                  style={{ color: 'var(--text-muted)' }}
+                  className="cursor-hover text-muted transition-colors"
                   whileHover={{ scale: 1.15, y: -2 }}
                   whileTap={{ scale: 0.92 }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
@@ -60,8 +56,7 @@ export const Footer = () => {
           {/* Back to top */}
           <motion.button
             onClick={scrollTop}
-            className="glass-card cursor-hover flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold"
-            style={{ color: 'var(--text-secondary)' }}
+            className="glass-card cursor-hover text-secondary flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold"
             whileHover={{ scale: 1.06, y: -2 }}
             whileTap={{ scale: 0.94 }}
           >

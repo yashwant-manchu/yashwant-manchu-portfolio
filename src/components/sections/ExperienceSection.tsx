@@ -72,11 +72,7 @@ export const ExperienceSection = () => {
   };
 
   return (
-    <section
-      id="experience"
-      className="section-padding"
-      style={{ background: 'var(--bg-primary)' }}
-    >
+    <section id="experience" className="section-padding bg-primary">
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -96,7 +92,7 @@ export const ExperienceSection = () => {
             >
               02. Experience
             </span>
-            <div className="h-px flex-1" style={{ background: 'var(--border-color)' }} />
+            <div className="bg-divider h-px flex-1" />
           </motion.div>
 
           {/* Entries */}
@@ -110,11 +106,8 @@ export const ExperienceSection = () => {
                 {/* Period */}
                 <div className="flex-shrink-0 pt-0.5">
                   <p
-                    className="text-xs leading-snug"
-                    style={{
-                      color: 'var(--text-muted)',
-                      fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
-                    }}
+                    className="text-muted text-xs leading-snug"
+                    style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
                   >
                     {exp.period}
                   </p>
@@ -123,40 +116,27 @@ export const ExperienceSection = () => {
                 {/* Content */}
                 <div className="space-y-3">
                   <h3
-                    className="text-base font-bold"
-                    style={{
-                      color: 'var(--text-primary)',
-                      fontFamily: "var(--font-syne), 'Syne', sans-serif",
-                    }}
+                    className="text-primary text-base font-bold"
+                    style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif" }}
                   >
                     {exp.role}{' '}
                     <a
                       href={exp.companyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="cursor-hover inline-flex items-center gap-0.5 hover:underline"
-                      style={{ color: 'var(--accent)' }}
+                      className="cursor-hover text-accent inline-flex items-center gap-0.5 hover:underline"
                     >
                       · {exp.company}
                       <ExternalLink className="h-3 w-3" />
                     </a>
                   </h3>
 
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                    {exp.description}
-                  </p>
+                  <p className="text-secondary text-sm leading-relaxed">{exp.description}</p>
 
                   <ul className="space-y-1.5">
                     {exp.points.map((pt, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-2 text-sm"
-                        style={{ color: 'var(--text-secondary)' }}
-                      >
-                        <span
-                          className="mt-2 h-1 w-1 flex-shrink-0 rounded-full"
-                          style={{ background: 'var(--accent)' }}
-                        />
+                      <li key={j} className="text-secondary flex items-start gap-2 text-sm">
+                        <span className="bg-accent mt-2 h-1 w-1 flex-shrink-0 rounded-full" />
                         {pt}
                       </li>
                     ))}
@@ -175,11 +155,7 @@ export const ExperienceSection = () => {
           </div>
 
           {/* View Full Résumé — opens PDF from public folder */}
-          <motion.div
-            variants={item}
-            className="mt-12 border-t pt-8"
-            style={{ borderColor: 'var(--border-color)' }}
-          >
+          <motion.div variants={item} className="border-divider mt-12 border-t pt-8">
             <a
               href="/Yashwant-Manchu-Resume.pdf"
               target="_blank"
@@ -187,18 +163,12 @@ export const ExperienceSection = () => {
               className="cursor-hover group inline-flex items-center gap-2"
             >
               <span
-                className="text-sm font-semibold group-hover:underline"
-                style={{
-                  color: 'var(--accent)',
-                  fontFamily: "var(--font-syne), 'Syne', sans-serif",
-                }}
+                className="text-accent text-sm font-semibold group-hover:underline"
+                style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif" }}
               >
                 View Full Résumé
               </span>
-              <ArrowUpRight
-                className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                style={{ color: 'var(--accent)' }}
-              />
+              <ArrowUpRight className="text-accent h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
           </motion.div>
         </motion.div>

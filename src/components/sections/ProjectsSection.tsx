@@ -137,7 +137,7 @@ export const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects" className="section-padding" style={{ background: 'var(--bg-primary)' }}>
+    <section id="projects" className="section-padding bg-primary">
       <div className="container mx-auto px-4">
         <motion.div
           ref={ref}
@@ -157,13 +157,10 @@ export const ProjectsSection = () => {
             <h2 className="gradient-text-blue mb-4 text-4xl font-extrabold md:text-5xl">
               Featured Projects
             </h2>
-            <p className="mx-auto max-w-xl text-base" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-muted mx-auto max-w-xl text-base">
               Production-grade apps spanning fintech, enterprise banking, compliance &amp; HR
             </p>
-            <div
-              className="mx-auto mt-5 h-1 w-16 rounded-full"
-              style={{ background: 'var(--accent)' }}
-            />
+            <div className="bg-accent mx-auto mt-5 h-1 w-16 rounded-full" />
           </motion.div>
 
           {/* Filter tabs — all green */}
@@ -231,10 +228,7 @@ export const ProjectsSection = () => {
                   <div className="p-6">
                     {/* Title row */}
                     <div className="mb-3 flex items-start justify-between gap-3">
-                      <h3
-                        className="text-base font-bold leading-tight sm:text-lg"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
+                      <h3 className="text-primary text-base font-bold leading-tight sm:text-lg">
                         {project.title}
                       </h3>
                       <div className="flex flex-shrink-0 gap-2">
@@ -248,7 +242,7 @@ export const ProjectsSection = () => {
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                         >
-                          <Github className="h-4 w-4" style={{ color: 'var(--text-muted)' }} />
+                          <Github className="text-muted h-4 w-4" />
                         </motion.a>
                         <motion.a
                           href={project.demo}
@@ -268,25 +262,13 @@ export const ProjectsSection = () => {
                       </div>
                     </div>
 
-                    <p
-                      className="mb-4 text-sm leading-relaxed"
-                      style={{ color: 'var(--text-muted)' }}
-                    >
-                      {project.description}
-                    </p>
+                    <p className="text-muted mb-4 text-sm leading-relaxed">{project.description}</p>
 
                     {/* Highlights */}
                     <ul className="mb-5 space-y-1.5">
                       {project.highlights.slice(0, 3).map((h, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2 text-xs"
-                          style={{ color: 'var(--text-secondary)' }}
-                        >
-                          <span
-                            className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full"
-                            style={{ background: 'var(--accent)' }}
-                          />
+                        <li key={i} className="text-secondary flex items-start gap-2 text-xs">
+                          <span className="bg-accent mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full" />
                           {h}
                         </li>
                       ))}
@@ -319,9 +301,7 @@ export const ProjectsSection = () => {
               <h3 className="gradient-text-blue mb-2 text-xl font-bold">
                 See all projects on GitHub
               </h3>
-              <p className="mb-6 text-sm" style={{ color: 'var(--text-muted)' }}>
-                Open-source contributions and side projects
-              </p>
+              <p className="text-muted mb-6 text-sm">Open-source contributions and side projects</p>
               <motion.a
                 href="https://github.com/yashwant-manchu"
                 target="_blank"

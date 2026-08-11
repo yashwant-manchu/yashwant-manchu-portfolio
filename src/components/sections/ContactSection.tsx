@@ -91,7 +91,7 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="section-padding" style={{ background: 'var(--bg-primary)' }}>
+    <section id="contact" className="section-padding bg-primary">
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -111,24 +111,17 @@ export const ContactSection = () => {
             >
               04. Contact
             </span>
-            <div className="h-px flex-1" style={{ background: 'var(--border-color)' }} />
+            <div className="bg-divider h-px flex-1" />
           </motion.div>
 
           <motion.h2
             variants={item}
-            className="mb-3 text-2xl font-bold sm:text-3xl"
-            style={{
-              color: 'var(--text-primary)',
-              fontFamily: "var(--font-syne), 'Syne', sans-serif",
-            }}
+            className="text-primary mb-3 text-2xl font-bold sm:text-3xl"
+            style={{ fontFamily: "var(--font-syne), 'Syne', sans-serif" }}
           >
             Get In Touch
           </motion.h2>
-          <motion.p
-            variants={item}
-            className="mb-10 text-base leading-relaxed"
-            style={{ color: 'var(--text-secondary)' }}
-          >
+          <motion.p variants={item} className="text-secondary mb-10 text-base leading-relaxed">
             I&apos;m currently open to new opportunities. Whether you have a project, a role, or
             just want to say hi — I&apos;ll do my best to get back to you.
           </motion.p>
@@ -149,19 +142,10 @@ export const ContactSection = () => {
                     whileHover={{ x: 4 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <div
-                      className="flex-shrink-0 rounded-lg p-2 transition-colors"
-                      style={{
-                        background: 'var(--bg-secondary)',
-                        border: '1px solid var(--border-color)',
-                      }}
-                    >
-                      <Icon className="h-4 w-4" style={{ color: 'var(--text-muted)' }} />
+                    <div className="border-divider bg-secondary flex-shrink-0 rounded-lg border p-2 transition-colors">
+                      <Icon className="text-muted h-4 w-4" />
                     </div>
-                    <span
-                      className="truncate text-sm group-hover:underline"
-                      style={{ color: 'var(--text-secondary)' }}
-                    >
+                    <span className="text-secondary truncate text-sm group-hover:underline">
                       {l.label}
                     </span>
                   </motion.a>
@@ -177,8 +161,7 @@ export const ContactSection = () => {
                     <div key={field} className="space-y-1.5">
                       <label
                         htmlFor={field}
-                        className="block text-xs font-semibold uppercase tracking-wide"
-                        style={{ color: 'var(--text-muted)' }}
+                        className="text-muted block text-xs font-semibold uppercase tracking-wide"
                       >
                         {field === 'name' ? 'Name' : 'Email'}
                       </label>
@@ -202,8 +185,7 @@ export const ContactSection = () => {
                 <div className="space-y-1.5">
                   <label
                     htmlFor="message"
-                    className="block text-xs font-semibold uppercase tracking-wide"
-                    style={{ color: 'var(--text-muted)' }}
+                    className="text-muted block text-xs font-semibold uppercase tracking-wide"
                   >
                     Message
                   </label>

@@ -63,7 +63,7 @@ export const SkillsSection = () => {
   };
 
   return (
-    <section id="skills" className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
+    <section id="skills" className="section-padding bg-secondary">
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -83,14 +83,10 @@ export const SkillsSection = () => {
             >
               03. Skills
             </span>
-            <div className="h-px flex-1" style={{ background: 'var(--border-color)' }} />
+            <div className="bg-divider h-px flex-1" />
           </motion.div>
 
-          <motion.p
-            variants={item}
-            className="mb-10 text-base leading-relaxed"
-            style={{ color: 'var(--text-secondary)' }}
-          >
+          <motion.p variants={item} className="text-secondary mb-10 text-base leading-relaxed">
             Technologies and tools I reach for day-to-day. I pick up new ones quickly when a project
             calls for it.
           </motion.p>
@@ -104,11 +100,8 @@ export const SkillsSection = () => {
                 className="grid items-start gap-3 sm:grid-cols-[170px_1fr] sm:gap-6"
               >
                 <p
-                  className="flex-shrink-0 pt-1 text-xs font-semibold uppercase tracking-widest"
-                  style={{
-                    color: 'var(--text-muted)',
-                    fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
-                  }}
+                  className="text-muted flex-shrink-0 pt-1 text-xs font-semibold uppercase tracking-widest"
+                  style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
                 >
                   {group.category}
                 </p>
@@ -131,7 +124,7 @@ export const SkillsSection = () => {
           </div>
 
           {/* Divider */}
-          <div className="my-10 h-px" style={{ background: 'var(--border-color)' }} />
+          <div className="bg-divider my-10 h-px" />
 
           {/* Stats */}
           <motion.div variants={item} className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -151,9 +144,7 @@ export const SkillsSection = () => {
                 >
                   {s.v}
                 </p>
-                <p className="mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>
-                  {s.l}
-                </p>
+                <p className="text-muted mt-1 text-xs">{s.l}</p>
               </div>
             ))}
           </motion.div>

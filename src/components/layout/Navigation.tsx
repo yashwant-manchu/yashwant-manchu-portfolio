@@ -122,10 +122,7 @@ export const Navigation = () => {
               >
                 YM
               </span>
-              <span
-                className="hidden text-sm font-semibold sm:inline"
-                style={{ color: 'var(--text-secondary)' }}
-              >
+              <span className="text-secondary hidden text-sm font-semibold sm:inline">
                 Yashwant Manchu
               </span>
             </motion.button>
@@ -147,8 +144,7 @@ export const Navigation = () => {
                     {isActive && (
                       <motion.div
                         layoutId="navIndicator"
-                        className="absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full"
-                        style={{ background: 'var(--accent)' }}
+                        className="bg-accent absolute inset-x-2 -bottom-0.5 h-0.5 rounded-full"
                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
                     )}
@@ -161,8 +157,7 @@ export const Navigation = () => {
             <div className="flex items-center gap-2">
               <motion.button
                 onClick={toggleTheme}
-                className="glass-card cursor-hover rounded-full p-2"
-                style={{ color: 'var(--text-secondary)' }}
+                className="glass-card cursor-hover text-secondary rounded-full p-2"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Toggle theme"
@@ -194,8 +189,7 @@ export const Navigation = () => {
 
               <motion.button
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="glass-card cursor-hover rounded-full p-2 lg:hidden"
-                style={{ color: 'var(--text-secondary)' }}
+                className="glass-card cursor-hover text-secondary rounded-full p-2 lg:hidden"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Toggle menu"
@@ -236,8 +230,7 @@ export const Navigation = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="glass-card overflow-hidden lg:hidden"
-              style={{ borderTop: '1px solid var(--border-color)' }}
+              className="glass-card border-divider overflow-hidden border-t lg:hidden"
             >
               <div className="space-y-1 px-4 py-4">
                 {navItems.map((item, i) => (

@@ -32,7 +32,7 @@ export const AboutSection = () => {
   };
 
   return (
-    <section id="about" className="section-padding" style={{ background: 'var(--bg-secondary)' }}>
+    <section id="about" className="section-padding bg-secondary">
       <div className="container mx-auto px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -52,26 +52,25 @@ export const AboutSection = () => {
             >
               01. About
             </span>
-            <div className="h-px flex-1" style={{ background: 'var(--border-color)' }} />
+            <div className="bg-divider h-px flex-1" />
           </motion.div>
 
           <div className="grid items-start gap-10 md:grid-cols-5">
             {/* Prose */}
             <motion.div variants={item} className="space-y-4 md:col-span-3">
-              <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-secondary text-base leading-relaxed">
                 Hey, I&apos;m Yashwant. I&apos;m a frontend engineer based in Pune, India with 3+
                 years of experience building fast, accessible, and production-ready interfaces. I
                 care about writing code that&apos;s clean, maintainable, and actually works for the
                 people using it.
               </p>
-              <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-secondary text-base leading-relaxed">
                 Right now I&apos;m at{' '}
                 <a
                   href="https://edsomfintech.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="cursor-hover font-semibold hover:underline"
-                  style={{ color: 'var(--accent)' }}
+                  className="cursor-hover text-accent font-semibold hover:underline"
                 >
                   EDSOM FINTECH
                 </a>{' '}
@@ -80,16 +79,13 @@ export const AboutSection = () => {
                 and I&apos;m comfortable across the full frontend stack — UI, state management,
                 auth, and testing.
               </p>
-              <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-secondary text-base leading-relaxed">
                 Outside of work, I enjoy exploring what&apos;s new in the React ecosystem and
                 finding ways to make things faster and easier to maintain.
               </p>
 
               {/* Education */}
-              <div
-                className="space-y-3 border-t pt-3"
-                style={{ borderColor: 'var(--border-color)' }}
-              >
+              <div className="border-divider space-y-3 border-t pt-3">
                 {[
                   {
                     deg: 'B.Tech in Electrical & Electronics Engineering',
@@ -103,15 +99,10 @@ export const AboutSection = () => {
                   },
                 ].map((e) => (
                   <div key={e.deg} className="flex items-start gap-2.5">
-                    <span
-                      className="mt-2 h-1 w-1 flex-shrink-0 rounded-full"
-                      style={{ background: 'var(--accent)' }}
-                    />
+                    <span className="bg-accent mt-2 h-1 w-1 flex-shrink-0 rounded-full" />
                     <div>
-                      <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                        {e.deg}
-                      </p>
-                      <p className="mt-0.5 text-xs" style={{ color: 'var(--text-muted)' }}>
+                      <p className="text-primary text-sm font-semibold">{e.deg}</p>
+                      <p className="text-muted mt-0.5 text-xs">
                         {e.school} · {e.year}
                       </p>
                     </div>
@@ -124,10 +115,7 @@ export const AboutSection = () => {
             <motion.div variants={item} className="space-y-6 md:col-span-2">
               {/* Avatar */}
               <div className="relative mx-auto max-w-[180px] md:mx-0">
-                <div
-                  className="absolute -inset-2 rounded-2xl opacity-20 blur-xl"
-                  style={{ background: 'var(--accent)' }}
-                />
+                <div className="bg-accent absolute -inset-2 rounded-2xl opacity-20 blur-xl" />
                 <div
                   className="relative flex aspect-square w-full items-center justify-center rounded-2xl text-3xl font-extrabold text-white"
                   style={{
@@ -141,11 +129,8 @@ export const AboutSection = () => {
               {/* Skills */}
               <div>
                 <p
-                  className="mb-3 text-xs font-semibold uppercase tracking-widest"
-                  style={{
-                    color: 'var(--text-muted)',
-                    fontFamily: "var(--font-mono), 'JetBrains Mono', monospace",
-                  }}
+                  className="text-muted mb-3 text-xs font-semibold uppercase tracking-widest"
+                  style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
                 >
                   Tech I work with
                 </p>
