@@ -58,10 +58,28 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Yashwant Manchu',
+  url: SITE_URL,
+  image: `${SITE_URL}/opengraph-image`,
+  jobTitle: 'Frontend Engineer',
+  email: 'yashwanthmanchu059@gmail.com',
+  sameAs: ['https://github.com/yashwant-manchu', 'https://linkedin.com/in/yashwant-manchu'],
+  knowsAbout: ['React.js', 'React Native', 'TypeScript', 'Next.js'],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, '\\u003c'),
+          }}
+        />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
