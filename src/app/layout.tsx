@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Syne, Outfit, JetBrains_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { ThemeProvider } from '../components/providers/ThemeProvider';
 import { SITE_URL } from '@/lib/constants';
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
