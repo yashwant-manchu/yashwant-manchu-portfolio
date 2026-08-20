@@ -6,17 +6,19 @@ import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 const experiences = [
   {
-    period: 'May 2025 — Present',
+    period: 'May 2025 — Jul 2026',
     role: 'Software Development Engineer',
     company: 'EDSOM FINTECH',
     companyUrl: 'https://edsomfintech.com',
-    description: `Build and maintain production fintech platforms used by real customers. 
-    Shipped iPaisa — a multi-gateway payment app (Razorpay, UPI, Net Banking) with wallet flows, 
-    real-time transaction updates, and receipt generation — live on the Google Play Store.`,
+    description: `Built and maintained production fintech platforms used by real customers.
+    Shipped iPaisa — a multi-gateway payment app (Razorpay, Cashfree, Easebuzz, UPI) serving
+    10K+ daily active users with wallet flows, real-time transaction monitoring, and receipt
+    generation — live on the Google Play Store, at a 99.7% transaction success rate.`,
     points: [
-      'Built FINAMSCCS & VLNIDHI corporate banking suite covering KYC onboarding, investment plan management, and a 4-tier role hierarchy secured with JWT & RBAC',
-      'Delivered HRMS with payroll, leave tracking, and approval workflows; improved render speed by 35% via memoization and code-splitting',
-      'Developed Smart Parking system with Bluetooth printer integration, cutting ticket generation time by 70%',
+      'Built FINAMSCCS & VLNIDHI corporate banking suite with 15+ role-based permissions, audit logging, multi-stage KYC workflows, and a dynamic plan-configuration system for admin-defined savings/investment plans',
+      'Developed BOLBUDDY, a real-time chat app built on Socket.io, WebRTC, and SockJS supporting text messaging, voice/video calling, and auto-disappear messages',
+      'Delivered HRMS with Chart.js/D3.js workforce analytics and virtualized tables handling 10K+ records; cut render time by 35% and JS bundle size by 28% with Reselect-optimized selectors sustaining 60 FPS scrolling',
+      'Architected a component-based design system with 50+ reusable components using atomic design principles, improving development velocity by 40%; implemented RTK Query with normalized state and optimistic updates, cutting API calls by 60%',
     ],
     tech: [
       'React.js',
@@ -24,6 +26,8 @@ const experiences = [
       'TypeScript',
       'Expo',
       'Redux Toolkit',
+      'RTK Query',
+      'Socket.io',
       'JWT',
       'Tailwind CSS',
     ],
@@ -36,9 +40,10 @@ const experiences = [
     description: `Led frontend development across multiple client products. Focused on modernising legacy code, 
     improving performance, and building reliable test coverage while shipping features quickly.`,
     points: [
-      'Migrated 20+ class components to functional components with Hooks, reducing technical debt by 40%',
-      'Architected Redux Toolkit state management across 3 production apps, cutting redundant API calls by 35%',
-      'Maintained 85%+ test coverage with Jest & RTL; integrated 8+ REST APIs via Axios at 99.2% uptime',
+      'Spearheaded migration of 20+ class components to functional components with Hooks and modernized a legacy DXP toolkit to Connect Toolkit, reducing technical debt by 40%',
+      'Architected Redux Toolkit and Context API state management across 3 production apps, cutting redundant API calls by 35%',
+      'Maintained 85%+ test coverage with Jest & RTL; integrated 8+ REST APIs via Axios at 99.2% success rate',
+      'Mentored a cohort of 5 interns through 1:1 and group sessions while reviewing pull requests for 3 engineers to uphold code quality',
     ],
     tech: ['React.js', 'React Native', 'Redux Toolkit', 'TypeScript', 'Jest', 'RTL', 'Axios'],
   },
@@ -51,8 +56,9 @@ const experiences = [
     Also developed a medical appointment portal and resolved long-standing PHP performance issues.`,
     points: [
       'Developed and deployed the company website using HTML5, CSS3 & JavaScript via GitHub Pages',
-      'Built a Bootstrap 5 medical portal with 95% cross-browser compatibility',
-      'Fixed 15+ security vulnerabilities in a PHP 8 codebase; reduced page load time by 47%',
+      'Built a Bootstrap 5 medical appointment portal with 95% cross-browser compatibility, cutting UI dev time by 30%',
+      'Fixed 15+ security vulnerabilities in a legacy PHP codebase; reduced page load time by 47% via lazy loading and asset optimization',
+      'Built a custom CMS giving the client self-service control over gallery content, replacing a manual upload-and-redeploy workflow',
     ],
     tech: ['JavaScript', 'HTML5', 'CSS3', 'Bootstrap', 'PHP', 'React Native'],
   },

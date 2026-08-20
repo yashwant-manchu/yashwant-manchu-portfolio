@@ -44,29 +44,73 @@ export const AboutSection = () => {
             {/* Prose */}
             <motion.div variants={item} className="space-y-4 md:col-span-3">
               <p className="text-secondary text-base leading-relaxed">
-                Hey, I&apos;m Yashwant. I&apos;m a frontend engineer based in Pune, India with 3+
-                years of experience building fast, accessible, and production-ready interfaces. I
-                care about writing code that&apos;s clean, maintainable, and actually works for the
-                people using it.
+                3+ years building fintech web and mobile applications that real users depend on —
+                payment platforms, banking suites, real-time communication systems, and admin
+                dashboards, all shipped to production across web, iOS, and Android.
               </p>
               <p className="text-secondary text-base leading-relaxed">
-                Right now I&apos;m at{' '}
-                <a
-                  href="https://edsomfintech.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cursor-hover text-accent font-semibold hover:underline"
+                I&apos;m a software engineer specializing in React.js, React Native, Next.js,
+                TypeScript, and Redux — working end-to-end across web and cross-platform mobile. My
+                work spans multi-gateway payment integrations, corporate banking suites with
+                role-based access control, real-time chat systems built on WebRTC and Socket.io, and
+                mobile apps involving hardware integrations like Bluetooth printing and GPS/location
+                tracking.
+              </p>
+              <p className="text-secondary text-base leading-relaxed">
+                I&apos;ve also modernized legacy codebases — migrating class components to Hooks,
+                upgrading outdated PHP systems, and rebuilding admin dashboards from scratch — while
+                architecting state management with Redux Toolkit, Context API, and TanStack Query to
+                cut redundant API calls and improve performance.
+              </p>
+              <p className="text-secondary text-base leading-relaxed">
+                What I care about most is writing code that&apos;s clean, fast, and maintainable.
+                Whether it&apos;s reducing render times through memoization, cutting API overhead
+                with smart caching, or getting a mobile app from dev to Play Store — I like owning
+                things end to end.
+              </p>
+
+              {/* What I work with */}
+              <div className="space-y-2.5 pt-1">
+                <p
+                  className="text-muted text-xs font-semibold uppercase tracking-widest"
+                  style={{ fontFamily: "var(--font-mono), 'JetBrains Mono', monospace" }}
                 >
-                  EDSOM FINTECH
-                </a>{' '}
-                building payment platforms, banking apps, and HR tools used by real people every
-                day. I&apos;ve shipped apps to both the Google Play Store and the Apple App Store,
-                and I&apos;m comfortable across the full frontend stack — UI, state management,
-                auth, and testing.
-              </p>
+                  What I work with
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    'React.js',
+                    'React Native',
+                    'Next.js',
+                    'Expo',
+                    'TypeScript',
+                    'Redux Toolkit',
+                    'TanStack Query',
+                    'TanStack Table',
+                    'Tailwind CSS',
+                    'NativeWind',
+                    'Gluestack UI',
+                    'Socket.io',
+                    'WebRTC',
+                    'JWT',
+                    'REST APIs',
+                    'Swagger',
+                    'Jest',
+                    'RTL',
+                    'Git',
+                    'JIRA',
+                  ].map((skill) => (
+                    <span key={skill} className="skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               <p className="text-secondary text-base leading-relaxed">
-                Outside of work, I enjoy exploring what&apos;s new in the React ecosystem and
-                finding ways to make things faster and easier to maintain.
+                Beyond work, I enjoy exploring new frameworks, breaking things to understand how
+                they work, and staying current with what&apos;s moving in the frontend and mobile
+                ecosystem.
               </p>
 
               {/* Education */}

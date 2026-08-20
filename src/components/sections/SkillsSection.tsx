@@ -34,6 +34,8 @@ const skillGroups = [
     skills: [
       'Redux Toolkit',
       'RTK Query',
+      'TanStack Query',
+      'TanStack Table',
       'Redux-Thunk Middleware',
       'Reselect',
       'Context API',
