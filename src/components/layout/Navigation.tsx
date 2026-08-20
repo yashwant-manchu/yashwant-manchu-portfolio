@@ -124,6 +124,14 @@ export const Navigation = () => {
   }, [menuOpen]);
 
   const scrollTo = (href: string) => {
+    /* Unlock the body synchronously — the mobile menu's scroll-lock
+       effect only runs on the next render, but we need to scroll now.
+       Calling setMenuOpen(false) alone would be too late: this
+       scrollTo still fires while body overflow is still "hidden" from
+       the open menu, so window.scrollTo silently no-ops. */
+    document.body.style.overflow = 'unset';
+    setMenuOpen(false);
+
     const id = href.substring(1);
     const el = document.getElementById(id);
     if (el) {
@@ -147,7 +155,6 @@ export const Navigation = () => {
       /* Immediately set active so there's no lag */
       setActive(id);
     }
-    setMenuOpen(false);
   };
 
   return (

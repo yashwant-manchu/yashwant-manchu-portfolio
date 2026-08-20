@@ -10,8 +10,30 @@ export const CustomCursor = () => {
 
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [enabled, setEnabled] = useState(false);
+
+  /* ── Only run on devices that both have a real pointer AND are wide
+       enough to use the desktop nav (matches the `lg` breakpoint where
+       the hamburger menu takes over) — a touch laptop/tablet can report
+       hover:hover while still being a mobile-sized, touch-driven layout,
+       where a giant cursor ring just gets in the way of tap targets.
+       Re-evaluated on viewport/input changes, not just once on mount. */
+  useEffect(() => {
+    const hoverQuery = window.matchMedia('(hover: hover)');
+    const widthQuery = window.matchMedia('(min-width: 1024px)');
+    const update = () => setEnabled(hoverQuery.matches && widthQuery.matches);
+    update();
+    hoverQuery.addEventListener('change', update);
+    widthQuery.addEventListener('change', update);
+    return () => {
+      hoverQuery.removeEventListener('change', update);
+      widthQuery.removeEventListener('change', update);
+    };
+  }, []);
 
   useEffect(() => {
+    if (!enabled) return;
+
     /* ── move both cursors via RAF — no React state, zero re-renders ── */
     function moveCursors() {
       const { x, y } = posRef.current;
@@ -23,9 +45,6 @@ export const CustomCursor = () => {
       }
       rafRef.current = requestAnimationFrame(moveCursors);
     }
-
-    /* Only activate on pointer devices */
-    if (!window.matchMedia('(hover: hover)').matches) return;
 
     /* ── Inject global cursor: none ONCE so it applies before any
            element's own cursor style can override it ── */
@@ -99,7 +118,7 @@ export const CustomCursor = () => {
       observer.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [isVisible]);
+  }, [enabled, isVisible]);
 
   /* Keep dot/ring CSS classes in sync with hover state */
   useEffect(() => {
@@ -125,7 +144,7 @@ export const CustomCursor = () => {
     }
   }, [isHovering]);
 
-  if (!isVisible) return null;
+  if (!enabled || !isVisible) return null;
 
   return (
     <>

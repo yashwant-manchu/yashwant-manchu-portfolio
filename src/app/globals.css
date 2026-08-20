@@ -10,11 +10,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Hide native cursor everywhere before React hydrates ── */
-html,
-body,
-* {
-  cursor: none !important;
+/* ── Hide native cursor everywhere before React hydrates ──
+   Scoped to `lg` and up (1024px) to match CustomCursor.tsx, which only
+   renders the custom cursor at that breakpoint — below it (mobile/tablet,
+   including touch-capable devices that still report hover:hover), the
+   native cursor stays untouched since there's no custom one replacing it. */
+@media (min-width: 1024px) {
+  html,
+  body,
+  * {
+    cursor: none !important;
+  }
 }
 
 * {
