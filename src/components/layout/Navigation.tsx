@@ -19,24 +19,54 @@ export const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active, setActive] = useState('home');
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const ratiosRef = useRef<Map<string, number>>(new Map());
+  const manualScrollRef = useRef(false);
+  const manualScrollTimeoutRef = useRef<number | undefined>(undefined);
 
   /* ── Active section via IntersectionObserver ─────────────────────
        Uses a rootMargin that fires when a section crosses the 70px
        nav boundary.  The last section (contact) gets special treatment
-       via a "bottom of page" fallback so it always highlights.         */
+       via a "bottom of page" fallback so it always highlights.
+
+       IntersectionObserver callbacks only include entries whose ratio
+       crossed a threshold since the last firing — not every observed
+       element. Adjacent full-height sections (Home/About) share a
+       boundary, so a 1px sliver of the outgoing section can cross the
+       "0" threshold on its own, in a callback that doesn't include the
+       incoming section at all. Picking the "most visible" from just
+       that batch would wrongly flip back to the outgoing section, so
+       instead we keep a running map of every section's last-known
+       ratio and always compare across the full map.
+
+       While a nav click is driving a smooth scroll (manualScrollRef),
+       the two sections straddling the viewport's observed window
+       naturally trade off the highest ratio several times as the
+       boundary sweeps past — each of those readings is "correct" for
+       that instant, so acting on them makes the highlight jiggle
+       between the old and new section mid-scroll. We already know the
+       intended target from the click, so ignore observer updates until
+       the scroll actually finishes.                                   */
   useEffect(() => {
     const NAV_H = 70;
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        /* Find the entry that is currently most "in view" */
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        entries.forEach((e) => {
+          ratiosRef.current.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0);
+        });
 
-        if (visible.length > 0) {
-          setActive(visible[0].target.id);
-        }
+        if (manualScrollRef.current) return;
+
+        let bestId: string | null = null;
+        let bestRatio = 0;
+        ratiosRef.current.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
+        });
+
+        if (bestId) setActive(bestId);
       },
       {
         /* Top edge = nav bottom; bottom edge = 40% from top
@@ -53,9 +83,15 @@ export const Navigation = () => {
       if (el) observerRef.current!.observe(el);
     });
 
-    /* Fallback: when near bottom of page, activate contact */
+    /* Fallback: when near bottom of page, activate contact.
+       Skipped mid manual-scroll for the same reason as the observer
+       above — e.g. scrolling from Contact back up to Home stays
+       "near bottom" for a good chunk of the transit, and this isn't
+       an IntersectionObserver callback so nothing corrects it once
+       the scroll settles if it's allowed to fire here.                */
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
+      if (manualScrollRef.current) return;
       const nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 100;
       if (nearBottom) setActive('contact');
     };
@@ -64,6 +100,7 @@ export const Navigation = () => {
     return () => {
       observerRef.current?.disconnect();
       window.removeEventListener('scroll', onScroll);
+      window.clearTimeout(manualScrollTimeoutRef.current);
     };
   }, []);
 
@@ -91,6 +128,21 @@ export const Navigation = () => {
     const el = document.getElementById(id);
     if (el) {
       const top = el.getBoundingClientRect().top + window.pageYOffset - 70;
+
+      /* Ignore observer updates until this scroll settles, so the
+         highlight doesn't jiggle between the old and new section
+         while their ratios trade off mid-scroll (see effect above). */
+      manualScrollRef.current = true;
+      window.clearTimeout(manualScrollTimeoutRef.current);
+
+      const endManualScroll = () => {
+        manualScrollRef.current = false;
+        window.removeEventListener('scrollend', endManualScroll);
+      };
+      window.addEventListener('scrollend', endManualScroll);
+      /* Fallback for browsers without `scrollend` (e.g. Safari < 17.4) */
+      manualScrollTimeoutRef.current = window.setTimeout(endManualScroll, 1000);
+
       window.scrollTo({ top, behavior: 'smooth' });
       /* Immediately set active so there's no lag */
       setActive(id);
